@@ -5,3 +5,7 @@
 ## Get the development version from GitHub:
 
 devtools::install_github('natearoe/ecositer')
+
+
+remotes::install_github("ncss-tech/soilDB", dependencies = FALSE)
+
