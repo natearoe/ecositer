@@ -4,4 +4,4 @@
 
 Get the development version from GitHub:
 
-`devtools::install_github('natearoe/ecositer')`
+devtools::install_github('natearoe/ecositer')
