@@ -18,3 +18,9 @@ of vegetation for ecosites and states/phases. Vegetation data originates from th
 NASIS vegplot table. The BLANK function should be used to manipulate raw NASIS
 vegplot data into a \emph{properly formatted vegetation dataframe}
 }
+\examples{
+
+veg_summary(veg_df = ecositer::vegetation_dataframe)
+
+
+}

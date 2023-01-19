@@ -1,4 +1,3 @@
-#' @export
 #' Produce vegetation summary of ecosites and states/phases
 #'
 #' `veg_summary()` takes a *properly formatted vegetation dataframe* and produces summaries
@@ -12,9 +11,9 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'      veg_summary(veg_df = ecositer::vegetation_dataframe)
-#' }
+#'
+#' veg_summary(veg_df = ecositer::vegetation_dataframe)
+#'
 #'
 veg_summary <- function(veg_df){
 
