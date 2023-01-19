@@ -1,9 +1,26 @@
+#' @export
+
 if (!requireNamespace("dplyr"))
   stop("package `dplyr` is required for data manipulation", call. = FALSE)
 
 
 
 
+#' Produce vegetation summary of ecosites and states/phases
+#'
+#' `veg_summary()` takes a *properly formatted vegetation dataframe* and produces summaries
+#' of vegetation for ecosites and states/phases. Vegetation data originates from the
+#' NASIS vegplot table. The BLANK function should be used to manipulate raw NASIS
+#' vegplot data into a *properly formatted vegetation dataframe*
+#'
+#' @param veg_df a properly formatted vegetation dataframe
+#'
+#' @return a nested list of vegetation summaries by ecosite and state/phase
+#' @export
+#'
+#' @examples
+#'
+#'
 veg_summary <- function(veg_df){
 
 

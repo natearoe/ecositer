@@ -6,4 +6,5 @@ Authors@R: c(person(given="Nathan", family="Roe", role = c("aut, cre"), email = 
 Author: Nathan Roe [aut, cre]
 Maintainer: Nathan Roe <nateroe@gmail.com>
 Description: A collection of functions for Natural Resource Conservation Service (NRCS) ecologists. Many of these functions build off of the AQP (https://ncss-tech.github.io/AQP/) R packages to provide improved functionality for ecologists. 
-
+Imports: aqp, soilDB, dplyr, stringr, tidyr, ggplot2
+Suggests: jsonlite, xml2, httr, rvest, odbc, RSQLite, sf, wk, terra, raster, scales, knitr, rmarkdown, testthat

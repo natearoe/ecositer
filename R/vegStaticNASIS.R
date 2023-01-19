@@ -1,3 +1,5 @@
+#' @export
+
 vegStaticNASIS <- function(output_path){
 
   p <-
