@@ -1,11 +1,4 @@
 #' @export
-
-if (!requireNamespace("dplyr"))
-  stop("package `dplyr` is required for data manipulation", call. = FALSE)
-
-
-
-
 #' Produce vegetation summary of ecosites and states/phases
 #'
 #' `veg_summary()` takes a *properly formatted vegetation dataframe* and produces summaries
@@ -19,7 +12,9 @@ if (!requireNamespace("dplyr"))
 #' @export
 #'
 #' @examples
-#'
+#' \dontrun{
+#'      veg_summary(veg_df = ecositer::vegetation_dataframe)
+#' }
 #'
 veg_summary <- function(veg_df){
 
