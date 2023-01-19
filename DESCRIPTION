@@ -1,10 +1,15 @@
 Package: ecositer
 Type: Package
-Title: Tools for the analysis, standardization, and automation of NRCS ecological data and workflows. 
+Title: ecositer: tools for the analysis, standardization, and automation of NRCS ecological data
 Version: 0.1.0
 Authors@R: c(person(given="Nathan", family="Roe", role = c("aut, cre"), email = "nateroe@gmail.com"))
 Author: Nathan Roe [aut, cre]
 Maintainer: Nathan Roe <nateroe@gmail.com>
 Description: A collection of functions for Natural Resource Conservation Service (NRCS) ecologists. Many of these functions build off of the AQP (https://ncss-tech.github.io/AQP/) R packages to provide improved functionality for ecologists. 
-Imports: aqp, soilDB, dplyr, stringr, tidyr, ggplot2
-Suggests: jsonlite, xml2, httr, rvest, odbc, RSQLite, sf, wk, terra, raster, scales, knitr, rmarkdown, testthat
+RoxygenNote: 7.2.3
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+LazyData: false
+VignetteBuilder: knitr
+URL: https://github.com/natearoe/ecositer
+BugReports: https://github.com/natearoe/ecositer/issues
