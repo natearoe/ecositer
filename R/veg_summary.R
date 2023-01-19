@@ -1,3 +1,9 @@
+if (!requireNamespace("dplyr"))
+  stop("package `dplyr` is required for data manipulation", call. = FALSE)
+
+
+
+
 veg_summary <- function(veg_df){
 
 
