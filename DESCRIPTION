@@ -1,6 +1,6 @@
 Package: ecositer
 Type: Package
-Title: ecositer: tools for the analysis, standardization, and automation of NRCS ecological data
+Title: Tools for the analysis, standardization, and automation of NRCS ecological data and workflows. 
 Version: 0.1.0
 Authors@R: c(person(given="Nathan", family="Roe", role = c("aut, cre"), email = "nateroe@gmail.com"))
 Author: Nathan Roe [aut, cre]

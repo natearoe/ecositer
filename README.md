@@ -1,5 +1,5 @@
 `ecositer` is a collection of tools for the analysis, standardization,
-and automation NRCS ecological data.
+and automation of NRCS ecological data.
 
 contact <nateroe@gmail.com> with questions
 
