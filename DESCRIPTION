@@ -1,11 +1,9 @@
 Package: ecositer
 Type: Package
-Title: What the Package Does (Title Case)
+Title: ecositer: tools for the analysis, standardization, and automation of NRCS ecological data
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
-Encoding: UTF-8
-LazyData: true
+Authors@R: c(person(given="Nathan", family="Roe", role = c("aut, cre"), email = "nateroe@gmail.com"))
+Author: Nathan Roe [aut, cre]
+Maintainer: Nathan Roe <nateroe@gmail.com>
+Description: A collection of functions for Natural Resource Conservation Service (NRCS) ecologists. Many of these functions build off of the AQP (https://ncss-tech.github.io/AQP/) R packages to provide improved functionality for ecologists. 
+
