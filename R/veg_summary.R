@@ -37,6 +37,10 @@ veg_summary <- function(veg_df){
       dplyr::group_by(vegplotid, plantsciname) %>% summarise(sum(akstratumcoverclasspct)) %>%
       dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct)`)
 
+
+    # Clear foo_list
+    foo_list <- list()
+
     # This loop summarizes the vegetation data by ecosite
     for(j in unique(ecosite_species_sum$plantsciname[!is.na(ecosite_species_sum$plantsciname)])){
 
