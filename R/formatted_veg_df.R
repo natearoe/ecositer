@@ -48,14 +48,7 @@ formatted_veg_df <- function(static_location){
     unique() %>% dplyr::filter(!vegplotiid %in% dup_vegplots & vegplotiid %in% veg_data$vegplotspecies$vegplotiid)
 
 
-
-  ############ Adding peiid to veg_data_species_reduced
-  veg_data_species_peiid <- dplyr::left_join(veg_data_species_reduced,
-                                             veg_data_veg_plot_reduced %>%
-                                               dplyr::select(vegplotiid, peiid))
-
-
-  ########### Joining ecositeid to veg_data_species_peiid
+  ########### Joining ecositeid to veg_data_species_reduced
   veg_data_with_ecosite <-
     dplyr::left_join(
       veg_data_species_reduced %>%
@@ -75,6 +68,48 @@ formatted_veg_df <- function(static_location){
     ) %>%
     dplyr::left_join(veg_data_veg_plot_reduced %>% dplyr::select(siteiid, vegplotiid, akfieldecositeid)) %>%
     dplyr::select(siteiid, vegplotid, ecositeid, everything())
+
+
+  # Remove a question mark from a couple of instances of akfieldecositeid
+  veg_data_with_ecosite$akfieldecositeid <-
+    veg_data_with_ecosite$akfieldecositeid %>%
+    stringr::str_replace(pattern = "\\.\\?", replacement = "")
+
+  # Identify the akfieldecositeids missing a phase
+  no_phase <-
+    veg_data_with_ecosite$akfieldecositeid[!veg_data_with_ecosite$akfieldecositeid %in%
+                                         stringr::str_subset(veg_data_with_ecosite$akfieldecositeid,
+                                                             "[:digit:]\\.[:digit:]\\.[:digit:]") &
+                                         !is.na(veg_data_with_ecosite$akfieldecositeid)]
+
+  # Add default phase to those missing - default being .1
+  veg_data_with_ecosite$akfieldecositeid_edit <-
+    ifelse(
+      veg_data_with_ecosite$akfieldecositeid %in%
+        no_phase,
+      paste0(veg_data_with_ecosite$akfieldecositeid, ".1"),
+      veg_data_with_ecosite$akfieldecositeid
+    )
+
+  # Still missing a phase?
+  no_phase <-
+    veg_data_with_ecosite$akfieldecositeid_edit[!veg_data_with_ecosite$akfieldecositeid_edit %in%
+                                             stringr::str_subset(veg_data_with_ecosite$akfieldecositeid_edit,
+                                                                 "[:digit:]\\.[:digit:]\\.[:digit:]") &
+                                             !is.na(veg_data_with_ecosite$akfieldecositeid_edit)]
+
+
+  # Add default phase to those missing - default being .1
+  veg_data_with_ecosite$akfieldecositeid_edit <-
+    ifelse(
+      veg_data_with_ecosite$akfieldecositeid_edit %in%
+        no_phase,
+      paste0(veg_data_with_ecosite$akfieldecositeid_edit, ".1"),
+      veg_data_with_ecosite$akfieldecositeid_edit
+    )
+
+  veg_data_with_ecosite <- veg_data_with_ecosite %>% dplyr::select(-akfieldecositeid) %>%
+    dplyr::rename(akfieldecositeid = akfieldecositeid_edit)
 
   return(veg_data_with_ecosite)
 

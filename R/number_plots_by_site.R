@@ -28,6 +28,15 @@ number_plots_by_site <- function(static_location){
                              SS = FALSE, fill = TRUE, duplicates = TRUE)
 
 
+  # Vegdata fecosite
+  veg_data_fecosite <-
+    veg_data$vegplot %>% dplyr::select(site_id, akfieldecositeid) %>%
+    mutate(ecosite_simple = stringr::str_sub(.$akfieldecositeid, start = 1L, end = 4L))
+
+  # fetchNASIS ecositeid
+  ecosite_id <- aqp::site(ecosite_data) %>% dplyr::select(site_id, ecositeid)
+
+
   # Determine number of pedons associated with each ecosite
   numb_pedons_by_ecosite <-
     ecosite_id %>% count(ecositeid) %>% arrange(desc(n)) %>% dplyr::rename(pedons = n) %>%

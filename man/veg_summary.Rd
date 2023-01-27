@@ -15,7 +15,7 @@ a nested list of vegetation summaries by ecosite and state/phase
 \description{
 \code{veg_summary()} takes a \emph{properly formatted vegetation dataframe} and produces summaries
 of vegetation for ecosites and states/phases. Vegetation data originates from the
-NASIS vegplot table. The BLANK function should be used to manipulate raw NASIS
+NASIS vegplot table. The \link[ecositer]{formatted_veg_df} function should be used to manipulate raw NASIS
 vegplot data into a \emph{properly formatted vegetation dataframe}
 }
 \examples{
