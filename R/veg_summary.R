@@ -62,8 +62,8 @@ veg_summary <- function(veg_df){
     ## This nested loop separates ecosites into states/phases and summarizes vegetation by state/phase
 
     # Divide ecosites into states/phases
-    for(j in ecosite_list[[i]][["Raw_data"]]$akfieldecositeid_edit[!is.na(ecosite_list[[i]][["Raw_data"]]$akfieldecositeid_edit)] %>% unique()){
-      species_sum <- ecosite_list[[i]][["Raw_data"]] %>% dplyr::filter(akfieldecositeid_edit == j) %>%
+    for(j in ecosite_list[[i]][["Raw_data"]]$akfieldecositeid[!is.na(ecosite_list[[i]][["Raw_data"]]$akfieldecositeid)] %>% unique()){
+      species_sum <- ecosite_list[[i]][["Raw_data"]] %>% dplyr::filter(akfieldecositeid == j) %>%
         dplyr::group_by(vegplotid, plantsciname) %>% summarise(sum(akstratumcoverclasspct)) %>%
         dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct)`)
 
