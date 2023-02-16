@@ -4,7 +4,7 @@
 #'`soilDB::createStaticNASIS`, and includes the appropriate tables to access
 #'vegetation data. The output can be used as a reliable, local copy of query results,
 #'allowing the user to change their NASIS selected set and still access the
-#'data of interest.
+#'data of interest. The file extension needs to be ".sqlite"
 #'
 #'Examples of queries to use this function with include, MLRA13_Wasilla >
 #'Pedon/Site/Transect/Vegetation Plot by usiteid (multiple) & MLRA13_Wasilla >

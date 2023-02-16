@@ -14,7 +14,7 @@ vegStaticNASIS(output_path)
 \code{soilDB::createStaticNASIS}, and includes the appropriate tables to access
 vegetation data. The output can be used as a reliable, local copy of query results,
 allowing the user to change their NASIS selected set and still access the
-data of interest.
+data of interest. The file extension needs to be ".sqlite"
 }
 \details{
 Examples of queries to use this function with include, MLRA13_Wasilla >

@@ -14,7 +14,7 @@
 #'
 #' @examples
 #'
-#' number_plots_by_ecosite(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/vegplotdata2.sqlite")
+#' number_plots_by_site(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/vegplotdata2.sqlite")
 #'
 #'
 number_plots_by_site <- function(static_location){

@@ -34,7 +34,7 @@ veg_summary <- function(veg_df){
     # Modify raw veg data to sum cover within species (e.g., if a single plant species is in multiple strata, its cover
     # will be summed across strata to give a single summed cover)
     ecosite_species_sum <- veg_df %>% dplyr::filter(ecositeid == i) %>%
-      dplyr::group_by(vegplotid, plantsciname) %>% summarise(sum(akstratumcoverclasspct)) %>%
+      dplyr::group_by(vegplotid, plantsciname) %>% summarise(sum(akstratumcoverclasspct, na.rm = TRUE)) %>%
       dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct)`)
 
 
@@ -48,9 +48,9 @@ veg_summary <- function(veg_df){
       foo_list[[j]] <-
         data.frame(
           constancy = nrow(foo) * 100/length(unique(ecosite_species_sum$vegplotid)),
-          avg_abundance = sum(foo$total_plot_cover) / length(unique(ecosite_species_sum$vegplotid)),
-          max_abundance = max(foo$total_plot_cover),
-          min_abundance = ifelse(nrow(foo) < length(unique(ecosite_species_sum$vegplotid)), 0, min(foo$total_plot_cover)),
+          avg_abundance = sum(foo$total_plot_cover, na.rm = TRUE) / length(unique(ecosite_species_sum$vegplotid)),
+          max_abundance = max(foo$total_plot_cover, na.rm = TRUE),
+          min_abundance = ifelse(nrow(foo) < length(unique(ecosite_species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
           numb_plots_found = nrow(foo),
           numb_plots_not_found = length(unique(ecosite_species_sum$vegplotid)) - nrow(foo)
         )
@@ -64,7 +64,7 @@ veg_summary <- function(veg_df){
     # Divide ecosites into states/phases
     for(j in ecosite_list[[i]][["Raw_data"]]$akfieldecositeid[!is.na(ecosite_list[[i]][["Raw_data"]]$akfieldecositeid)] %>% unique()){
       species_sum <- ecosite_list[[i]][["Raw_data"]] %>% dplyr::filter(akfieldecositeid == j) %>%
-        dplyr::group_by(vegplotid, plantsciname) %>% summarise(sum(akstratumcoverclasspct)) %>%
+        dplyr::group_by(vegplotid, plantsciname) %>% summarise(sum(akstratumcoverclasspct, na.rm = TRUE)) %>%
         dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct)`)
 
       #Clear goo_list
@@ -77,9 +77,9 @@ veg_summary <- function(veg_df){
         goo_list[[g]] <-
           data.frame(
             constancy = nrow(foo) * 100/length(unique(species_sum$vegplotid)),
-            avg_abundance = sum(foo$total_plot_cover) / length(unique(species_sum$vegplotid)),
-            max_abundance = max(foo$total_plot_cover),
-            min_abundance = ifelse(nrow(foo) < length(unique(species_sum$vegplotid)), 0, min(foo$total_plot_cover)),
+            avg_abundance = sum(foo$total_plot_cover, na.rm = TRUE) / length(unique(species_sum$vegplotid)),
+            max_abundance = max(foo$total_plot_cover, na.rm = TRUE),
+            min_abundance = ifelse(nrow(foo) < length(unique(species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
             numb_plots_found = nrow(foo),
             numb_plots_not_found = length(unique(species_sum$vegplotid)) - nrow(foo)
           )
