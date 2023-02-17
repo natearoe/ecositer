@@ -22,6 +22,8 @@ veg_summary <- function(veg_df){
   foo_list <- list()
   goo_list <- list()
 
+  veg_df$akfieldecositeid <- ifelse(is.na(veg_df$akfieldecositeid), "undefined", veg_df$akfieldecositeid)
+
   for(i in unique(veg_df$ecositeid[!is.na(veg_df$ecositeid)])){
 
     # Create'ecosite_list' and a dataframe with all the raw veg data for each ecosite
@@ -35,7 +37,7 @@ veg_summary <- function(veg_df){
     # will be summed across strata to give a single summed cover)
     ecosite_species_sum <- veg_df %>% dplyr::filter(ecositeid == i) %>%
       dplyr::group_by(vegplotid, plantsciname) %>% summarise(sum(akstratumcoverclasspct, na.rm = TRUE)) %>%
-      dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct)`)
+      dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct, na.rm = TRUE)`)
 
 
     # Clear foo_list
@@ -52,7 +54,9 @@ veg_summary <- function(veg_df){
           max_abundance = max(foo$total_plot_cover, na.rm = TRUE),
           min_abundance = ifelse(nrow(foo) < length(unique(ecosite_species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
           numb_plots_found = nrow(foo),
-          numb_plots_not_found = length(unique(ecosite_species_sum$vegplotid)) - nrow(foo)
+          numb_plots_not_found = length(unique(ecosite_species_sum$vegplotid)) - nrow(foo),
+          perc_obs_pres_abs = "test"
+          # foo$total_plot_cover == 0/nrow(foo)
         )
     }
 
@@ -65,7 +69,7 @@ veg_summary <- function(veg_df){
     for(j in ecosite_list[[i]][["Raw_data"]]$akfieldecositeid[!is.na(ecosite_list[[i]][["Raw_data"]]$akfieldecositeid)] %>% unique()){
       species_sum <- ecosite_list[[i]][["Raw_data"]] %>% dplyr::filter(akfieldecositeid == j) %>%
         dplyr::group_by(vegplotid, plantsciname) %>% summarise(sum(akstratumcoverclasspct, na.rm = TRUE)) %>%
-        dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct)`)
+        dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct, na.rm = TRUE)`)
 
       #Clear goo_list
       goo_list <- list()
@@ -81,7 +85,8 @@ veg_summary <- function(veg_df){
             max_abundance = max(foo$total_plot_cover, na.rm = TRUE),
             min_abundance = ifelse(nrow(foo) < length(unique(species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
             numb_plots_found = nrow(foo),
-            numb_plots_not_found = length(unique(species_sum$vegplotid)) - nrow(foo)
+            numb_plots_not_found = length(unique(species_sum$vegplotid)) - nrow(foo),
+            perc_obs_pres_abs = sum(foo$total_plot_cover == 0)/nrow(foo)
           )
 
       }

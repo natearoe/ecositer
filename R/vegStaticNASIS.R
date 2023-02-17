@@ -14,10 +14,12 @@
 #'
 #' @param output_path
 #'
-#' @return
+#' @return a static NASIS database that can be called independent of your current selected set in NASIS.
 #' @export
 #'
 #' @examples
+#' vegStaticNASIS("C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
+
 vegStaticNASIS <- function(output_path){
 
   p <-

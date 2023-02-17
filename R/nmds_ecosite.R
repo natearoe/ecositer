@@ -20,10 +20,14 @@
 #' interpretted as percent, specifying the minimum percentage of plots a species
 #' must be present in to remain in the dataset.
 #'
-#' @return
+#' @return an NMDS object generated using the vegan package
 #' @export
 #'
 #' @examples
+#' formatted_veg <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
+#' my_veg_summary <- ecositer::veg_summary(veg_df = formatted_veg)
+#' my_nmds <- ecositer::nmds_ecosite(veg_summary = my_veg_summary, ecosite = "F022AK100CA", pres_abs = TRUE, nmds_dim = 2, reduce_species = NA)
+
 nmds_ecosite <- function(veg_summary, ecosite, pres_abs, nmds_dim, reduce_species){
 
   ecosite_bind <- NULL

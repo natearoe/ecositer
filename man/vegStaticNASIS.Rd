@@ -9,6 +9,9 @@ vegStaticNASIS(output_path)
 \arguments{
 \item{output_path}{}
 }
+\value{
+a static NASIS database that can be called independent of your current selected set in NASIS.
+}
 \description{
 \code{vegStaticNASIS} saves a NASIS selected set to your local drive. The function utilizes
 \code{soilDB::createStaticNASIS}, and includes the appropriate tables to access
@@ -22,4 +25,7 @@ Pedon/Site/Transect/Vegetation Plot by usiteid (multiple) & MLRA13_Wasilla >
 Pedon/Site/Vegetation Plot by site area overlap table
 
 Code written by Andrew Brown
+}
+\examples{
+vegStaticNASIS("C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
 }

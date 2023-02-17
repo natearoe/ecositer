@@ -2,7 +2,7 @@ Package: ecositer
 Type: Package
 Title: ecositer: tools for the analysis, standardization, and automation of NRCS ecological data
 Version: 0.1.0
-Authors@R: c(person(given="Nathan", family="Roe", role = c("aut, cre"), email = "nateroe@gmail.com"))
+Authors@R: c(person(given="Nathan", family="Roe", role = c("aut", "cre"), email = "nateroe@gmail.com"))
 Author: Nathan Roe [aut, cre]
 Maintainer: Nathan Roe <nateroe@gmail.com>
 Description: A collection of functions for Natural Resource Conservation Service (NRCS) ecologists. Many of these functions build off of the AQP (https://ncss-tech.github.io/AQP/) R packages to provide improved functionality for ecologists. 
@@ -15,3 +15,6 @@ URL: https://github.com/natearoe/ecositer
 BugReports: https://github.com/natearoe/ecositer/issues
 Depends: 
     R (>= 2.10)
+Imports: 
+    dplyr,
+    stringr
