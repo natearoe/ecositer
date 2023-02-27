@@ -17,12 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: 
-
-Other contributors:
-\itemize{
-  \item Nathan Roe \email{nateroe@gmail.com}
-}
+\strong{Maintainer}: Nathan Roe \email{nateroe@gmail.com}
 
 }
 \keyword{internal}
