@@ -40,6 +40,8 @@
 #'
 #' veg_summary(veg_df = ecositer::vegetation_dataframe)
 #'
+#'@importFrom indicspecies multipatt
+#'
 #'
 veg_summary <- function(veg_df){
 
@@ -61,7 +63,7 @@ veg_summary <- function(veg_df){
     dplyr::mutate_if(is.numeric, ~ tidyr::replace_na(., 0))  |> select_if(~ !is.numeric(.) || sum(.) != 0)
 
   # run ISA for ecosite level
-  IV_ecosite_results <- multipatt(IV_ecosite_df |> dplyr::select(-ecositeid, -vegplotid), cluster = IV_ecosite_df$ecositeid,
+  IV_ecosite_results <- indicspecies::multipatt(IV_ecosite_df |> dplyr::select(-ecositeid, -vegplotid), cluster = IV_ecosite_df$ecositeid,
                                   func = "IndVal.g", duleg = TRUE, control = how(nperm = 999))
 
   # several steps assembling ISA results into df with species, ecosite, and p.values
@@ -115,7 +117,7 @@ veg_summary <- function(veg_df){
 
 
   # run ISA for state/phase level
-  IV_state_results <- multipatt(IV_state_df |> dplyr::select(-akfieldecositeid, -vegplotid, -ecositeid), cluster = IV_state_df$akfieldecositeid,
+  IV_state_results <- indicspecies::multipatt(IV_state_df |> dplyr::select(-akfieldecositeid, -vegplotid, -ecositeid), cluster = IV_state_df$akfieldecositeid,
                                   func = "IndVal.g", duleg = TRUE, control = how(nperm = 999))
 
   # several steps assembling ISA results into df with species, ecosite, and p.values
@@ -200,10 +202,11 @@ veg_summary <- function(veg_df){
           # and should therefore not be used to influence the denominator either.
           # There could be a scenario where abundance was entered as 0. This functions the same as having an NA in abundance as it suggests
           # presence absence data collection.
-          avg_abundance = sum(foo$total_plot_cover, na.rm = TRUE) / (length(unique(ecosite_species_sum$vegplotid)) - sum(foo$total_plot_cover == 0)),
-          max_abundance = max(foo$total_plot_cover, na.rm = TRUE),
-          min_abundance = ifelse(nrow(foo) < length(unique(ecosite_species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
-          sum_abundance = sum(foo$total_plot_cover, na.rm = TRUE),
+          avg_abund = sum(foo$total_plot_cover, na.rm = TRUE) / (length(unique(ecosite_species_sum$vegplotid)) - sum(foo$total_plot_cover == 0)),
+          median_abund = median(foo$total_plot_cover, na.rm = TRUE),
+          max_abund = max(foo$total_plot_cover, na.rm = TRUE),
+          min_abund = ifelse(nrow(foo) < length(unique(ecosite_species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
+          sum_abund = sum(foo$total_plot_cover, na.rm = TRUE),
           numb_plots_found = nrow(foo),
           numb_plots_not_found = length(unique(ecosite_species_sum$vegplotid)) - nrow(foo),
           perc_obs_pres_abs = sum(foo$total_plot_cover == 0)/nrow(foo),
@@ -211,7 +214,7 @@ veg_summary <- function(veg_df){
                                              unique() |> length()),
           perc_abund_in_ecosite = sum(foo$total_plot_cover, na.rm = TRUE)/(veg_df |> dplyr::filter(plantsciname == j) |>
                                                                dplyr::pull(akstratumcoverclasspct) |> sum(na.rm = TRUE))
-        ) |> dplyr::mutate(importance = avg_abundance * constancy,
+        ) |> dplyr::mutate(importance = median_abund * constancy,
                            ISA_p.value = ifelse(length(IV_ecosite_species$p.value) == 0, NA, IV_ecosite_species$p.value))
     }
 
@@ -248,10 +251,11 @@ veg_summary <- function(veg_df){
         goo_list[[g]] <-
           data.frame(
             constancy = nrow(foo) * 100/length(unique(species_sum$vegplotid)),
-            avg_abundance = sum(foo$total_plot_cover, na.rm = TRUE) / (length(unique(species_sum$vegplotid)) - sum(foo$total_plot_cover == 0)),
-            max_abundance = max(foo$total_plot_cover, na.rm = TRUE),
-            min_abundance = ifelse(nrow(foo) < length(unique(species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
-            sum_abundance = sum(foo$total_plot_cover, na.rm = TRUE),
+            avg_abund = sum(foo$total_plot_cover, na.rm = TRUE) / (length(unique(species_sum$vegplotid)) - sum(foo$total_plot_cover == 0)),
+            median_abund = median(foo$total_plot_cover, na.rm = TRUE),
+            max_abund = max(foo$total_plot_cover, na.rm = TRUE),
+            min_abund = ifelse(nrow(foo) < length(unique(species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
+            sum_abund = sum(foo$total_plot_cover, na.rm = TRUE),
             numb_plots_found = nrow(foo),
             numb_plots_not_found = length(unique(species_sum$vegplotid)) - nrow(foo),
             perc_obs_pres_abs = sum(foo$total_plot_cover == 0)/nrow(foo),
@@ -259,7 +263,7 @@ veg_summary <- function(veg_df){
                                                unique() |> length()),
             perc_abund_in_ecosite = sum(foo$total_plot_cover, na.rm = TRUE)/(veg_df |> dplyr::filter(plantsciname == g) |>
                                                                  dplyr::pull(akstratumcoverclasspct) |> sum(na.rm = TRUE))
-          ) |> dplyr::mutate(importance = avg_abundance * constancy,
+          ) |> dplyr::mutate(importance = median_abund * constancy,
                              ISA_p.value = ifelse(length(IV_state_species$p.value) == 0, NA, IV_state_species$p.value))
 
       }

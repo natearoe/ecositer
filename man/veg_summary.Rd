@@ -48,5 +48,4 @@ This function takes several minutes due to the computation related to ISA.
 
 veg_summary(veg_df = ecositer::vegetation_dataframe)
 
-
 }
