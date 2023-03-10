@@ -40,7 +40,6 @@
 #'
 #' veg_summary(veg_df = ecositer::vegetation_dataframe)
 #'
-#'@importFrom indicspecies multipatt
 #'
 #'
 veg_summary <- function(veg_df){
