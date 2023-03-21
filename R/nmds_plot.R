@@ -12,6 +12,7 @@
 #'
 #' @examples
 #'
+
 nmds_plot <- function(static_location, nmds, veg_summary){
 
   ecosite_data <- soilDB::fetchNASIS(dsn = static_location,
@@ -33,14 +34,15 @@ nmds_plot <- function(static_location, nmds, veg_summary){
                                       })
 
   plot_data <- ecosite_data@site %>% dplyr::filter(site_id %in% veg_df_with_plot$site_id) %>%
-    dplyr::select(site_id, slope_field, elev_field, drainagecl, pmkind) %>% unique() %>%
+    dplyr::select(site_id, slope_field, elev_field, drainagecl, pmkind, surface_total_frags_pct, bedrckdepth) %>% unique() %>%
     dplyr::left_join(veg_df_with_plot %>% dplyr::select(site_id, richness, shannon, akfieldecositeid))
 
 
 
 
   # Environmental variable
-  env.envfit <- vegan::envfit(my_nmds, plot_data %>% dplyr::select(-site_id), choices = c(1,2), permutations = 9999)
+  env.envfit <- vegan::envfit(my_nmds, plot_data %>% dplyr::select(-site_id), choices = c(1,2), permutations = 9999,
+                              na.rm = TRUE)
 
   # Species scores
   species.envfit <- vegan::envfit(my_nmds, veg_df_with_plot %>%
@@ -91,7 +93,7 @@ nmds_plot <- function(static_location, nmds, veg_summary){
     geom_text(data = env.scores, ggplot2::aes(x = NMDS1, y = NMDS2,
                                      label = env.variables), cex = 4)
 
-  plotly::ggplotly(bar, tooltip = c("text", "color"))
+  plotly::ggplotly(bar, tooltip = c("text", "color"), width = 750, height = 500)
 
 
 

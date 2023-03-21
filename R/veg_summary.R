@@ -213,7 +213,7 @@ veg_summary <- function(veg_df){
                                              unique() |> length()),
           perc_abund_in_ecosite = sum(foo$total_plot_cover, na.rm = TRUE)/(veg_df |> dplyr::filter(plantsciname == j) |>
                                                                dplyr::pull(akstratumcoverclasspct) |> sum(na.rm = TRUE))
-        ) |> dplyr::mutate(importance = median_abund * constancy,
+        ) |> dplyr::mutate(importance = perc_obs_in_ecosite * perc_abund_in_ecosite,
                            ISA_p.value = ifelse(length(IV_ecosite_species$p.value) == 0, NA, IV_ecosite_species$p.value))
     }
 
