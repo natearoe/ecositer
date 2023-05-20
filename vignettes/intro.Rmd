@@ -64,6 +64,8 @@ CA792_veg_summary <- ecositer::veg_summary(veg_df = CA792_veg_formatted)
 The result of ```veg_summary()``` is a list. This list provides a vegetation summary for every ecosite and state/phase in your dataset, as well as raw dataset by ecosite and state/phase. 
 ```{r}
 listviewer::jsonedit(CA792_veg_summary, width = 750)
+
+CA792_veg_summary$R022AB006CA$STM$B006.1.1 |> View()
 ```
 
 Now let's look at a vegetation summary, including elements like importance, Indicator Species Analysis, and more. 
