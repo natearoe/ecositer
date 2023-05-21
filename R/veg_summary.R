@@ -189,7 +189,7 @@ veg_summary <- function(veg_df){
                                                                             max(akstratumcoverclasspct, na.rm = TRUE)),
                                                                sd = ifelse(sd(akstratumcoverclasspct) == 0, 0,
                                                                            sd(akstratumcoverclasspct, na.rm = TRUE))
-                                                               )
+                                                               ) |> dplyr::arrange(desc(avg))
 
 
     # Clear foo_list
