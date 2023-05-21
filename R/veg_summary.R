@@ -44,8 +44,6 @@
 #'
 veg_summary <- function(veg_df){
 
-  veg_df = formatted_veg
-
 # This script starts with an Indicator Species Analysis (ISA). Then it begins
 #   using for loops to summarize species by ecosite as well as the states/phases
 #   within ecosites.
