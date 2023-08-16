@@ -179,13 +179,13 @@ veg_summary <- function(veg_df){
       dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct, na.rm = TRUE)`)
 
     ecosite_list[[i]][["Cover_by_strata"]] <- veg_df |> dplyr::filter(ecositeid == i) |>
-      dplyr::group_by(akstratumcoverclass) |> dplyr::summarise(avg = ifelse(sum(akstratumcoverclasspct) == 0, 0,
+      dplyr::group_by(akstratumcoverclass) |> dplyr::summarise(avg = ifelse(sum(akstratumcoverclasspct, na.rm = TRUE) == 0, 0,
                                                                             sum(akstratumcoverclasspct, na.rm = TRUE)/length(vegplotiid)),
-                                                               min = ifelse(min(akstratumcoverclasspct) == 0, 0,
+                                                               min = ifelse(min(akstratumcoverclasspct, na.rm = TRUE) == 0, 0,
                                                                             sum(akstratumcoverclasspct, na.rm = TRUE)/length(vegplotiid)),
-                                                               max = ifelse(max(akstratumcoverclasspct) == 0, 0,
+                                                               max = ifelse(max(akstratumcoverclasspct, na.rm = TRUE) == 0, 0,
                                                                             max(akstratumcoverclasspct, na.rm = TRUE)),
-                                                               sd = ifelse(sd(akstratumcoverclasspct) == 0, 0,
+                                                               sd = ifelse(sd(akstratumcoverclasspct, na.rm = TRUE) == 0, 0,
                                                                            sd(akstratumcoverclasspct, na.rm = TRUE))
                                                                ) |> dplyr::arrange(desc(avg))
 
@@ -213,6 +213,8 @@ veg_summary <- function(veg_df){
           # There could be a scenario where abundance was entered as 0. This functions the same as having an NA in abundance as it suggests
           # presence absence data collection.
           avg_abund = sum(foo$total_plot_cover, na.rm = TRUE) / (length(unique(ecosite_species_sum$vegplotid)) - sum(foo$total_plot_cover == 0)),
+          twenty_percentile = quantile(foo$total_plot_cover, na.rm = TRUE, probs = 0.2),
+          eighty_percentile = quantile(foo$total_plot_cover, na.rm = TRUE, probs = 0.8),
           median_abund = median(foo$total_plot_cover, na.rm = TRUE),
           max_abund = max(foo$total_plot_cover, na.rm = TRUE),
           min_abund = ifelse(nrow(foo) < length(unique(ecosite_species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
@@ -262,6 +264,8 @@ veg_summary <- function(veg_df){
           data.frame(
             constancy = nrow(foo) * 100/length(unique(species_sum$vegplotid)),
             avg_abund = sum(foo$total_plot_cover, na.rm = TRUE) / (length(unique(species_sum$vegplotid)) - sum(foo$total_plot_cover == 0)),
+            twenty_percentile = quantile(foo$total_plot_cover, na.rm = TRUE, probs = 0.2),
+            eighty_percentile = quantile(foo$total_plot_cover, na.rm = TRUE, probs = 0.8),
             median_abund = median(foo$total_plot_cover, na.rm = TRUE),
             max_abund = max(foo$total_plot_cover, na.rm = TRUE),
             min_abund = ifelse(nrow(foo) < length(unique(species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),

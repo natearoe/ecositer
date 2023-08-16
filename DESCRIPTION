@@ -22,4 +22,5 @@ Imports:
     ggplot2,
     soilDB,
     indicspecies,
-    permute
+    permute,
+    pdftools

@@ -18,7 +18,7 @@ Create formatted vegetation dataframe
 }
 \examples{
 
-formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/vegplotdata2.sqlite")
+formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 
 
 }
