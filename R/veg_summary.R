@@ -1,11 +1,11 @@
 #' Produce vegetation summary of ecosites and states/phases
 #'
-#' `veg_summary_test()` takes a *properly formatted vegetation dataframe* and produces summaries
+#' `veg_summary()` takes a *properly formatted vegetation dataframe* and produces summaries
 #' of vegetation for ecosites and states/phases. Vegetation data originates from the
 #' NASIS vegplot table. The \link[ecositer]{formatted_veg_df} function should be used to manipulate raw NASIS
 #' vegplot data into a *properly formatted vegetation dataframe*
 #'
-#' `veg_summary_test()` function also runs an Indicator Species Analysis (ISA) using the \link[indicspecies]{multipatt} function.
+#' `veg_summary()` function also runs an Indicator Species Analysis (ISA) using the \link[indicspecies]{multipatt} function.
 #' Documentation for that function should be read to understand ISA. Briefly, ISA determines whether a species is a strong
 #' indicator for a community. This is determined by multiplying the percent of the abundance of the species that occurs in
 #' the community of interest (summed abundance in community of interest/summed abundance in all plots) by the the percent
@@ -42,7 +42,7 @@
 #'
 #'
 #'
-veg_summary_test <- function(veg_df){
+veg_summary <- function(veg_df){
 
   # This script starts with an Indicator Species Analysis (ISA). Then it begins
   #   using for loops to summarize species by ecosite as well as the states/phases
