@@ -1,11 +1,11 @@
 #' Produce vegetation summary of ecosites and states/phases
 #'
-#' `veg_summary()` takes a *properly formatted vegetation dataframe* and produces summaries
+#' `veg_summary_test()` takes a *properly formatted vegetation dataframe* and produces summaries
 #' of vegetation for ecosites and states/phases. Vegetation data originates from the
 #' NASIS vegplot table. The \link[ecositer]{formatted_veg_df} function should be used to manipulate raw NASIS
 #' vegplot data into a *properly formatted vegetation dataframe*
 #'
-#' `veg_summary()` function also runs an Indicator Species Analysis (ISA) using the \link[indicspecies]{multipatt} function.
+#' `veg_summary_test()` function also runs an Indicator Species Analysis (ISA) using the \link[indicspecies]{multipatt} function.
 #' Documentation for that function should be read to understand ISA. Briefly, ISA determines whether a species is a strong
 #' indicator for a community. This is determined by multiplying the percent of the abundance of the species that occurs in
 #' the community of interest (summed abundance in community of interest/summed abundance in all plots) by the the percent
@@ -42,16 +42,16 @@
 #'
 #'
 #'
-veg_summary <- function(veg_df){
+veg_summary_test <- function(veg_df){
 
-# This script starts with an Indicator Species Analysis (ISA). Then it begins
-#   using for loops to summarize species by ecosite as well as the states/phases
-#   within ecosites.
+  # This script starts with an Indicator Species Analysis (ISA). Then it begins
+  #   using for loops to summarize species by ecosite as well as the states/phases
+  #   within ecosites.
 
-#########################         ISA         #################################
+  #########################         ISA         #################################
 
 
-############ Ecosite level ISA
+  ############ Ecosite level ISA
 
   # filtering out missing data, grouping, summarizing, pivoting data wide
   IV_ecosite_df <- veg_df |> dplyr::filter_at(dplyr::vars(ecositeid, vegplotid, plantsciname), dplyr::all_vars(!is.na(.))) |>
@@ -63,7 +63,7 @@ veg_summary <- function(veg_df){
 
   # run ISA for ecosite level
   IV_ecosite_results <- indicspecies::multipatt(IV_ecosite_df |> dplyr::select(-ecositeid, -vegplotid), cluster = IV_ecosite_df$ecositeid,
-                                  func = "IndVal.g", duleg = TRUE, control = permute::how(nperm = 99))
+                                                func = "IndVal.g", duleg = TRUE, control = permute::how(nperm = 9))
 
   # several steps assembling ISA results into df with species, ecosite, and p.values
   IV_ecosite_results_df <- IV_ecosite_results$sign |> tibble::rownames_to_column("plantsciname")
@@ -89,7 +89,7 @@ veg_summary <- function(veg_df){
     IV_ecosite_list[[i]] <- IV_ecosite_results_df |> dplyr::filter(ecosite == i)
   }
 
-############ State/phase level ISA
+  ############ State/phase level ISA
 
   # States/phases are assigned in the field. In this script, we are using the
   #   akfieldecositeid for state/phase (in the future, I believe that the site >
@@ -117,22 +117,22 @@ veg_summary <- function(veg_df){
 
   # run ISA for state/phase level
   IV_state_results <- indicspecies::multipatt(IV_state_df |> dplyr::select(-akfieldecositeid, -vegplotid, -ecositeid), cluster = IV_state_df$akfieldecositeid,
-                                  func = "IndVal.g", duleg = TRUE, control = permute::how(nperm = 99))
+                                              func = "IndVal.g", duleg = TRUE, control = permute::how(nperm = 99))
 
   # several steps assembling ISA results into df with species, ecosite, and p.values
   IV_state_results_df <- IV_state_results$sign |> tibble::rownames_to_column("plantsciname")
 
 
   index_values <- colnames(IV_state_results_df)[!colnames(IV_state_results_df) %in%
-                                                    c("plantsciname", "index", "stat", "p.value")] |> stringr::str_sub(start = 3L)
+                                                  c("plantsciname", "index", "stat", "p.value")] |> stringr::str_sub(start = 3L)
 
   state_values <- unique(IV_state_results_df$index) |> sort()
 
   index_values <- index_values[state_values]
 
   IV_state_results_df$state <- plyr::mapvalues(IV_state_results_df$index,
-                                                   from = state_values,
-                                                   to = index_values)
+                                               from = state_values,
+                                               to = index_values)
 
   IV_state_results_df$ecosite <- sapply(IV_state_results_df$state, FUN = function(x){
     field_eco_reduced <- x |> stringr::str_sub(start = 0L, end = 4L)
@@ -146,22 +146,29 @@ veg_summary <- function(veg_df){
     IV_state_list[[i]] <- IV_state_results_df |> dplyr::filter(state == i)
   }
 
-#########################    final prep before looping      ####################
+  #########################    final prep before looping      ####################
 
-# initiate lists
+  # initiate lists
   ecosite_list <- list()
   foo_list <- list()
   goo_list <- list()
 
-# change missing field ecosites to "undefined". This will be used for summaries, not for
-#   ISA.
+  # change missing field ecosites to "undefined". This will be used for summaries, not for
+  #   ISA.
   veg_df$akfieldecositeid <- ifelse(is.na(veg_df$akfieldecositeid), "undefined", veg_df$akfieldecositeid)
 
-#########################    begin loop through ecosite      ####################
+  #########################    begin loop through ecosite      ####################
   for(i in unique(veg_df$ecositeid[!is.na(veg_df$ecositeid)])){
 
+    print(i)
+
     # Subset ecosite ISA
-    IV_ecosite <- IV_ecosite_list[[i]]
+    IV_ecosite <- if(i %in% names(IV_ecosite_list)){
+      IV_ecosite_list[[i]]
+    } else {
+      data.frame(plantsciname = NA, index = NA, stat = NA,
+                 p.value = NA, ecosite = NA)
+    }
 
     # Create'ecosite_list' and a dataframe with all the raw veg data for each ecosite
     ecosite_list[[i]][["Raw_data"]] <- veg_df |> dplyr::filter(ecositeid == i)
@@ -179,15 +186,15 @@ veg_summary <- function(veg_df){
       dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct, na.rm = TRUE)`)
 
     ecosite_list[[i]][["Cover_by_strata"]] <- veg_df |> dplyr::filter(ecositeid == i) |>
-      dplyr::group_by(akstratumcoverclass) |> dplyr::summarise(avg = ifelse(sum(akstratumcoverclasspct, na.rm = TRUE) == 0, 0,
+      dplyr::group_by(akstratumcoverclass) |> dplyr::summarise(avg = ifelse(sum(akstratumcoverclasspct) == 0, 0,
                                                                             sum(akstratumcoverclasspct, na.rm = TRUE)/length(vegplotiid)),
-                                                               min = ifelse(min(akstratumcoverclasspct, na.rm = TRUE) == 0, 0,
-                                                                            sum(akstratumcoverclasspct, na.rm = TRUE)/length(vegplotiid)),
-                                                               max = ifelse(max(akstratumcoverclasspct, na.rm = TRUE) == 0, 0,
+                                                               min = ifelse(min(akstratumcoverclasspct) == 0, 0,
+                                                                            min(akstratumcoverclasspct, na.rm = TRUE)/length(vegplotiid)),
+                                                               max = ifelse(max(akstratumcoverclasspct) == 0, 0,
                                                                             max(akstratumcoverclasspct, na.rm = TRUE)),
-                                                               sd = ifelse(sd(akstratumcoverclasspct, na.rm = TRUE) == 0, 0,
+                                                               sd = ifelse(sd(akstratumcoverclasspct) == 0, 0,
                                                                            sd(akstratumcoverclasspct, na.rm = TRUE))
-                                                               ) |> dplyr::arrange(desc(avg))
+      ) |> dplyr::arrange(desc(avg))
 
 
     # Clear foo_list
@@ -197,6 +204,8 @@ veg_summary <- function(veg_df){
     ########## Within ecosite loop, loop through plant species ################
     # This loop summarizes the vegetation data by ecosite
     for(j in unique(ecosite_species_sum$plantsciname[!is.na(ecosite_species_sum$plantsciname)])){
+
+      print(c(i, j))
 
       # Subset ecosite ISA by species
       IV_ecosite_species <- IV_ecosite |> dplyr::filter(plantsciname == j)
@@ -213,8 +222,10 @@ veg_summary <- function(veg_df){
           # There could be a scenario where abundance was entered as 0. This functions the same as having an NA in abundance as it suggests
           # presence absence data collection.
           avg_abund = sum(foo$total_plot_cover, na.rm = TRUE) / (length(unique(ecosite_species_sum$vegplotid)) - sum(foo$total_plot_cover == 0)),
-          twenty_percentile = quantile(foo$total_plot_cover, na.rm = TRUE, probs = 0.2),
-          eighty_percentile = quantile(foo$total_plot_cover, na.rm = TRUE, probs = 0.8),
+          twenty_percentile = quantile(c(foo$total_plot_cover, rep(0, times = length(unique(ecosite_species_sum$vegplotid)) -
+                                                                     nrow(foo))), na.rm = TRUE, probs = 0.2),
+          eighty_percentile = quantile(c(foo$total_plot_cover, rep(0, times = length(unique(ecosite_species_sum$vegplotid)) -
+                                                                     nrow(foo))), na.rm = TRUE, probs = 0.8),
           median_abund = median(foo$total_plot_cover, na.rm = TRUE),
           max_abund = max(foo$total_plot_cover, na.rm = TRUE),
           min_abund = ifelse(nrow(foo) < length(unique(ecosite_species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
@@ -225,7 +236,7 @@ veg_summary <- function(veg_df){
           perc_obs_in_ecosite = nrow(foo)/(veg_df |> dplyr::filter(plantsciname == j) |> dplyr::pull(vegplotid) |>
                                              unique() |> length()),
           perc_abund_in_ecosite = sum(foo$total_plot_cover, na.rm = TRUE)/(veg_df |> dplyr::filter(plantsciname == j) |>
-                                                               dplyr::pull(akstratumcoverclasspct) |> sum(na.rm = TRUE))
+                                                                             dplyr::pull(akstratumcoverclasspct) |> sum(na.rm = TRUE))
         ) |> dplyr::mutate(importance = perc_obs_in_ecosite * perc_abund_in_ecosite,
                            ISA_p.value = ifelse(length(IV_ecosite_species$p.value) == 0, NA, IV_ecosite_species$p.value))
     }
@@ -237,15 +248,17 @@ veg_summary <- function(veg_df){
     # This nested loop separates ecosites into states/phases and summarizes vegetation by state/phase
 
     # Divide ecosites into states/phases
-    for(j in ecosite_list[[i]][["Raw_data"]]$akfieldecositeid[!is.na(ecosite_list[[i]][["Raw_data"]]$akfieldecositeid)] |> unique()){
+    for(k in ecosite_list[[i]][["Raw_data"]]$akfieldecositeid[!is.na(ecosite_list[[i]][["Raw_data"]]$akfieldecositeid)] |> unique()){
+
+      print(c(i,k))
 
       # Subset ISA ecosite
-      IV_state <- if(is.null(IV_state_list[[j]])){
+      IV_state <- if(is.null(IV_state_list[[k]])){
         IV_state_list[[1]][0,]
-      } else {IV_state_list[[j]]}
+      } else {IV_state_list[[k]]}
 
       # species sum is the dataframe for all the state/phase data
-      species_sum <- ecosite_list[[i]][["Raw_data"]] |> dplyr::filter(akfieldecositeid == j) |>
+      species_sum <- ecosite_list[[i]][["Raw_data"]] |> dplyr::filter(akfieldecositeid == k) |>
         dplyr::group_by(vegplotid, plantsciname) |> dplyr::summarise(sum(akstratumcoverclasspct, na.rm = TRUE)) |>
         dplyr::rename(total_plot_cover = `sum(akstratumcoverclasspct, na.rm = TRUE)`)
 
@@ -254,6 +267,8 @@ veg_summary <- function(veg_df){
 
       # Loop through species, summarizing each
       for(g in unique(species_sum$plantsciname[!is.na(species_sum$plantsciname)])){
+
+        print(c(i,k,g))
 
         # state/phase species ISA
         IV_state_species <- IV_state |> dplyr::filter(plantsciname == g)
@@ -264,8 +279,10 @@ veg_summary <- function(veg_df){
           data.frame(
             constancy = nrow(foo) * 100/length(unique(species_sum$vegplotid)),
             avg_abund = sum(foo$total_plot_cover, na.rm = TRUE) / (length(unique(species_sum$vegplotid)) - sum(foo$total_plot_cover == 0)),
-            twenty_percentile = quantile(foo$total_plot_cover, na.rm = TRUE, probs = 0.2),
-            eighty_percentile = quantile(foo$total_plot_cover, na.rm = TRUE, probs = 0.8),
+            twenty_percentile = quantile(c(foo$total_plot_cover, rep(0, times = length(unique(species_sum$vegplotid)) -
+                                                                       nrow(foo))) , na.rm = TRUE, probs = 0.2),
+            eighty_percentile = quantile(c(foo$total_plot_cover, rep(0, times = length(unique(species_sum$vegplotid)) -
+                                                                       nrow(foo))) , na.rm = TRUE, probs = 0.8),
             median_abund = median(foo$total_plot_cover, na.rm = TRUE),
             max_abund = max(foo$total_plot_cover, na.rm = TRUE),
             min_abund = ifelse(nrow(foo) < length(unique(species_sum$vegplotid)), 0, min(foo$total_plot_cover, na.rm = TRUE)),
@@ -273,17 +290,17 @@ veg_summary <- function(veg_df){
             numb_plots_found = nrow(foo),
             numb_plots_not_found = length(unique(species_sum$vegplotid)) - nrow(foo),
             perc_obs_pres_abs = sum(foo$total_plot_cover == 0)/nrow(foo),
-            perc_obs_in_ecosite = nrow(foo)/(veg_df |> dplyr::filter(plantsciname == j) |> dplyr::pull(vegplotid) |>
+            perc_obs_in_ecosite = nrow(foo)/(veg_df |> dplyr::filter(plantsciname == k) |> dplyr::pull(vegplotid) |>
                                                unique() |> length()),
             perc_abund_in_ecosite = sum(foo$total_plot_cover, na.rm = TRUE)/(veg_df |> dplyr::filter(plantsciname == g) |>
-                                                                 dplyr::pull(akstratumcoverclasspct) |> sum(na.rm = TRUE))
+                                                                               dplyr::pull(akstratumcoverclasspct) |> sum(na.rm = TRUE))
           ) |> dplyr::mutate(importance = median_abund * constancy,
                              ISA_p.value = ifelse(length(IV_state_species$p.value) == 0, NA, IV_state_species$p.value))
 
       }
 
       #Assemble species summary lists
-      ecosite_list[[i]][["STM"]][[j]] <- do.call(rbind, goo_list) |> dplyr::arrange(desc(constancy))
+      ecosite_list[[i]][["STM"]][[k]] <- do.call(rbind, goo_list) |> dplyr::arrange(desc(constancy))
 
     }
 
