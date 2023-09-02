@@ -13,6 +13,8 @@
 #' @export
 #'
 #' @examples
+#' my_pres_abs <- pres_abs_conversion(veg_df = ecositer::vegetation_dataframe)
+#' head(my_pres_abs)
 #'
 pres_abs_conversion <- function(veg_df){
 

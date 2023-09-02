@@ -12,7 +12,8 @@ Suggests: knitr, rmarkdown, testthat
 Roxygen: list(markdown = TRUE)
 LazyData: true
 VignetteBuilder: knitr
-URL: https://github.com/natearoe/ecositer
+URL: https://github.com/natearoe/ecositer,
+    https://natearoe.github.io/ecositer/
 BugReports: https://github.com/natearoe/ecositer/issues
 Depends: 
     R (>= 2.10)

@@ -20,3 +20,8 @@ interactive NMDS plot
 \code{nmds_plot} produces and interactive NMDS from the object created with \code{ecositer::nmds_ecosite}. The function allows the user to define several properties,
 such as where to use pres/abs data, the number of dimensions, and whether to remove rare species.
 }
+\examples{
+my_nmds_plot <- nmds_plot(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite",
+nmds = my_nmds, veg_summary = my_veg_summary)
+
+}

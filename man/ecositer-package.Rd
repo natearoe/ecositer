@@ -12,6 +12,7 @@ A collection of functions for Natural Resource Conservation Service (NRCS) ecolo
 Useful links:
 \itemize{
   \item \url{https://github.com/natearoe/ecositer}
+  \item \url{https://natearoe.github.io/ecositer/}
   \item Report bugs at \url{https://github.com/natearoe/ecositer/issues}
 }
 

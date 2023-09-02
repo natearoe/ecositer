@@ -20,3 +20,8 @@ datasets, this is an advantageous feature. When I have used NMDS on moderate
 sized datasets (i.e., 100+ plots), I have found it to yield similar results
 as abundance data. This could be different for small datasets.
 }
+\examples{
+my_pres_abs <- pres_abs_conversion(veg_df = ecositer::vegetation_dataframe)
+head(my_pres_abs)
+
+}

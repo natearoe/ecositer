@@ -11,6 +11,8 @@
 #' @export
 #'
 #' @examples
+#' my_nmds_plot <- nmds_plot(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite",
+#' nmds = my_nmds, veg_summary = my_veg_summary)
 #'
 
 nmds_plot <- function(static_location, nmds, veg_summary){

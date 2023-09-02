@@ -8,8 +8,8 @@
 #'
 #' @examples
 #'
-#' formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
-#'
+#' my_formatted_veg_df <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
+#' head(formatted_veg_df)
 #'
 formatted_veg_df <- function(static_location){
 
