@@ -1,0 +1,10 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  intro: intro.html
+last_built: 2023-09-05T18:25Z
+urls:
+  reference: https://natearoe.github.io/ecositer/reference
+  article: https://natearoe.github.io/ecositer/articles
+
