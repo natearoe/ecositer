@@ -233,9 +233,9 @@ veg_summary <- function(veg_df){
           numb_plots_found = nrow(foo),
           numb_plots_not_found = length(unique(ecosite_species_sum$vegplotid)) - nrow(foo),
           perc_obs_pres_abs = sum(foo$total_plot_cover == 0)/nrow(foo),
-          perc_obs_in_ecosite = nrow(foo)/(veg_df |> dplyr::filter(plantsciname == j) |> dplyr::pull(vegplotid) |>
+          perc_obs_in_ecosite = 100*nrow(foo)/(veg_df |> dplyr::filter(plantsciname == j) |> dplyr::pull(vegplotid) |>
                                              unique() |> length()),
-          perc_abund_in_ecosite = sum(foo$total_plot_cover, na.rm = TRUE)/(veg_df |> dplyr::filter(plantsciname == j) |>
+          perc_abund_in_ecosite = 100*sum(foo$total_plot_cover, na.rm = TRUE)/(veg_df |> dplyr::filter(plantsciname == j) |>
                                                                              dplyr::pull(akstratumcoverclasspct) |> sum(na.rm = TRUE))
         ) |> dplyr::mutate(importance = perc_obs_in_ecosite * perc_abund_in_ecosite,
                            ISA_p.value = ifelse(length(IV_ecosite_species$p.value) == 0, NA, IV_ecosite_species$p.value))
@@ -290,9 +290,9 @@ veg_summary <- function(veg_df){
             numb_plots_found = nrow(foo),
             numb_plots_not_found = length(unique(species_sum$vegplotid)) - nrow(foo),
             perc_obs_pres_abs = sum(foo$total_plot_cover == 0)/nrow(foo),
-            perc_obs_in_ecosite = nrow(foo)/(veg_df |> dplyr::filter(plantsciname == k) |> dplyr::pull(vegplotid) |>
+            perc_obs_in_ecosite = 100*nrow(foo)/(veg_df |> dplyr::filter(plantsciname == k) |> dplyr::pull(vegplotid) |>
                                                unique() |> length()),
-            perc_abund_in_ecosite = sum(foo$total_plot_cover, na.rm = TRUE)/(veg_df |> dplyr::filter(plantsciname == g) |>
+            perc_abund_in_ecosite = 100*sum(foo$total_plot_cover, na.rm = TRUE)/(veg_df |> dplyr::filter(plantsciname == g) |>
                                                                                dplyr::pull(akstratumcoverclasspct) |> sum(na.rm = TRUE))
           ) |> dplyr::mutate(importance = median_abund * constancy,
                              ISA_p.value = ifelse(length(IV_state_species$p.value) == 0, NA, IV_state_species$p.value))
