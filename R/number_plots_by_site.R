@@ -14,7 +14,7 @@
 #'
 #' @examples
 #'
-#' my_plots_by_site <- number_plots_by_site(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/vegplotdata2.sqlite")
+#' my_plots_by_site <- number_plots_by_site(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 #' head(my_plots_by_site)
 #'
 number_plots_by_site <- function(static_location){
