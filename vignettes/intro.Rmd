@@ -17,15 +17,13 @@ knitr::opts_chunk$set(
 This vignette is intended to document basic functionality of the *ecositer* package. This package is in development and should not be expected to perform in a robust manner across different datasets. At this point, the functionality here is a demonstration of workflows for dealing with NRCS ecological site data. I hope that future development of this package and standardization of NASIS population will make it more applicable. 
 
 Library
-```{r setup, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(ecositer)
 library(soilDB)
 library(dplyr)
 library(indicspecies)
 library(stringr)
-library(listviewer)
 library(plotly)
-library(kableExtra)
 ```
 
 Begin by querying NASIS so that you have a selected set containing vegetation data. In this vignette, we will query for vegetation data in Sequoia and Kings Canyon National Parks, soil survey area CA792. Detailed instructions for making this query can be found [here](https://natearoe.github.io/ESS_FAQs/ecosites.html#plotveg).
