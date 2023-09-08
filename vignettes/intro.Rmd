@@ -26,6 +26,47 @@ library(stringr)
 library(plotly)
 ```
 
+```{r, echo=FALSE}
+ configDir <- tools::R_user_dir("ecositer", which="cache")
+ if (!dir.exists(configDir)) {
+   dir.create(configDir, recursive=TRUE)
+ }
+ configFile <- file.path(configDir, "CA792_veg_data.sqlite")
+ if (!file.exists(configFile)) {
+   destFile <- paste0(configDir, "/CA792_veg_data.zip")
+
+   tryCatch(download.file(url =  "https://github.com/natearoe/ecositer_data/blob/main/CA792_veg_data.zip?raw=TRUE",
+                          destfile = destFile,
+                          mode = "wb"),
+            error=function(e) {
+              message('An Error Occurred')
+              print(e)
+            },
+            #if a warning occurs, tell me the warning
+            warning=function(w) {
+              message('A Warning Occurred')
+              print(w)
+              return(NA)
+            })
+
+   tryCatch(unzip(zipfile = destFile,
+                  exdir = configDir),
+            error=function(e) {
+              message('An Error Occurred')
+              print(e)
+            },
+            #if a warning occurs, tell me the warning
+            warning=function(w) {
+              message('A Warning Occurred')
+              print(w)
+              return(NA)
+            }
+   )
+ }
+ 
+```
+
+
 Begin by querying NASIS so that you have a selected set containing vegetation data. In this vignette, we will query for vegetation data in Sequoia and Kings Canyon National Parks, soil survey area CA792. Detailed instructions for making this query can be found [here](https://natearoe.github.io/ESS_FAQs/ecosites.html#plotveg).
 
 Now that we have data in our selected set, we will introduce the first *ecositer* function. ```vegStaticNASIS()``` takes a snapshot of your NASIS selected set and saves it in a local SQLite database. It is referred to as "static" because it does not change. This means that regardless of what is in your selected set in the future, you can refer to this static NASIS database using a local file path on your harddrive. Rather than switching between different queries and clearing your selected set in NASIS, you will likely find it useful to save a few specific selected sets locally on your computer. The functionality of creating static NASIS selected sets is borrowed from [soilDB](https://github.com/ncss-tech/soilDB). ```vegStaticNASIS()``` is a special case designed specifically for vegetation data. 
@@ -35,15 +76,24 @@ The only argument in this function is ```output_path``` the local file path wher
 ecositer::vegStaticNASIS(output_path = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
 ```
 
+Now we can format our vegetation data into a more useful format
+```{r, eval = FALSE}
+CA792_veg_formatted <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
+```
+
+```{r, echo=FALSE, message=FALSE}
+CA792_veg_formatted <- formatted_veg_df(static_location = configFile)
+```
+
 Let's start off by looking at how many pedons and vegplots we have for each ecosite
-```{r, message=FALSE, warning=FALSE}
+
+```{r, eval=FALSE}
 numb_plots <- number_plots_by_site(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
 head(numb_plots)
 ```
 
-Now we can format our vegetation data into a more useful format
-```{r, message=FALSE, warning=FALSE}
-CA792_veg_formatted <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
+```{r, echo=FALSE, message=FALSE}
+numb_plots <- number_plots_by_site(static_location = configFile)
 ```
 
 Here is a look at a portion of the data we have assembled.
@@ -74,10 +124,15 @@ my_nmds <- ecositer::nmds_ecosite(veg_summary = CA792_veg_summary, ecosite = c("
 ```
 
 Visualize NMDS
-```{r, message=FALSE, warning=FALSE}
+```{r, eval=FALSE}
 nmds_plot(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite", 
           nmds = my_nmds,
           veg_summary = CA792_veg_summary)
 ```
 
+```{r, echo=FALSE, warning=FALSE}
+nmds_plot(static_location = configFile, 
+          nmds = my_nmds,
+          veg_summary = CA792_veg_summary)
+```
 
