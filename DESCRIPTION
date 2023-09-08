@@ -8,7 +8,7 @@ Maintainer: Nathan Roe <nateroe@gmail.com>
 Description: A collection of functions for Natural Resource Conservation Service (NRCS) ecologists. Many of these functions build off of the AQP (https://ncss-tech.github.io/AQP/) R packages to provide improved functionality for ecologists. 
 RoxygenNote: 7.2.3
 Encoding: UTF-8
-Suggests: knitr, rmarkdown, testthat, odbc, RSQLite, plotly, plyr
+Suggests: knitr, rmarkdown, testthat, odbc, RSQLite, plotly, plyr, vegan
 Roxygen: list(markdown = TRUE)
 LazyData: true
 VignetteBuilder: knitr
