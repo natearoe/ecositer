@@ -27,5 +27,8 @@ Pedon/Site/Vegetation Plot by site area overlap table
 Code written by Andrew Brown
 }
 \examples{
-vegStaticNASIS("C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
+\dontrun{
+ soilDB::local_NASIS_defined()
+vegStaticNASIS(output_path = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
+}
 }
