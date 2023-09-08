@@ -44,6 +44,9 @@
 #'
 veg_summary <- function(veg_df){
 
+  # If plant scientific name is NA, call it undefined
+  veg_df$plantsciname <- ifelse(is.na(veg_df$plantsciname), "undefined", veg_df$plantsciname)
+
   # This script starts with an Indicator Species Analysis (ISA). Then it begins
   #   using for loops to summarize species by ecosite as well as the states/phases
   #   within ecosites.
@@ -160,7 +163,7 @@ veg_summary <- function(veg_df){
   #########################    begin loop through ecosite      ####################
   for(i in unique(veg_df$ecositeid[!is.na(veg_df$ecositeid)])){
 
-    # print(i)
+     print(i)
 
     # Subset ecosite ISA
     IV_ecosite <- if(i %in% names(IV_ecosite_list)){
@@ -205,7 +208,7 @@ veg_summary <- function(veg_df){
     # This loop summarizes the vegetation data by ecosite
     for(j in unique(ecosite_species_sum$plantsciname[!is.na(ecosite_species_sum$plantsciname)])){
 
-      # print(c(i, j))
+       print(c(i, j))
 
       # Subset ecosite ISA by species
       IV_ecosite_species <- IV_ecosite |> dplyr::filter(plantsciname == j)
@@ -250,7 +253,7 @@ veg_summary <- function(veg_df){
     # Divide ecosites into states/phases
     for(k in ecosite_list[[i]][["Raw_data"]]$akfieldecositeid[!is.na(ecosite_list[[i]][["Raw_data"]]$akfieldecositeid)] |> unique()){
 
-      # print(c(i,k))
+       print(c(i,k))
 
       # Subset ISA ecosite
       IV_state <- if(is.null(IV_state_list[[k]])){
@@ -268,7 +271,7 @@ veg_summary <- function(veg_df){
       # Loop through species, summarizing each
       for(g in unique(species_sum$plantsciname[!is.na(species_sum$plantsciname)])){
 
-        #print(c(i,k,g))
+        print(c(i,k,g))
 
         # state/phase species ISA
         IV_state_species <- IV_state |> dplyr::filter(plantsciname == g)
