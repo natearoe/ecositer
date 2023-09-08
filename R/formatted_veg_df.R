@@ -15,8 +15,6 @@ formatted_veg_df <- function(static_location){
 
   ############# Create foundational dataframes
 
-  static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite"
-
   # Access veg data
   veg_data <- soilDB::fetchVegdata(dsn = static_location, SS = FALSE)
 
