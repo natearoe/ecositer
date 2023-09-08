@@ -1,6 +1,6 @@
 #' Produce vegetation summary of ecosites and states/phases
 #'
-#' `veg_summary()` TEST! takes a *properly formatted vegetation dataframe* and produces summaries
+#' `veg_summary()` TEST!! takes a *properly formatted vegetation dataframe* and produces summaries
 #' of vegetation for ecosites and states/phases. Vegetation data originates from the
 #' NASIS vegplot table. The \link[ecositer]{formatted_veg_df} function should be used to manipulate raw NASIS
 #' vegplot data into a *properly formatted vegetation dataframe*
