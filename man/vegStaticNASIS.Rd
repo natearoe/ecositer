@@ -28,7 +28,6 @@ Code written by Andrew Brown
 }
 \examples{
 \dontrun{
- soilDB::local_NASIS_defined()
 vegStaticNASIS(output_path = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
 }
 }
