@@ -23,7 +23,7 @@
 number_plots_by_site <- function(static_location){
 
   # Access veg data
-  veg_data <- veg_data <- soilDB::fetchVegdata(dsn = static_location, SS = FALSE)
+  veg_data <- soilDB::fetchVegdata(dsn = static_location, SS = FALSE)
 
   # Access fetchNASIS data
   ecosite_data <- soilDB::fetchNASIS(dsn = static_location,
