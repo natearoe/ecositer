@@ -8,7 +8,7 @@
 #'dataset that commonly has new data entered, it is probably best to work off of your
 #'NASIS selected set rather than using a static, local sqlite database.
 #'
-#'Examples of queries to use with this function with include, MLRA13_Wasilla >
+#'An appropriate queries to run to populate your selected set include: MLRA13_Wasilla >
 #'Pedon/Site/Transect/Vegetation Plot by usiteid (multiple) & MLRA13_Wasilla >
 #'Pedon/Site/Vegetation Plot by site area overlap table
 #'
@@ -19,10 +19,9 @@
 #' @return a static NASIS database that can be called independent of your current selected set in NASIS.
 #' @export
 #'
-#' @examples
-#' \dontrun{
+#' @examplesIf FALSE
 #' vegStaticNASIS(output_path = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
-#' }
+#'
 
 vegStaticNASIS <- function(output_path){
 
