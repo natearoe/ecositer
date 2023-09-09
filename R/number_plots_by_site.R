@@ -13,63 +13,20 @@
 #' @export
 #'
 #' @examples
-#'
-#' \dontshow{
-#'
-#' configDir <- tools::R_user_dir("ecositer", which="cache")
-#' if (!dir.exists(configDir)) {
-#'   dir.create(configDir, recursive=TRUE)
-#' }
-#' configFile <- file.path(configDir, "CA792_veg_data.sqlite")
-#' if (!file.exists(configFile)) {
-#'   destFile <- paste0(configDir, "/CA792_veg_data.zip")
-#'
-#'   tryCatch(download.file(url = "https://github.com/natearoe/ecositer_data/blob/main/CA792_veg_data.zip?raw=TRUE",
-#'                          destfile = destFile,
-#'                          mode = "wb"),
-#'            error=function(e) {
-#'              message('An Error Occurred')
-#'              print(e)
-#'            },
-#'            #if a warning occurs, tell me the warning
-#'            warning=function(w) {
-#'              message('A Warning Occurred')
-#'              print(w)
-#'              return(NA)
-#'            })
-#'
-#'   tryCatch(unzip(zipfile = destFile,
-#'                  exdir = configDir),
-#'            error=function(e) {
-#'              message('An Error Occurred')
-#'              print(e)
-#'            },
-#'            #if a warning occurs, tell me the warning
-#'            warning=function(w) {
-#'              message('A Warning Occurred')
-#'              print(w)
-#'              return(NA)
-#'            }
-#'   )
-#' }
-#'
-#' my_plots_by_site <- number_plots_by_site(static_location = configFile)
+#' example_data <- access_example_data()
+#' my_plots_by_site <- number_plots_by_site(static_location = example_data)
+#' # specify user-defined location -
+#' # my_plots_by_site <- number_plots_by_site(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 #' head(my_plots_by_site)
 #'
-#' }
-#'
-#'\dontrun{
-#' my_plots_by_site <- number_plots_by_site(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
-#' head(my_plots_by_site)
-#' }
-#'
+
 number_plots_by_site <- function(static_location){
 
   # Access veg data
-  veg_data <- veg_data <- fetchVegdata(dsn = static_location, SS = FALSE)
+  veg_data <- veg_data <- soilDB::fetchVegdata(dsn = static_location, SS = FALSE)
 
   # Access fetchNASIS data
-  ecosite_data <- fetchNASIS(dsn = static_location,
+  ecosite_data <- soilDB::fetchNASIS(dsn = static_location,
                              from = "pedons",
                              SS = FALSE, fill = TRUE, duplicates = TRUE)
 
@@ -77,7 +34,7 @@ number_plots_by_site <- function(static_location){
   # Vegdata fecosite
   veg_data_fecosite <-
     veg_data$vegplot %>% dplyr::select(site_id, akfieldecositeid) %>%
-    mutate(ecosite_simple = stringr::str_sub(.$akfieldecositeid, start = 1L, end = 4L))
+    dplyr::mutate(ecosite_simple = stringr::str_sub(.$akfieldecositeid, start = 1L, end = 4L))
 
   # fetchNASIS ecositeid
   ecosite_id <- aqp::site(ecosite_data) %>% dplyr::select(site_id, ecositeid)
@@ -85,17 +42,17 @@ number_plots_by_site <- function(static_location){
 
   # Determine number of pedons associated with each ecosite
   numb_pedons_by_ecosite <-
-    ecosite_id %>% count(ecositeid) %>% arrange(desc(n)) %>% dplyr::rename(pedons = n) %>%
-    mutate(ecosite_simple = stringr::str_sub(ecositeid, start = -6L, end = -3L))
+    ecosite_id %>% dplyr::count(ecositeid) %>% dplyr::arrange(desc(n)) %>% dplyr::rename(pedons = n) %>%
+    dplyr::mutate(ecosite_simple = stringr::str_sub(ecositeid, start = -6L, end = -3L))
 
   # Determine the number of vegplots associated with each ecosite
   numb_vegplots_by_ecosite <- veg_data_fecosite %>%
-    mutate(ecosite_simple = stringr::str_sub(
+    dplyr::mutate(ecosite_simple = stringr::str_sub(
       veg_data_fecosite$akfieldecositeid,
       start = 1L,
       end = 4L
     )) %>%
-    count(ecosite_simple) %>% arrange(desc(n)) %>% dplyr::rename(vegplots = n)
+    dplyr::count(ecosite_simple) %>% dplyr::arrange(desc(n)) %>% dplyr::rename(vegplots = n)
 
 
 
@@ -123,7 +80,7 @@ number_plots_by_site <- function(static_location){
   # Summarise how many state/phases each ecosite has and list them
   numb_statephases <-
     veg_data_fecosite %>% dplyr::group_by(ecosite_simple) %>%
-    summarise(
+    dplyr::summarise(
       numb_statephases = n_distinct(akfieldecositeid_edit),
       statephases = paste(unique(akfieldecositeid_edit), collapse = ", ")
     )
@@ -132,7 +89,7 @@ number_plots_by_site <- function(static_location){
   # Df showing number of pedons, vegplots, and states/phases for each ecosite
   numb_pedons_and_vegplots <-
     dplyr::full_join(numb_pedons_by_ecosite, numb_vegplots_by_ecosite) %>%
-    select(ecositeid, ecosite_simple, everything()) %>% dplyr::full_join(numb_statephases)
+    dplyr::select(ecositeid, ecosite_simple, everything()) %>% dplyr::full_join(numb_statephases)
 
 
 
