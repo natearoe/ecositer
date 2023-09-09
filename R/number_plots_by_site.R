@@ -33,32 +33,32 @@ number_plots_by_site <- function(static_location){
 
   # Vegdata fecosite
   veg_data_fecosite <-
-    veg_data$vegplot %>% dplyr::select(site_id, akfieldecositeid) %>%
+    veg_data$vegplot |>  dplyr::select(site_id, akfieldecositeid) |>
     dplyr::mutate(ecosite_simple = stringr::str_sub(.$akfieldecositeid, start = 1L, end = 4L))
 
   # fetchNASIS ecositeid
-  ecosite_id <- aqp::site(ecosite_data) %>% dplyr::select(site_id, ecositeid)
+  ecosite_id <- aqp::site(ecosite_data) |>  dplyr::select(site_id, ecositeid)
 
 
   # Determine number of pedons associated with each ecosite
   numb_pedons_by_ecosite <-
-    ecosite_id %>% dplyr::count(ecositeid) %>% dplyr::arrange(desc(n)) %>% dplyr::rename(pedons = n) %>%
+    ecosite_id |>  dplyr::count(ecositeid) |>  dplyr::arrange(desc(n)) |>  dplyr::rename(pedons = n) |>
     dplyr::mutate(ecosite_simple = stringr::str_sub(ecositeid, start = -6L, end = -3L))
 
   # Determine the number of vegplots associated with each ecosite
-  numb_vegplots_by_ecosite <- veg_data_fecosite %>%
+  numb_vegplots_by_ecosite <- veg_data_fecosite |>
     dplyr::mutate(ecosite_simple = stringr::str_sub(
       veg_data_fecosite$akfieldecositeid,
       start = 1L,
       end = 4L
-    )) %>%
-    dplyr::count(ecosite_simple) %>% dplyr::arrange(desc(n)) %>% dplyr::rename(vegplots = n)
+    )) |>
+    dplyr::count(ecosite_simple) |>  dplyr::arrange(desc(n)) |>  dplyr::rename(vegplots = n)
 
 
 
   # Remove a question mark from a couple of instances of akfieldecositeid
   veg_data_fecosite$akfieldecositeid <-
-    veg_data_fecosite$akfieldecositeid %>%
+    veg_data_fecosite$akfieldecositeid |>
     stringr::str_replace(pattern = "\\.\\?", replacement = "")
 
   # Identify the akfieldecositeids missing a phase
@@ -79,7 +79,7 @@ number_plots_by_site <- function(static_location){
 
   # Summarise how many state/phases each ecosite has and list them
   numb_statephases <-
-    veg_data_fecosite %>% dplyr::group_by(ecosite_simple) %>%
+    veg_data_fecosite |>  dplyr::group_by(ecosite_simple) |>
     dplyr::summarise(
       numb_statephases = n_distinct(akfieldecositeid_edit),
       statephases = paste(unique(akfieldecositeid_edit), collapse = ", ")
@@ -88,8 +88,8 @@ number_plots_by_site <- function(static_location){
 
   # Df showing number of pedons, vegplots, and states/phases for each ecosite
   numb_pedons_and_vegplots <-
-    dplyr::full_join(numb_pedons_by_ecosite, numb_vegplots_by_ecosite) %>%
-    dplyr::select(ecositeid, ecosite_simple, everything()) %>% dplyr::full_join(numb_statephases)
+    dplyr::full_join(numb_pedons_by_ecosite, numb_vegplots_by_ecosite) |>
+    dplyr::select(ecositeid, ecosite_simple, everything()) |>  dplyr::full_join(numb_statephases)
 
 
 
