@@ -11,7 +11,11 @@
 #' @export
 #'
 #' @examples
-#' my_nmds_plot <- nmds_plot(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite",
+#' example_data <- access_example_data()
+#' my_nmds_plot <- nmds_plot(static_location = example_data,
+#' nmds = my_nmds, veg_summary = my_veg_summary)
+#' # user-defined static location
+#' # my_nmds_plot <- nmds_plot(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite",
 #' nmds = my_nmds, veg_summary = my_veg_summary)
 #'
 
