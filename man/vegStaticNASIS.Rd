@@ -29,7 +29,7 @@ Pedon/Site/Vegetation Plot by site area overlap table
 Code written by Andrew Brown
 }
 \examples{
-\dontrun{
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 vegStaticNASIS(output_path = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
-}
+\dontshow{\}) # examplesIf}
 }

@@ -19,7 +19,10 @@ with each state/phase
 an ecosite state/phase.
 }
 \examples{
-veg_df <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
+example_data <- access_example_data()
+veg_df <- formatted_veg_df(static_location = example_data)
+# user-defined static location -
+# veg_df <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 my_state_phase <- sites_in_state_phase(veg_df = veg_df)
 head(my_state_phase)
 
