@@ -121,7 +121,24 @@ for each ecosite</p>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">my_plots_by_site</span> <span class="op">&lt;-</span> <span class="fu">number_plots_by_site</span><span class="op">(</span>static_location <span class="op">=</span> <span class="va">configFile</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in fetchVegdata(dsn = static_location, SS = FALSE):</span> could not find function "fetchVegdata"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> NOTE: some records are missing surface fragment cover</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> NOTE: some records are missing surface fragment cover</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>non-standard notation in Munsell value, use getClosestMunsellChip()</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> mixing dry colors ... [54 of 4847 horizons]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> mixing moist colors ... [102 of 5407 horizons]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> NOTE: some records are missing rock fragment volume</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> NOTE: all records are missing artifact volume</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> replacing missing lower horizon depths with top depth + 1cm ... [59 horizons]</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Horizon top depths contain NA! Check depth logic with aqp::checkHzDepthLogic()</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Horizon bottom depths contain NA! Check depth logic with aqp::checkHzDepthLogic()</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> -&gt; QC: sites without pedons: </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	Use `get('sites.missing.pedons', envir=get_soilDB_env())` for site record IDs (siteiid)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> -&gt; QC: duplicate pedons: </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	Use `get('dup.pedon.ids', envir=get_soilDB_env())` for pedon record IDs (peiid)</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot set `phiid` as unique pedon horizon key - `NA` introduced by fill=TRUE</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> -&gt; QC: pedons missing bottom hz depths:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	Use `get('missing.bottom.depths', envir=get_soilDB_env())` for pedon record IDs (peiid)</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in veg_data$vegplot %&gt;% dplyr::select(site_id, akfieldecositeid) %&gt;%     dplyr::mutate(ecosite_simple = stringr::str_sub(.$akfieldecositeid,         start = 1L, end = 4L)):</span> could not find function "%&gt;%"</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_plots_by_site</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'my_plots_by_site' not found</span>
 <span class="r-in"><span></span></span>
