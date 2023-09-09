@@ -81,13 +81,13 @@ Now we can format our vegetation data into a more useful format
 CA792_veg_formatted <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
 ```
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 CA792_veg_formatted <- formatted_veg_df(static_location = configFile)
 ```
 
 Let's start off by looking at how many pedons and vegplots we have for each ecosite
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, warning=FALSE}
 numb_plots <- number_plots_by_site(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
 head(numb_plots)
 ```
@@ -99,7 +99,7 @@ numb_plots <- number_plots_by_site(static_location = configFile)
 Here is a look at a portion of the data we have assembled.
 ```{r, warning=FALSE}
 CA792_veg_formatted |> dplyr::select(-primarydatacollector, - plantnatvernm, -akfieldecositeid,
-                                                   -vegplotid, -vegplotiid, -plantsym)
+                                                   -vegplotid, -vegplotiid, -plantsym) |> head()
 ```
 
 Now that the data is formatted we can begin to analyze it. 
