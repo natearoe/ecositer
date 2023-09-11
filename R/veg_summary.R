@@ -39,7 +39,7 @@
 #' @examples
 #'
 #' my_veg_summary <- veg_summary(veg_df = ecositer::vegetation_dataframe)
-#' head(my_summary)
+#' head(my_veg_summary)
 #'
 #'
 veg_summary <- function(veg_df){
