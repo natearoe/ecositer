@@ -99,11 +99,25 @@ for each ecosite</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot set `phiid` as unique pedon horizon key - `NA` introduced by fill=TRUE</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> -&gt; QC: pedons missing bottom hz depths:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 	Use `get('missing.bottom.depths', envir=get_soilDB_env())` for pedon record IDs (peiid)</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in veg_data$vegplot %&gt;% dplyr::select(site_id, akfieldecositeid) %&gt;%     dplyr::mutate(ecosite_simple = stringr::str_sub(.$akfieldecositeid,         start = 1L, end = 4L)):</span> could not find function "%&gt;%"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(ecosite_simple)`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(ecosite_simple)`</span>
 <span class="r-in"><span><span class="co"># specify user-defined location -</span></span></span>
 <span class="r-in"><span><span class="co"># my_plots_by_site &lt;- number_plots_by_site(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_plots_by_site</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'my_plots_by_site' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     ecositeid ecosite_simple pedons vegplots numb_statephases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1        &lt;NA&gt;           &lt;NA&gt;    145     1042                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 F022AD102CA           D102     67       35                4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 F022AH102CA           H102     59       26                4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 F022AD104CA           D104     53       33                2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 F022AH106CA           H106     38       25                2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 F022AH101CA           H101     35       19                4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                 statephases</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                                        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 D102.1.1, D102.1.1P, D102.1.2F, D102.1.3F</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 H102.1.4F, H102.1.1, H102.1.2F, H102.1.2A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                       D104.1.1, D104.1.4F</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                       H106.1.1, H106.1.3F</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 H101.1.2F, H101.1.1, H101.1.3F, H101.1.4F</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

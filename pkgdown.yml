@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   intro: intro.html
-last_built: 2023-09-09T01:08Z
+last_built: 2023-09-11T17:07Z
 urls:
   reference: https://natearoe.github.io/ecositer/reference
   article: https://natearoe.github.io/ecositer/articles
