@@ -1,5 +1,8 @@
 #' Accessing example data
 #'
+#' `access_example_data()`is an internal function that helps function examples
+#' and vignettes to access datasets
+#'
 #' @return the location of example data
 #' @export
 #'
