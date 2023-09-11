@@ -34,7 +34,7 @@ number_plots_by_site <- function(static_location){
   # Vegdata fecosite
   veg_data_fecosite <-
     veg_data$vegplot |>  dplyr::select(site_id, akfieldecositeid) |>
-    dplyr::mutate(ecosite_simple = stringr::str_sub(_$akfieldecositeid, start = 1L, end = 4L))
+    dplyr::mutate(ecosite_simple = stringr::str_sub(veg_data$vegplot$akfieldecositeid, start = 1L, end = 4L))
 
   # fetchNASIS ecositeid
   ecosite_id <- aqp::site(ecosite_data) |>  dplyr::select(site_id, ecositeid)
@@ -81,7 +81,7 @@ number_plots_by_site <- function(static_location){
   numb_statephases <-
     veg_data_fecosite |>  dplyr::group_by(ecosite_simple) |>
     dplyr::summarise(
-      numb_statephases = n_distinct(akfieldecositeid_edit),
+      numb_statephases = dplyr::n_distinct(akfieldecositeid_edit),
       statephases = paste(unique(akfieldecositeid_edit), collapse = ", ")
     )
 
