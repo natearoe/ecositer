@@ -23,8 +23,8 @@ formatted_veg_df <- function(static_location){
                              from = "pedons",
                              SS = FALSE, fill = TRUE, duplicates = TRUE)
 
-  ############ Choosing the best vegplot
 
+  ############ Choosing the best vegplot
 
   # What sites have multiple veg plots?
   siteiid_with_dup_vegplots <- veg_data$vegplot  |>  dplyr::select(siteiid, vegplotiid, vegplot_id, peiid) |>
@@ -111,6 +111,13 @@ formatted_veg_df <- function(static_location){
   veg_data_with_ecosite <- veg_data_with_ecosite |> dplyr::select(-akfieldecositeid) |>
     dplyr::rename(akfieldecositeid = akfieldecositeid_edit)
 
-  return(veg_data_with_ecosite)
+  # Append coordinates
+  veg_data_with_ecosite_coords <-
+    dplyr::left_join(veg_data_with_ecosite,
+                     veg_data$vegplotlocation |>
+                       dplyr::select(siteiid, utmzone, utmeasting, utmnorthing) |>
+                       unique())
+
+  return(veg_data_with_ecosite_coords)
 
 }
