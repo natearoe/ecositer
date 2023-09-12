@@ -15,7 +15,7 @@
 #' QC_plants(veg_df = ecositer::vegetation_dataframe) |> head()
 QC_plants <- function(veg_df){
 
-  # split genus, species, subspecies
+  # plant only appears once per plot, then split genus, species, subspecies
   plant_sci_split <- veg_df |> dplyr::select(vegplotid, plantsciname) |> unique() |>
     dplyr::filter(!is.na(plantsciname) & plantsciname != "unknown scientific name") |>
     dplyr::pull(plantsciname) |> unique() |> stringr::str_split(pattern = "[:blank:]")
