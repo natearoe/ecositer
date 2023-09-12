@@ -34,7 +34,7 @@ QC_plants <- function(veg_df){
   spp_to_ssp_list <- stringr::str_subset(veg_df$plantsciname, pattern = paste(my_ssp, collapse = "|")) |>
     stringr::str_split(pattern = "[:blank:]")
 
-  spp_to_ssp <- lapply(spp_to_ssp, FUN = function(x){x[1]}) |> unlist() |> unique()
+  spp_to_ssp <- lapply(spp_to_ssp_list, FUN = function(x){x[1]}) |> unlist() |> unique()
 
   # return genera IDed to genera and subspecies
   plant_to_examine <- veg_df |> dplyr::filter(plantsciname %in%
