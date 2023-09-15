@@ -2,8 +2,9 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
+  cleaning_veg_data: cleaning_veg_data.html
   intro: intro.html
-last_built: 2023-09-11T17:07Z
+last_built: 2023-09-15T21:56Z
 urls:
   reference: https://natearoe.github.io/ecositer/reference
   article: https://natearoe.github.io/ecositer/articles

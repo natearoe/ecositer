@@ -4,6 +4,9 @@
     <loc>https://natearoe.github.io/ecositer/404.html</loc>
   </url>
   <url>
+    <loc>https://natearoe.github.io/ecositer/articles/cleaning_veg_data.html</loc>
+  </url>
+  <url>
     <loc>https://natearoe.github.io/ecositer/articles/index.html</loc>
   </url>
   <url>
@@ -14,6 +17,12 @@
   </url>
   <url>
     <loc>https://natearoe.github.io/ecositer/index.html</loc>
+  </url>
+  <url>
+    <loc>https://natearoe.github.io/ecositer/reference/QC_plants.html</loc>
+  </url>
+  <url>
+    <loc>https://natearoe.github.io/ecositer/reference/QC_vegplots_summary.html</loc>
   </url>
   <url>
     <loc>https://natearoe.github.io/ecositer/reference/access_example_data.html</loc>
