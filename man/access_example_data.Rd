@@ -10,7 +10,8 @@ access_example_data()
 the location of example data
 }
 \description{
-Accessing example data
+\code{access_example_data()}is an internal function that helps function examples
+and vignettes to access datasets
 }
 \examples{
 access_example_data()
