@@ -20,10 +20,13 @@ QC_vegplots_remove_plots(
 
 \item{my_QC_vegplots_summary}{results of \code{ecositer::my_QC_vegplots_summary()}}
 
-\item{min_species}{sites with < N species are removed due to non-comprehensive sampling}
+\item{min_species}{site must have >= N species to be included}
 
-\item{min_abund}{sites with < N\% species with abundance data are removed (e.g.,
-entering 90 would remove sites with less than 90\% of species including abundance data.)}
+\item{min_abund}{sites must have >= N\% species with abundance data to be included (e.g.,
+entering 90 would include all sites with 90\% or more species with abundance data).
+WARNING: If you keep sites that are missing abundance data and intend to run vegetation
+analyses using abundance data, abundance values will have to be populated. If you run
+analyses on presence/absence data, abundance data is not needed.}
 
 \item{site_id}{site_ids to be removed as defined by user}
 }

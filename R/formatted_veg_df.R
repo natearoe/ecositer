@@ -27,7 +27,7 @@ formatted_veg_df <- function(static_location){
   ############ Choosing the best vegplot
 
   # What sites have multiple veg plots?
-  siteiid_with_dup_vegplots <- veg_data$vegplot  |>  dplyr::select(siteiid, site_id, vegplotiid, vegplot_id, peiid) |>
+  siteiid_with_dup_vegplots <- veg_data$vegplot  |>  dplyr::select(siteiid, vegplotiid, vegplot_id, peiid) |>
     unique() |>  dplyr::group_by(siteiid) |>
     dplyr::filter(dplyr::n() > 1) |> dplyr::pull(siteiid)
 
@@ -46,7 +46,7 @@ formatted_veg_df <- function(static_location){
   # Remove dup_vegplots from veg_data$vegplot
   veg_data_veg_plot_reduced <- veg_data$vegplot |>
     dplyr::filter(!is.na(ecositeid)) |>
-    dplyr::select(siteiid, site_id, ecositeid, vegplotiid, akfieldecositeid) |>
+    dplyr::select(siteiid, ecositeid, vegplotiid, akfieldecositeid) |>
     unique() |>
     dplyr::filter(!vegplotiid %in% dup_vegplots & vegplotiid %in% veg_data$vegplotspecies$vegplotiid)
 
@@ -69,8 +69,8 @@ formatted_veg_df <- function(static_location){
       aqp::site(ecosite_data) |>
         dplyr::select(siteiid, ecositeid) |> unique()
     ) |>
-    dplyr::left_join(veg_data_veg_plot_reduced |> dplyr::select(siteiid, site_id, vegplotiid, akfieldecositeid)) |>
-    dplyr::select(siteiid, site_id, vegplotid, ecositeid, everything())
+    dplyr::left_join(veg_data_veg_plot_reduced |> dplyr::select(siteiid, vegplotiid, akfieldecositeid)) |>
+    dplyr::select(siteiid, vegplotid, ecositeid, everything())
 
 
   # Remove a question mark from a couple of instances of akfieldecositeid

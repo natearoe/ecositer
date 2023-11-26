@@ -1,4 +1,7 @@
-nmds_taxon_comparison <- function(veg_df, taxon){
+nmds_taxon_comparison <- function(veg_df, taxon, rare_species, min_plots){
+
+  # remove missing species
+  veg_df <- veg_df |> dplyr::filter(!is.na(plantsciname))
 
   # determine taxon identified
   taxon_of_interest <- stringr::str_subset(veg_df$plantsciname,
@@ -22,14 +25,58 @@ nmds_taxon_comparison <- function(veg_df, taxon){
                                    by = dplyr::join_by(siteiid),
                                    multiple = "all")
 
-  # remove plots that are poorly sampled
-  test <- veg_df |>
-    dplyr::group_by(siteiid) |>
-    dplyr::summarise(species_richness = dplyr::n()) |>
-    as.data.frame()
+  # pivot df wider
+  veg_df_class_wide <- veg_df_class |> dplyr::select(siteiid, plantsciname, akstratumcoverclasspct) |>
+    tidyr::pivot_wider(names_from = plantsciname,
+                                     values_from = akstratumcoverclasspct,
+                                     values_fn = sum)
+
+  # change NAs to 0
+  veg_df_class_wide[is.na(veg_df_class_wide)] <- 0
+
+  # remove rare species
+  numb_of_plots <- apply(veg_df_class_wide > 0, 2, sum)
+  perc_of_plots <- 100 * numb_of_plots/nrow(veg_df_class_wide)
+  veg_df_class_wide_reduced <- veg_df_class_wide[, perc_of_plots >= rare_species]
+
+  # relativize by max
 
 
+  # run nmds
+  my_nmds <- vegan::metaMDS(comm = veg_df_class_wide_reduced,
+                 distance = "bray",
+                 autotransform = TRUE,
+                 k = 2)
 
+  # species scores
+  spp.envfit <- vegan::envfit(my_nmds, veg_df_class_wide_reduced,
+                              choices = c(1,2), permutations = 9999)
+  spp.scores <- as.data.frame(vegan::scores(spp.envfit, display = "vectors"))
+  spp.scores <- cbind(spp.scores, species = rownames(spp.scores))
+  spp.scores <- cbind(spp.scores, pval = spp.envfit$vectors$pvals)
+  sig.spp.scrs <- subset(spp.scores, pval <= 0.005)
+
+  # site scrs
+  site_scrs <- as.data.frame(vegan::scores(my_nmds, display = "sites"))
+  site_scrs <- cbind(site_scrs, veg_df_class_wide_reduced[,1]) |>
+    dplyr::left_join(y = veg_df_class |>
+                       dplyr::select(class, vegplotid, siteiid) |>
+                       unique(),
+                     by = dplyr::join_by(siteiid), multiple = "all")
+  site_scrs$class <- as.factor(site_scrs$class)
+
+  # plot
+  ggplot2::ggplot() + ggplot2::geom_point(data = site_scrs,
+                                 ggplot2::aes(x = NMDS1, y = NMDS2,
+                                              colour = class,
+                                              position = "jitter"),
+                                 size = 2.5) +
+    ggplot2::geom_text(data = sig.spp.scrs,
+                             ggplot2::aes(x = NMDS1,
+                                 y = NMDS2,
+                                 label = species),
+                       size = 2,
+                       position = ggplot2::position_jitter())
 
 
 }
