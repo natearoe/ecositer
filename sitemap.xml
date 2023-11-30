@@ -22,10 +22,19 @@
     <loc>https://natearoe.github.io/ecositer/reference/QC_plants.html</loc>
   </url>
   <url>
+    <loc>https://natearoe.github.io/ecositer/reference/QC_taxonomy.html</loc>
+  </url>
+  <url>
     <loc>https://natearoe.github.io/ecositer/reference/QC_vegplots_summary.html</loc>
   </url>
   <url>
     <loc>https://natearoe.github.io/ecositer/reference/access_example_data.html</loc>
+  </url>
+  <url>
+    <loc>https://natearoe.github.io/ecositer/reference/big_beta_diversity.html</loc>
+  </url>
+  <url>
+    <loc>https://natearoe.github.io/ecositer/reference/ecosite_similarity_pairwise.html</loc>
   </url>
   <url>
     <loc>https://natearoe.github.io/ecositer/reference/ecositer-package.html</loc>
@@ -55,7 +64,13 @@
     <loc>https://natearoe.github.io/ecositer/reference/scanned_data_organizer.html</loc>
   </url>
   <url>
+    <loc>https://natearoe.github.io/ecositer/reference/site_similarity_pairwise.html</loc>
+  </url>
+  <url>
     <loc>https://natearoe.github.io/ecositer/reference/sites_in_state_phase.html</loc>
+  </url>
+  <url>
+    <loc>https://natearoe.github.io/ecositer/reference/strange_bedfellows.html</loc>
   </url>
   <url>
     <loc>https://natearoe.github.io/ecositer/reference/vegStaticNASIS.html</loc>
