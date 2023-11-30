@@ -11,7 +11,8 @@
 #'
 #' @examples
 #' my_bbd <- big_beta_diversity(veg_df = my_veg_df)
-big_beta_diversity <- function(veg_df){
+big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
+                               relative_dist = TRUE){
 
   # manipulating data for process
   .sd_veg_df <- veg_df |>
@@ -25,6 +26,14 @@ big_beta_diversity <- function(veg_df){
 
   .sd_veg_df[is.na(.sd_veg_df)] <- 0
   .sd_veg_df <- .sd_veg_df[,colSums(.sd_veg_df) > 0]
+
+  if(wisconsin == TRUE){
+    .sd_veg_df <- vegan::wisconsin(.sd_veg_df)
+  }
+
+  if(rare == FALSE){
+    .sd_veg_df <- .sd_veg_df[, colSums(.sd_veg_df > 0) > nrow(.sd_veg_df) * 0.01]
+  }
 
   ### DATASET WIDE CORRELATION
 
@@ -67,6 +76,8 @@ big_beta_diversity <- function(veg_df){
 
   bbd_values <- list()
   for(i in seq(ncol(plot_combs))){
+    #print(i)
+
     # reduce to plot comparison of interest
     .sd_plots <- .sd_veg_df_m_t[,plot_combs[,i]]
 
@@ -82,32 +93,32 @@ big_beta_diversity <- function(veg_df){
     # reduce coeffs down to those of interest
     species_positions <- which(colnames(bray_matrix) %in% colnames(sp_comp))
 
-    # multiple species comparison by coeffs
+    # multiply species comparison by coeffs
     res <- sp_comp * bray_matrix[species_positions, species_positions] * 2
 
     # perform bray equation
     bbd_values[[i]] = 1 - sum(res) / my_denom
 
 
-
-    # reduce to plot comparison of interest
-    .sd_plots <- .sd_veg_df_m_t[,plot_combs[,i]]
-    # remove species absent in both plots
-    .sd_plots <- .sd_plots[rowSums(.sd_plots > 0) > 0, ]
-
-    # calculate denominator
-    my_denom <- sum(denom_multiplier * .sd_plots)
-
-    # species comparison
-    # sp_comp <- outer(t(.sd_plots[, 1]), t(.sd_plots[, 2]), pmin)[1, , ,]
-
-    sp_comp <- outer(.sd_plots[, 1], .sd_plots[, 2], pmin)
-
-    species_positions <- which(colnames(bray_matrix) %in% colnames(sp_comp))
-
-    res <- sp_comp * bray_matrix[species_positions, species_positions] * 2
-
-    bbd_values[[i]] = 1 - sum(res) / my_denom
+#
+#     # reduce to plot comparison of interest
+#     .sd_plots <- .sd_veg_df_m_t[,plot_combs[,i]]
+#     # remove species absent in both plots
+#     .sd_plots <- .sd_plots[rowSums(.sd_plots > 0) > 0, ]
+#
+#     # calculate denominator
+#     my_denom <- sum(denom_multiplier * .sd_plots)
+#
+#     # species comparison
+#     # sp_comp <- outer(t(.sd_plots[, 1]), t(.sd_plots[, 2]), pmin)[1, , ,]
+#
+#     sp_comp <- outer(.sd_plots[, 1], .sd_plots[, 2], pmin)
+#
+#     species_positions <- which(colnames(bray_matrix) %in% colnames(sp_comp))
+#
+#     res <- sp_comp * bray_matrix[species_positions, species_positions] * 2
+#
+#     bbd_values[[i]] = 1 - sum(res) / my_denom
 
   }
 
@@ -132,6 +143,11 @@ big_beta_diversity <- function(veg_df){
   colnames(bbd_matrix) <- colnames_df$vegplotid
   rownames(bbd_matrix) <- colnames(bbd_matrix)
 
+  if(relative_dist == TRUE){
+    bbd_matrix <- (bbd_matrix - min(bbd_matrix))/(max(bbd_matrix) - min(bbd_matrix))
+  }
+
+  return(bbd_matrix)
 
   }
 

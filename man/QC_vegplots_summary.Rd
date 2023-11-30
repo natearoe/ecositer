@@ -11,8 +11,9 @@ QC_vegplots_remove_plots(
   veg_df = NULL,
   my_QC_vegplots_summary = NULL,
   min_species = NULL,
-  min_perc_abund = NULL,
-  site_ids = NULL
+  min_perc_species_with_abund = NULL,
+  min_perc_species_level_id = NULL,
+  siteiids = NULL
 )
 }
 \arguments{
@@ -22,13 +23,13 @@ QC_vegplots_remove_plots(
 
 \item{min_species}{site must have >= N species to be included}
 
+\item{siteiids}{siteiids to be removed as defined by user}
+
 \item{min_abund}{sites must have >= N\% species with abundance data to be included (e.g.,
 entering 90 would include all sites with 90\% or more species with abundance data).
 WARNING: If you keep sites that are missing abundance data and intend to run vegetation
 analyses using abundance data, abundance values will have to be populated. If you run
 analyses on presence/absence data, abundance data is not needed.}
-
-\item{site_id}{site_ids to be removed as defined by user}
 }
 \value{
 \code{QC_vegplots_summary()} returns a summary of vegetation plot sampling detail
@@ -43,7 +44,7 @@ species with abundance data. This information can be used to remove vegplots
 from analyses due to lack of completeness.
 
 \code{QC_vegplots_remove_plots()} allows you to remove vegplots from your dataset
-based on site_ids and parameters related to vegplot completeness.
+based on siteiids and parameters related to vegplot completeness.
 }
 \examples{
 my_QC_vegplots <- QC_vegplots(veg_df = my_veg_df)
