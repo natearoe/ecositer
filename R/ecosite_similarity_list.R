@@ -43,7 +43,9 @@ ecosite_similarity_pairwise <- function(veg_df, dist_pair){
 
 
     dist_pair_i_sum <- dist_pair_i |> dplyr::group_by(group) |> dplyr::summarise(avg_bbd = mean(bbd),
-                                                                          sd_bbd = sd(bbd))
+                                                                          sd_bbd = sd(bbd)) |>
+      dplyr::arrange(avg_bbd)
+
     list_es[[paste(i)]] <- dist_pair_i_sum
   }
 

@@ -90,8 +90,7 @@ QC_vegplots_remove_plots <- function(veg_df = NULL,
                     perc_species_level_id >= min_perc_species_level_id) |>
     dplyr::pull(siteiid)
 
-  veg_df |> dplyr::filter(siteiid %in% c(sites_with_min_requirement)) |>
-    dplyr::filter(!site_id %in% siteiids)
+  veg_df |> dplyr::filter(siteiid %in% c(sites_with_min_requirement))
 
 
 }

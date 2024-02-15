@@ -1,3 +1,14 @@
+#' NMDS taxon comparison
+#'
+#' @param veg_df a properly formatted vegetation dataframe
+#' @param taxon the taxon of interest
+#' @param rare_species TRUE or FALSE to include or remove, respectively
+#' @param min_plots
+#'
+#' @return a NMDS of taxon of interest
+#' @export
+#'
+#' @examples
 nmds_taxon_comparison <- function(veg_df, taxon, rare_species, min_plots){
 
   # remove missing species
@@ -66,8 +77,9 @@ nmds_taxon_comparison <- function(veg_df, taxon, rare_species, min_plots){
   site_scrs$class <- as.factor(site_scrs$class)
 
   # plot
-  ggplot2::ggplot() + ggplot2::geom_point(data = site_scrs,
+  my_plot <- ggplot2::ggplot() + ggplot2::geom_point(data = site_scrs,
                                  ggplot2::aes(x = NMDS1, y = NMDS2,
+                                              text = vegplotid,
                                               colour = class,
                                               position = "jitter"),
                                  size = 2.5) +
@@ -77,6 +89,8 @@ nmds_taxon_comparison <- function(veg_df, taxon, rare_species, min_plots){
                                  label = species),
                        size = 2,
                        position = ggplot2::position_jitter())
+
+  plotly::ggplotly(my_plot, tooltip = c("all"))
 
 
 }

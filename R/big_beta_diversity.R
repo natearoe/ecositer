@@ -35,6 +35,9 @@ big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
     .sd_veg_df <- .sd_veg_df[, colSums(.sd_veg_df > 0) > nrow(.sd_veg_df) * 0.01]
   }
 
+  #ATTENTION!!!!! NEED TO REMOVE PLOTS THAT HAVE NO ABUNDANCE AND DELIVER WARNING
+  .sd_veg_df <- .sd_veg_df[rowSums(.sd_veg_df[, -1])>0, ]
+
   ### DATASET WIDE CORRELATION
 
   # Remove species in only one plot. Spearman correlation cannot be
@@ -76,19 +79,26 @@ big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
 
   bbd_values <- list()
   for(i in seq(ncol(plot_combs))){
-    #print(i)
+    print(i)
 
     # reduce to plot comparison of interest
     .sd_plots <- .sd_veg_df_m_t[,plot_combs[,i]]
 
     # remove species absent in both plots
-    .sd_plots <- .sd_plots[rowSums(.sd_plots > 0) > 0, ]
+    ##.sd_plots <- .sd_plots[rowSums(.sd_plots > 0) > 0, ,drop = FALSE]
+    .sd_plots <- .sd_plots[rowSums(.sd_plots > 0) > 0,]
 
     # calculate denominator
     my_denom <- sum(denom_multiplier * .sd_plots)
 
     # species comparison: use outer function for product of species arrays
+    ## ATTENTION!!! This loop fails when dealing with a plot that has only one species observation. It treats
+    ##              the single value differently, wanting to convert from matrix to numeric. ",drop = FALSE"
+    ##              on line 88 help deal with this. The outer function still needs work though.
+    ### sp_comp2 <- outer(.sd_plots[, 1, drop = FALSE] |> as.numeric(), .sd_plots[, 2, drop = FALSE] |> as.numeric() , pmin)
+
     sp_comp <- outer(.sd_plots[, 1], .sd_plots[, 2], pmin)
+
 
     # reduce coeffs down to those of interest
     species_positions <- which(colnames(bray_matrix) %in% colnames(sp_comp))
