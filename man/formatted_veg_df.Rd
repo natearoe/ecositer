@@ -4,9 +4,11 @@
 \alias{formatted_veg_df}
 \title{Create formatted vegetation dataframe}
 \usage{
-formatted_veg_df(static_location)
+formatted_veg_df(SS = TRUE, static_location)
 }
 \arguments{
+\item{SS}{TRUE or FALSE, should data be accessed from NASIS Selected Set?}
+
 \item{static_location}{the location where a static NASIS database has been
 saved.}
 }

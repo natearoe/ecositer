@@ -2,6 +2,7 @@
 #'
 #' @param static_location the location where a static NASIS database has been
 #' saved.
+#' @param SS TRUE or FALSE, should data be accessed from NASIS Selected Set?
 #'
 #' @return a formatted vegetation dataframe suitable for analysis
 #' @export formatted_veg_df
@@ -11,12 +12,18 @@
 #' my_formatted_veg_df <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 #' head(formatted_veg_df)
 #'
-formatted_veg_df <- function(static_location){
+formatted_veg_df <- function(SS = TRUE, static_location = NULL){
+
+  if(SS == FALSE & is.null(static_location))
+    stop('If SS = FALSE, static location must be provided.')
 
   ############# Create foundational dataframes
 
   # Access veg data
-  veg_data <- soilDB::fetchVegdata(dsn = static_location, SS = FALSE)
+  veg_data <- if(SS == TRUE){
+    soilDB::fetchVegdata(SS = TRUE)
+  } else {
+    soilDB::fetchVegdata(dsn = static_location, SS = FALSE)}
 
   # Access ecosite data
   ecosite_data <- soilDB::fetchNASIS(dsn = static_location,

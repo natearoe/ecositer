@@ -51,6 +51,7 @@ big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
 
   my_list <- list()
   for(i in seq(ncol(comb_m_t))){
+
     sp_comb <- comb_m_t[,i]
     p1 <- .sd_veg_df_m[,sp_comb[[1]]]
     p2 <- .sd_veg_df_m[,sp_comb[[2]]]
@@ -79,7 +80,7 @@ big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
 
   bbd_values <- list()
   for(i in seq(ncol(plot_combs))){
-    print(i)
+    print(c("2i_", i))
 
     # reduce to plot comparison of interest
     .sd_plots <- .sd_veg_df_m_t[,plot_combs[,i]]
