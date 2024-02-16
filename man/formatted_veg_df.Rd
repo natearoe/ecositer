@@ -4,7 +4,7 @@
 \alias{formatted_veg_df}
 \title{Create formatted vegetation dataframe}
 \usage{
-formatted_veg_df(SS = TRUE, static_location)
+formatted_veg_df(SS = TRUE, static_location = NULL)
 }
 \arguments{
 \item{SS}{TRUE or FALSE, should data be accessed from NASIS Selected Set?}
