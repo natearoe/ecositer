@@ -35,8 +35,14 @@ big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
     .sd_veg_df <- .sd_veg_df[, colSums(.sd_veg_df > 0) > nrow(.sd_veg_df) * 0.01]
   }
 
-  #ATTENTION!!!!! NEED TO REMOVE PLOTS THAT HAVE NO ABUNDANCE AND DELIVER WARNING
-  .sd_veg_df <- .sd_veg_df[rowSums(.sd_veg_df[, -1])>0, ]
+  no_abund <- .sd_veg_df[rowSums(.sd_veg_df) <= 0, ] |> row.names()
+
+  if(length(no_abund) != 0){
+    warning("The following plots have no abundance and have been removed: ",
+            paste(no_abund, collapse = ", "))
+  }
+
+  .sd_veg_df <- .sd_veg_df[rowSums(.sd_veg_df)>0, ]
 
   ### DATASET WIDE CORRELATION
 
