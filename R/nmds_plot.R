@@ -11,13 +11,13 @@
 #' @export
 #'
 #' @examples
-#' example_data <- access_example_data()
-#' /dontrun{my_nmds_plot <- nmds_plot(static_location = example_data,
-#' nmds = my_nmds, veg_summary = my_veg_summary)}
+#' \dontrun{#' example_data <- access_example_data()
+#' my_nmds_plot <- nmds_plot(static_location = example_data,
+#' nmds = my_nmds, veg_summary = my_veg_summary)
 #' # user-defined static location
-#' /dontrun{my_nmds_plot <- nmds_plot(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite",
+#' my_nmds_plot <- nmds_plot(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite",
 #' nmds = my_nmds, veg_summary = my_veg_summary)}
-#'
+
 
 nmds_plot <- function(static_location, nmds, veg_summary){
 
