@@ -6,10 +6,10 @@
 #' @export
 #'
 #' @examples
-#' #' my_veg_summary <- veg_summary2(veg_df = ecositer::vegetation_dataframe)
+#' #' my_veg_summary <- veg_summary(veg_df = ecositer::vegetation_dataframe)
 #' head(my_veg_summary)
 #'
-veg_summary2 <- function(veg_df){
+veg_summary <- function(veg_df){
 
   # Convert to data.table
   veg_df <- data.table::as.data.table(veg_df)
