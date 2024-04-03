@@ -21,11 +21,10 @@ interactive NMDS plot
 such as where to use pres/abs data, the number of dimensions, and whether to remove rare species.
 }
 \examples{
-example_data <- access_example_data()
+\dontrun{#' example_data <- access_example_data()
 my_nmds_plot <- nmds_plot(static_location = example_data,
 nmds = my_nmds, veg_summary = my_veg_summary)
 # user-defined static location
-# my_nmds_plot <- nmds_plot(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite",
-nmds = my_nmds, veg_summary = my_veg_summary)
-
+my_nmds_plot <- nmds_plot(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite",
+nmds = my_nmds, veg_summary = my_veg_summary)}
 }
