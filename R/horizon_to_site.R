@@ -1,11 +1,19 @@
-# This script is a continuation of efforts to take pedon horizon or component
-## horizon data and summarize it to a site level property.
+# This function is being developed. It's purpose is to create ecologically relevant
+# site-level properties from horizon data.
 
-# I am currently thinking of three primary categories of properties:
-## horizon, depth interval, and taxonomic. It is possible that particle
-## size control section is another, but that may also fit into depth interval?
+# Currently, I am thinking of including four primary categories of properties:
+# horizon level properties (master horizons or more specific), depth range properties
+# (0-25, 0-50, etc. - though ideally they would be depth related to plant rooting depths...
+# could be an argument in the function), full profile description (e.g., horizon thickness
+# weighted average of texture across entire profile), and taxonomically relevant
+# properties given their recognized importance in pedology.
 
-# Let's start with horizon.
+# Properties of interest include; depth, texture, fragments, color, pH, AWC,
+# ksat, drainage, CEC. Data population completeness likely varies between these
+# properties.
+
+# These properties will be useful for ecological site development, QA/QC of
+# ecological sites, and ecological site modeling.
 
 
 #' Create site level properties from soil horizon data
@@ -137,7 +145,127 @@ site_level_soil_properties <- function(soil_data){
   depth_class <- aqp::getSoilDepthClass(soil_data)
   aqp::site(soil_data) <- depth_class
 
+  # properties by depth
+  aqp::slab(soil_data,
+            fm = phiid ~ clay_best,
+            slab.structure = 0:50)
 
+  head(soil_data$peiid)
+  test <- soil_data[soil_data$peiid == "100256"]
+
+  aqp::dice(test,
+            fm = 0:10 ~ .,
+            slab.structure = 0:50)
+
+  aqp::glomApply()
+
+
+
+
+  # simulate some data, IDs are 1:20
+  d <- lapply(1:20, random_profile)
+  d <- do.call('rbind', d)
+
+  # init SoilProfileCollection object
+  depths(d) <- id ~ top + bottom
+  head(horizons(d))
+
+  # generate single slice at 10 cm
+  # output is a SoilProfileCollection object
+  s <- dice(d, fm = 10 ~ name + p1 + p2 + p3)
+
+
+  aqp::dice(soil_data, fm = 0:10 ~ .)
+
+
+
+
+
+  aqp::dice(soil_data)
+
+  test <- aqp::repairMissingHzDepths(soil_data)
+
+  aqp::dice(test)
+
+
+
+
+
+
+
+
+
+
+
+
+  o_surf_thk <- aqp::getSurfaceHorizonDepth(soils_data2,
+                                            pattern = "O")[[3]]
+
+
+
+  site
+
+
+  pat <- c('^A', '^B', '^E', '^C')
+  lab <- c('A', 'B', 'E', 'C')
+  th <- lapply(seq_along(pat), FUN = function(i) {
+    thicknessOf(x, pattern = pat[i], prefix = lab[i], thickvar = '_thick')
+  })
+
+  s <- Reduce(merge, th)
+
+  site(x) <- s
+
+
+  for(i in masters){
+    soils_data2[[paste0(i), "thk"]] <- soils_data2$thk |> aggregate(FUN = )
+  }
+
+  soils_data2 |> dplyr::select(peiid, thk)
+
+  aqp::subset(soils_data2, texcl == "c")
+
+  aqp::subset(soils_data2, c("peiid", "thk"))
+
+  soils_data2[, c("peiid", "thk")]
+
+  soils_data2
+
+
+
+  ###### texture of masters
+  texs <- c("sand", "silt", "clay")
+
+  for(i in seq_along(texs)){
+    soils_data2[[paste0(texs[i], "_texcl")]]
+  }
+
+
+  soils_data2 <- aqp::texcl_to_ssc(texcl = soils_data2$texcl)
+
+  for(i in unique(soils_data2$texcl[!is.na(soils_data2$texcl)])){
+    print(i)
+    aqp::texcl_to_ssc(texcl = i) |> print()
+  }
+
+  aqp::texcl_to_ssc(texcl = soils_data2$texcl)[[1]] ==
+
+
+
+    # pre-calculate values used by profile mutate expressions (not profile specific)
+    jacobs2000 <- transform(
+      jacobs2000,
+      thk = bottom - top,
+      is_a = grepl('A', name),
+      is_b = grepl('B', name),
+      texcl = ssc_to_texcl(sand, clay)
+    )
+
+  jacobs2000 <- jacobs2000 |>
+    mutate_profile(a_hz_thk = sum(thk[is_a]), # sum of thickness of A horizons
+                   b_hz_clay = weighted.mean(clay[is_b], thk[is_b]), # weighted mean of B horizon clay
+                   b_hz_ph = -log10(weighted.mean(10^-pH[is_b], thk[is_b])), # geometric weighted mean of B horizon pH
+                   b_hz_texcl = texcl[which.max(thk[is_b])]) # texture class of thickest B horizon
 
 }
 
