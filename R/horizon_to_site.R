@@ -26,67 +26,194 @@
 #' @examples
 #'
 #'
-site_level_soil_properties <- function(soil_data){
+site_level_soil_properties <- function(soil_data,
+                                       checkHzDepthLogic = TRUE,
+                                       stopOnHzLogicFail = TRUE,
+                                       byDepth = list(c(0,25), c(0, 50))){
 
+  ################# QC horizon data ############################
 
-  ###################### Property categories ##############################
+  # check for horizon logic - errors should be fixed
+  if (checkHzDepthLogic) {
+    my_logic <- aqp::checkHzDepthLogic(soil_data, byhz = TRUE)
+    my_illogic <- my_logic[my_logic$valid == FALSE,]
 
-  ####### calculate thickness
+    if (nrow(my_illogic >= 0)) {
+      if (stopOnHzLogicFail == TRUE) {
+        stop(
+          "Illogical conditions exist in horizon data. Please run aqp::checkHzDepthLogic() on your SoilProfileCollection and correct errors where possible. If you want to run the function despite failed horizon logic, set stopOnHzLogicFail == FALSE "
+        )
+      }
+      else{
+        warning(
+          "Illogical conditions exist in horizon data. Please run aqp::checkHzDepthLogic() on your SoilProfileCollection and correct errors where possible."
+        )
+      }
+    }
+  }
+
+  ################ Pre-division actions ################################
+  # In the next step, we will divide our SPC into multiple SPCs (if the
+  # user requests properties by depth). Here, we will make modifications
+  # to our SPC that can be done prior to this process, so that it does not
+  # need to be applied to multiple SPCs unnecessarily (inefficient).
+  # These properties are: thickness, master horizon designations
+
+  ## calculate thickness
   soil_data[["thk"]] <- soil_data$hzdepb - soil_data$hzdept
 
-
-  ####### assign horizon designations
+  ## assign horizon designations
   masters <- c("O", "A", "B", "C", "R")
 
-
-  # create master horizon logic
+  ## create master horizon logic
   for(i in masters){
     soil_data[[paste0("is", i)]] <- grepl(i, soil_data$hzname)
   }
 
+  ## set soil color
+  munsell <- c("hue", "value", "chroma")
+  moisture <- c("d", "m")
 
-  ####### depth intervals
-  depths <- c(5, 25, 50, 100, 150)
+  color_list <- lapply(seq_along(moisture), FUN = function(x){
+    paste(moisture[x], munsell, sep = "_")
+  })
 
-  ####### taxonomy
+  lapply(seq_along(color_list), FUN = function(x){
+    cie_lab <- cbind(soil_data$phiid, aqp::munsell2rgb(soil_data[[paste(color_list[[x]][1])]],
+                                                       soil_data[[paste(color_list[[x]][2])]],
+                                                       soil_data[[paste(color_list[[x]][3])]],
+                                                       returnLAB = TRUE))
+    colnames(cie_lab) <- c("phiid", paste(moisture[x], c("L", "A", "B"),
+                                          sep = "_"))
+    aqp::horizons(soil_data) <<- cie_lab
+  })
+
+  ### pull color from deepest horizon with color data
 
 
 
-  ###################### Properties #######################################
+
+  test <- soil_data@horizons |> dplyr::filter(
+    !is.na(soil_data$d_L) &
+      !is.na(soil_data$d_A) &
+      !is.na(soil_data$d_B)) |>
+    dplyr::filter(isB == TRUE | isC == TRUE | isR == TRUE) |> dplyr::group_by(peiid, d_L, d_A, d_B) |>
+    dplyr::summarise(max(hzdept))
+
+  test$test <- ifelse(soil_data$peiid == test$peiid &
+                        soil_data$hzdept == test$`max(hzdept)`,
+                      TRUE,
+                      FALSE)
+
+  lapply(unique(soil_data$peiid), FUN = function(x){
+    aqp::subset(soil_data, peiid == x)
+  })
+
+  soil_
+
+  soil_data$peiid
+
+
+
+
+  test <- soil_data[is.na(soil_data$d_L) &
+              is.na(soil_data$d_A) &
+              is.na(soil_data$d_B)
+              ,] |> aqp::subsetHz(hzdept == max(hzdept))
+
+  soil_data[is.na(soil_data$d_L) &
+              is.na(soil_data$d_A) &
+              is.na(soil_data$d_B)
+            ,] |> dplyr::group_by(peiid) |> summar
+
+  soil_data@horizons |> dplyr::filter(is.na(soil_data$d_L) &
+                                        is.na(soil_data$d_A) &
+                                        is.na(soil_data$d_B) ) |>
+    dplyr::summarise(max(hzdept))
+
+  soil_data$test <-
+
+
+
+  soil_data@horizons |> dplyr::filter(is.na(soil_data$d_L) &
+                                        is.na(soil_data$d_A) &
+                                        is.na(soil_data$d_B)) |> dplyr::group_by(peiid) |>
+    dplyr::summarise(max(hzdept))
+
+  soil_data$deepest_color <- ifelse(peiid)
+
+
+
+
+  ################ Create a list of SPCs ###############################
+  # SPC is divided into multiple SPCs, if user requests depth ranges.
+  # All future actions are applied to
+  byDepthNames <- c("full_profile",  lapply(byDepth, FUN = function(x){
+    paste(x, collapse = "_")
+  }) |> unlist())
+  byDepth <- c(list(c(0,999)), byDepth)
+
+
+  SPC_list <- lapply(seq_along(byDepth), FUN = function(x){
+    SPC_sub <- soil_data |> aqp::subsetHz(!hzdept >= byDepth[[x]][2] &
+                                            !hzdepb <= byDepth[[x]][1])
+    SPC_sub$hzdepb <- ifelse(SPC_sub$hzdepb > byDepth[[x]][2],
+                             byDepth[[x]][2],
+                             SPC_sub$hzdepb)
+    SPC_sub$hzdept <- ifelse(SPC_sub$hzdept < byDepth[[x]][1],
+                             byDepth[[x]][1],
+                             SPC_sub$hzdept)
+    return(SPC_sub)
+  })
+
+  names(SPC_list) <- byDepthNames
+
+  ###################### Property calculations ##############################
 
   ###### thickness of masters
   # possibly do this with for loop - group/summarize horizons, join to sites
-  soil_data <- soil_data |> aqp::mutate_profile(o_hz_thk = sum(thk[isO], na.rm = TRUE),
-                                                  a_hz_thk = sum(thk[isA], na.rm = TRUE),
-                                                  b_hz_thk = sum(thk[isB], na.rm = TRUE),
-                                                  c_hz_thk = sum(thk[isC], na.rm = TRUE),
-                                                  r_hz_thk = sum(thk[isR], na.rm = TRUE))
+  SPC_list <- lapply(SPC_list, FUN = function(x){
+    x |> aqp::mutate_profile(o_hz_thk = sum(thk[isO], na.rm = TRUE),
+                                     a_hz_thk = sum(thk[isA], na.rm = TRUE),
+                                     b_hz_thk = sum(thk[isB], na.rm = TRUE),
+                                     c_hz_thk = sum(thk[isC], na.rm = TRUE),
+                                     r_hz_thk = sum(thk[isR], na.rm = TRUE))
+  })
 
   # o surface thickness
-  o_surf_thk <- aqp::getSurfaceHorizonDepth(soil_data,
-                              pattern = "O")[, c(1,3)]
+  SPC_list <- lapply(SPC_list, FUN = function(x){
+    o_surf_thk <- aqp::getSurfaceHorizonDepth(x,
+                        pattern = "O")[, c(1,3)]
+    colnames(o_surf_thk) <- c("peiid", "o_surf_thk")
+    aqp::site(x) <- o_surf_thk
+    return(x)
+  })
 
-  colnames(o_surf_thk) <- c("peiid", "o_surf_thk")
-
-  aqp::site(soil_data) <- o_surf_thk
 
   # texture by horizon
-  ssc_texcl <- cbind(soil_data$phiid, aqp::texcl_to_ssc(soil_data$texcl))
-
-  colnames(ssc_texcl) <- c("phiid", "sand_texcl", "silt_texcl", "clay_texcl")
-
-  aqp::horizons(soil_data) <- ssc_texcl
+  SPC_list <- lapply(SPC_list, FUN = function(x){
+    ssc_texcl <- cbind(x$phiid, aqp::texcl_to_ssc(x$texcl))
+    colnames(ssc_texcl) <- c("phiid", "sand_texcl", "silt_texcl", "clay_texcl")
+    aqp::horizons(x) <- ssc_texcl
+    return(x)
+  })
 
   # calculate best texture
-  soil_data$sand_best <- ifelse(is.na(soil_data$sand), soil_data$sand_texcl,
-                                 soil_data$sand)
-  soil_data$silt_best <- ifelse(is.na(soil_data$silt), soil_data$silt_texcl,
-                                 soil_data$silt)
-  soil_data$clay_best <- ifelse(is.na(soil_data$clay), soil_data$clay_texcl,
-                                 soil_data$clay)
+  SPC_list <- lapply(SPC_list, FUN = function(x){
+    x$sand_best <- ifelse(is.na(x$sand), x$sand_texcl,
+                                  x$sand)
+    x$silt_best <- ifelse(is.na(x$silt), x$silt_texcl,
+                                  x$silt)
+    x$clay_best <- ifelse(is.na(x$clay), x$clay_texcl,
+                                  x$clay)
+    return(x)
+  })
+
+
 
   # site level texture properties
-  soil_data <- soil_data |> aqp::mutate_profile(o_sand_wtd = weighted.mean(sand_best[isO],
+  SPC_list <- lapply(SPC_list, FUN = function(x){
+    x <- x |> aqp::mutate_profile(o_sand_wtd = weighted.mean(sand_best[isO],
                                                                              thk[isO], na.rm = TRUE),
                                                   o_silt_wtd = weighted.mean(silt_best[isO],
                                                                              thk[isO], na.rm = TRUE),
@@ -116,9 +243,12 @@ site_level_soil_properties <- function(soil_data){
                                                                                      thk, na.rm = TRUE),
                                                   full_prof_clay_wtd = weighted.mean(clay_best,
                                                                                      thk, na.rm = TRUE))
+    return(x)
+  })
 
   # pH
-  soil_data <- soil_data |> aqp::mutate_profile(o_ph_wtd = weighted.mean(phfield[isO],
+  SPC_list <- lapply(SPC_list, FUN = function(x){
+    x <- x |> aqp::mutate_profile(o_ph_wtd = weighted.mean(phfield[isO],
                                                                            thk[isO], na.rm = TRUE),
                                                   a_ph_wtd = weighted.mean(phfield[isA],
                                                                            thk[isA], na.rm = TRUE),
@@ -128,9 +258,12 @@ site_level_soil_properties <- function(soil_data){
                                                                            thk[isC], na.rm = TRUE),
                                                   full_prof_ph_wtd = weighted.mean(phfield,
                                                                                    thk, na.rm = TRUE))
+    return(x)
+  })
 
   # frag vol.
-  soil_data <- soil_data |> aqp::mutate_profile(o_frag_vol_tot_wtd = weighted.mean(total_frags_pct[isO],
+  SPC_list <- lapply(SPC_list, FUN = function(x){
+    x <- x |> aqp::mutate_profile(o_frag_vol_tot_wtd = weighted.mean(total_frags_pct[isO],
                                                                                      thk[isO], na.rm = TRUE),
                                                   a_frag_vol_tot_wtd = weighted.mean(total_frags_pct[isA],
                                                                                      thk[isA], na.rm = TRUE),
@@ -139,13 +272,23 @@ site_level_soil_properties <- function(soil_data){
                                                   c_frag_vol_tot_wtd = weighted.mean(total_frags_pct[isC],
                                                                                      thk[isC], na.rm = TRUE),
                                                   full_prof_frag_vol_tot_wtd = weighted.mean(total_frags_pct,
-                                                                                     thk, na.rm = TRUE))
+                                                                                             thk, na.rm = TRUE))
+    return(x)
+  })
 
   # depth
-  depth_class <- aqp::getSoilDepthClass(soil_data)
-  aqp::site(soil_data) <- depth_class
+  SPC_list <- lapply(SPC_list, FUN = function(x){
+    depth_class <- aqp::getSoilDepthClass(x)
+    aqp::site(x) <- depth_class
+    return(x)
+  })
+
+  # color - only from full horizon
+  SPC_list[[1]][!is.na(SPC_list[[1]]$d_L) &
+                  !is.na(SPC_list[[1]]$d_A) &
+                  !is.na(SPC_list),]
 
 
-
+  SPC_list[[1]]$m
 }
 
