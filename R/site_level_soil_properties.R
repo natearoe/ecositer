@@ -28,6 +28,7 @@
 #' @param byDepth a list of depth ranges to calculate properties across. Use NULL if depth ranges are not of interest.
 #' @return an SPC with ecologically relevant properties appended to the site df
 #' @export
+#' @import data.table
 #'
 #' @examples
 #'
@@ -36,6 +37,8 @@ site_level_soil_properties <- function(soil_data,
                                        checkHzDepthLogic = TRUE,
                                        stopOnHzLogicFail = TRUE,
                                        byDepth = list(c(0,25), c(0, 50))){
+
+  .SD <- NULL
 
   ################# QC horizon data ############################
 
