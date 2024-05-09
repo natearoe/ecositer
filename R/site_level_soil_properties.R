@@ -257,7 +257,7 @@ site_level_soil_properties <- function(soil_data,
     return(x)
   })
 
-  return(x)
+  return(SPC_list)
 
 }
 
