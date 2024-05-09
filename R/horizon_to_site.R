@@ -89,60 +89,29 @@ site_level_soil_properties <- function(soil_data,
   })
 
   ### pull color from deepest horizon with color data
+  LAB <- c("L", "A", "B")
 
-
-
-
-  test <- soil_data@horizons |> dplyr::filter(
-    !is.na(soil_data$d_L) &
-      !is.na(soil_data$d_A) &
-      !is.na(soil_data$d_B)) |>
-    dplyr::filter(isB == TRUE | isC == TRUE | isR == TRUE) |> dplyr::group_by(peiid, d_L, d_A, d_B) |>
-    dplyr::summarise(max(hzdept))
-
-  test$test <- ifelse(soil_data$peiid == test$peiid &
-                        soil_data$hzdept == test$`max(hzdept)`,
-                      TRUE,
-                      FALSE)
-
-  lapply(unique(soil_data$peiid), FUN = function(x){
-    aqp::subset(soil_data, peiid == x)
+  LAB_list <- lapply(seq_along(moisture), FUN = function(x){
+    paste(moisture[x], LAB, sep = "_")
   })
 
-  soil_
+  soil_dt <- data.table::setDT(aqp::horizons(soil_data))
 
-  soil_data$peiid
+  lapply(seq_along(color_list), FUN = function(x){
 
+    soil_dt <- soil_dt[soil_dt[, rowSums(is.na(.SD)) == 0,
+                               .SDcols = LAB_list[[x]]],]
 
+    soil_dt <- soil_dt[soil_dt[, rowSums(.SD) > 0,
+                               .SDcols = c("isB", "isC", "isR")],][
+                                 , .SD[which.max(hzdept)], by = peiid,
+                                 .SDcols = LAB_list[[x]]
+                               ] |> data.table::setDF()
 
-
-  test <- soil_data[is.na(soil_data$d_L) &
-              is.na(soil_data$d_A) &
-              is.na(soil_data$d_B)
-              ,] |> aqp::subsetHz(hzdept == max(hzdept))
-
-  soil_data[is.na(soil_data$d_L) &
-              is.na(soil_data$d_A) &
-              is.na(soil_data$d_B)
-            ,] |> dplyr::group_by(peiid) |> summar
-
-  soil_data@horizons |> dplyr::filter(is.na(soil_data$d_L) &
-                                        is.na(soil_data$d_A) &
-                                        is.na(soil_data$d_B) ) |>
-    dplyr::summarise(max(hzdept))
-
-  soil_data$test <-
-
-
-
-  soil_data@horizons |> dplyr::filter(is.na(soil_data$d_L) &
-                                        is.na(soil_data$d_A) &
-                                        is.na(soil_data$d_B)) |> dplyr::group_by(peiid) |>
-    dplyr::summarise(max(hzdept))
-
-  soil_data$deepest_color <- ifelse(peiid)
-
-
+    colnames(soil_dt) <- c("peiid", paste(LAB_list[[x]], "lowest_mineral",
+                                          sep = "_"))
+    aqp::site(soil_data) <<- soil_dt
+  })
 
 
   ################ Create a list of SPCs ###############################
