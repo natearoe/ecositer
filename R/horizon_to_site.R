@@ -53,11 +53,14 @@ site_level_soil_properties <- function(soil_data,
   }
 
   ################ Pre-division actions ################################
-  # In the next step, we will divide our SPC into multiple SPCs (if the
-  # user requests properties by depth). Here, we will make modifications
-  # to our SPC that can be done prior to this process, so that it does not
-  # need to be applied to multiple SPCs unnecessarily (inefficient).
-  # These properties are: thickness, master horizon designations
+  # This section calculates properties on entire soil profiles. In the
+  # following section, the SoilProfileCollection is split into multiple
+  # SoilProfileCollections where property by depth calculations are
+  # performed (if requested by the user). The properties in this section
+  # either make more sense to be calculated on the entire profile (e.g.,
+  # depth) or feed into calculations that will later be performed on
+  # SoilProfileCollections separated by depth (e.g., thickness of
+  # horizon or master horizon id)
 
   ## calculate thickness
   soil_data[["thk"]] <- soil_data$hzdepb - soil_data$hzdept
@@ -113,6 +116,9 @@ site_level_soil_properties <- function(soil_data,
     aqp::site(soil_data) <<- soil_dt
   })
 
+  # depth
+  depth_class <- aqp::getSoilDepthClass(soil_data)
+  aqp::site(soil_data) <- depth_class
 
   ################ Create a list of SPCs ###############################
   # SPC is divided into multiple SPCs, if user requests depth ranges.
@@ -245,19 +251,7 @@ site_level_soil_properties <- function(soil_data,
     return(x)
   })
 
-  # depth
-  SPC_list <- lapply(SPC_list, FUN = function(x){
-    depth_class <- aqp::getSoilDepthClass(x)
-    aqp::site(x) <- depth_class
-    return(x)
-  })
+  return(x)
 
-  # color - only from full horizon
-  SPC_list[[1]][!is.na(SPC_list[[1]]$d_L) &
-                  !is.na(SPC_list[[1]]$d_A) &
-                  !is.na(SPC_list),]
-
-
-  SPC_list[[1]]$m
 }
 
