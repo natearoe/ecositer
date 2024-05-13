@@ -4,14 +4,15 @@
 #'
 #' @param veg_df a properly formatted vegetation dataframe (\link[ecositer]{formatted_veg_df}).
 #' The data should be QCed to ensure that it meets minimum data requirements (\link[ecositer]{QC_vegplots})
-#'
+#' @param remove_rare decimal value defining the fraction of sites a species must be present in to be included
+#' (e.g., 0.01 means a species must be present in > 1% of plots). FALSE to include all species in dataset.
 #' @return a distance matrix. This distance matrix can be used for ordination or to determine the similarity between
 #' different ecological sites.
 #' @export
 #'
 #' @examples
 #' my_bbd <- big_beta_diversity(veg_df = my_veg_df)
-big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
+big_beta_diversity <- function(veg_df, wisconsin = FALSE, remove_rare = FALSE,
                                relative_dist = TRUE){
 
   # manipulating data for process
@@ -27,12 +28,12 @@ big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
   .sd_veg_df[is.na(.sd_veg_df)] <- 0
   .sd_veg_df <- .sd_veg_df[,colSums(.sd_veg_df) > 0]
 
-  if(wisconsin == TRUE){
+  if(wisconsin){
     .sd_veg_df <- vegan::wisconsin(.sd_veg_df)
   }
 
-  if(rare == FALSE){
-    .sd_veg_df <- .sd_veg_df[, colSums(.sd_veg_df > 0) > nrow(.sd_veg_df) * 0.01]
+  if(remove_rare != FALSE){
+    .sd_veg_df <- .sd_veg_df[, colSums(.sd_veg_df > 0) > nrow(.sd_veg_df) * remove_rare]
   }
 
   no_abund <- .sd_veg_df[rowSums(.sd_veg_df) <= 0, ] |> row.names()
@@ -51,13 +52,11 @@ big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
   .sd_veg_df_m <- as.matrix(.sd_veg_df)
 
   # Create and name grid of all species combinations.
-
   comb_m_t <- t(RcppAlgos::comboGrid(colnames(.sd_veg_df_m), colnames(.sd_veg_df_m)))
   comb_m <- t(comb_m_t)
 
   my_list <- list()
   for(i in seq(ncol(comb_m_t))){
-
     sp_comb <- comb_m_t[,i]
     p1 <- .sd_veg_df_m[,sp_comb[[1]]]
     p2 <- .sd_veg_df_m[,sp_comb[[2]]]
@@ -92,20 +91,17 @@ big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
     .sd_plots <- .sd_veg_df_m_t[,plot_combs[,i]]
 
     # remove species absent in both plots
-    ##.sd_plots <- .sd_plots[rowSums(.sd_plots > 0) > 0, ,drop = FALSE]
-    .sd_plots <- .sd_plots[rowSums(.sd_plots > 0) > 0,]
+    .sd_plots <- .sd_plots[rowSums(.sd_plots > 0) > 0, , drop = FALSE]
+
+    # remove column names - this is important when you have a one row
+    # matrix because of row/column naming in the outer function.
+    # see - https://stackoverflow.com/questions/78462981/subset-a-single-row-matrix-array-and-return-row-names/78463350#78463350
+    colnames(.sd_plots) <- NULL
 
     # calculate denominator
     my_denom <- sum(denom_multiplier * .sd_plots)
 
-    # species comparison: use outer function for product of species arrays
-    ## ATTENTION!!! This loop fails when dealing with a plot that has only one species observation. It treats
-    ##              the single value differently, wanting to convert from matrix to numeric. ",drop = FALSE"
-    ##              on line 88 help deal with this. The outer function still needs work though.
-    ### sp_comp2 <- outer(.sd_plots[, 1, drop = FALSE] |> as.numeric(), .sd_plots[, 2, drop = FALSE] |> as.numeric() , pmin)
-
     sp_comp <- outer(.sd_plots[, 1], .sd_plots[, 2], pmin)
-
 
     # reduce coeffs down to those of interest
     species_positions <- which(colnames(bray_matrix) %in% colnames(sp_comp))
@@ -115,27 +111,6 @@ big_beta_diversity <- function(veg_df, wisconsin = FALSE, rare = TRUE,
 
     # perform bray equation
     bbd_values[[i]] = 1 - sum(res) / my_denom
-
-
-#
-#     # reduce to plot comparison of interest
-#     .sd_plots <- .sd_veg_df_m_t[,plot_combs[,i]]
-#     # remove species absent in both plots
-#     .sd_plots <- .sd_plots[rowSums(.sd_plots > 0) > 0, ]
-#
-#     # calculate denominator
-#     my_denom <- sum(denom_multiplier * .sd_plots)
-#
-#     # species comparison
-#     # sp_comp <- outer(t(.sd_plots[, 1]), t(.sd_plots[, 2]), pmin)[1, , ,]
-#
-#     sp_comp <- outer(.sd_plots[, 1], .sd_plots[, 2], pmin)
-#
-#     species_positions <- which(colnames(bray_matrix) %in% colnames(sp_comp))
-#
-#     res <- sp_comp * bray_matrix[species_positions, species_positions] * 2
-#
-#     bbd_values[[i]] = 1 - sum(res) / my_denom
 
   }
 
