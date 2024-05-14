@@ -55,6 +55,9 @@
     <loc>https://natearoe.github.io/ecositer/reference/nmds_plot.html</loc>
   </url>
   <url>
+    <loc>https://natearoe.github.io/ecositer/reference/nmds_taxon_comparison.html</loc>
+  </url>
+  <url>
     <loc>https://natearoe.github.io/ecositer/reference/number_plots_by_site.html</loc>
   </url>
   <url>
@@ -64,7 +67,13 @@
     <loc>https://natearoe.github.io/ecositer/reference/scanned_data_organizer.html</loc>
   </url>
   <url>
+    <loc>https://natearoe.github.io/ecositer/reference/site_level_soil_properties.html</loc>
+  </url>
+  <url>
     <loc>https://natearoe.github.io/ecositer/reference/site_similarity_pairwise.html</loc>
+  </url>
+  <url>
+    <loc>https://natearoe.github.io/ecositer/reference/site_soils.html</loc>
   </url>
   <url>
     <loc>https://natearoe.github.io/ecositer/reference/sites_in_state_phase.html</loc>
@@ -77,5 +86,8 @@
   </url>
   <url>
     <loc>https://natearoe.github.io/ecositer/reference/veg_summary.html</loc>
+  </url>
+  <url>
+    <loc>https://natearoe.github.io/ecositer/reference/veg_summary2.html</loc>
   </url>
 </urlset>
