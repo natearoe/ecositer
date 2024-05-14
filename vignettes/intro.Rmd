@@ -82,7 +82,7 @@ CA792_veg_formatted <- formatted_veg_df(SS = FALSE, static_location = "C:/Users/
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-CA792_veg_formatted <- formatted_veg_df(static_location = configFile)
+CA792_veg_formatted <- formatted_veg_df(SS = FALSE, static_location = configFile)
 ```
 
 Let's start off by looking at how many pedons and vegplots we have for each ecosite
