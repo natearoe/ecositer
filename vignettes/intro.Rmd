@@ -78,7 +78,7 @@ ecositer::vegStaticNASIS(output_path = "C:/Users/Nathan.Roe/Documents/SEKI/CA792
 
 Now we can format our vegetation data into a more useful format
 ```{r, eval = FALSE}
-CA792_veg_formatted <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
+CA792_veg_formatted <- formatted_veg_df(SS = FALSE, static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
