@@ -66,7 +66,7 @@ QC_taxonomy <- function(veg_df){
 
   sym_key$new_sci_name <- gsub("^ *|(?<= ) | *$", "", sym_key$new_sci_name, perl = TRUE)
 
-  sym_key <- sym_key |> dplyr::left_join(veg_df |> dplyr::select(plantsym, plantsciname) |> unique(), by = c("new_code" = "plantsym"))
+  sym_key <-  sym_key |> dplyr::left_join(veg_df |> dplyr::select(plantsym, plantsciname) |> unique(), by = c("new_code" = "plantsym"))
 
   sym_key$final_sci_name <- ifelse(is.na(sym_key$plantsciname.y), sym_key$new_sci_name, sym_key$plantsciname.y)
 
@@ -74,11 +74,11 @@ QC_taxonomy <- function(veg_df){
 
   veg_df$plantsciname <- plyr::mapvalues(veg_df$plantsciname, from = sym_key$plantsciname.x, to = sym_key$final_sci_name)
 
-  message(paste(sym_key$plantsciname.x, "changed to", sym_key$final_sci_name))
+  message(paste(sym_key$plantsciname.x, "changed to", sym_key$final_sci_name, "\n"))
 
-  return(veg_df)
-
+return(veg_df)
 
 }
+
 
 
