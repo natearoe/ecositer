@@ -74,6 +74,8 @@ QC_taxonomy <- function(veg_df){
 
   veg_df$plantsciname <- plyr::mapvalues(veg_df$plantsciname, from = sym_key$plantsciname.x, to = sym_key$final_sci_name)
 
+  message(paste(sym_key$plantsciname.x, "changed to", sym_key$final_sci_name))
+
   return(veg_df)
 
 
