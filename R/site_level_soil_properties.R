@@ -109,7 +109,9 @@ site_level_soil_properties <- function(soil_data,
 
   soil_dt <- data.table::setDT(aqp::horizons(soil_data))
 
-  lapply(seq_along(color_list), FUN = function(x){
+  color_results <- list()
+
+  color_results <- lapply(seq_along(color_list), FUN = function(x){
 
     soil_dt <- soil_dt[soil_dt[, rowSums(is.na(.SD)) == 0,
                                .SDcols = LAB_list[[x]]],]
@@ -122,8 +124,14 @@ site_level_soil_properties <- function(soil_data,
 
     colnames(soil_dt) <- c("peiid", paste(LAB_list[[x]], "lowest_mineral",
                                           sep = "_"))
-    aqp::site(soil_data) <<- soil_dt
+
+    soil_dt
+
   })
+
+  color_df <- do.call(merge, color_results)
+
+  aqp::site(soil_data)  <-  color_df
 
   # depth
   depth_class <- aqp::getSoilDepthClass(soil_data)
@@ -148,7 +156,7 @@ site_level_soil_properties <- function(soil_data,
     SPC_sub$hzdept <- ifelse(SPC_sub$hzdept < byDepth[[x]][1],
                              byDepth[[x]][1],
                              SPC_sub$hzdept)
-    return(SPC_list)
+    SPC_sub
 
   })
 
