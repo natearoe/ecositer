@@ -133,10 +133,11 @@ site_level_soil_properties <- function(soil_data,
   # SPC is divided into multiple SPCs, if user requests depth ranges.
   # All future actions are applied to
   byDepthNames <- c("full_profile",  lapply(byDepth, FUN = function(x){
-    paste(x, collapse = "_")
+    paste("cm", paste(x, collapse = "_"), sep = "_")
   }) |> unlist())
   byDepth <- c(list(c(0,999)), byDepth)
 
+  SPC_list <- list()
 
   SPC_list <- lapply(seq_along(byDepth), FUN = function(x){
     SPC_sub <- soil_data |> aqp::subsetHz(!hzdept >= byDepth[[x]][2] &
@@ -147,7 +148,8 @@ site_level_soil_properties <- function(soil_data,
     SPC_sub$hzdept <- ifelse(SPC_sub$hzdept < byDepth[[x]][1],
                              byDepth[[x]][1],
                              SPC_sub$hzdept)
-    return(SPC_sub)
+    return(SPC_list)
+
   })
 
   names(SPC_list) <- byDepthNames
