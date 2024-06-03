@@ -137,6 +137,22 @@ site_level_soil_properties <- function(soil_data,
   depth_class <- aqp::getSoilDepthClass(soil_data)
   aqp::site(soil_data) <- depth_class
 
+  aqp::site(soil_data) <- do.call('rbind', aqp::profileApply(soil_data, simplify = F, function(p) {
+    restr <- aqp::restrictions(p)
+    first.restr.depth <- suppressWarnings(min(restr$resdept, na.rm = TRUE)[1])
+    if(is.finite(first.restr.depth)) {
+      res <- restr[which(restr$resdept == first.restr.depth),]
+      names(res) <- c(names(res)[1], paste0("first_", names(res)[2:length(names(res))]))
+      return(res)
+    } else {
+      return(restr[0,])
+    }
+  }))
+
+  soil_data$depth_best <- ifelse(is.na(soil_data$first_resdept),
+                                 soil_data$first_resdept,
+                                 soil_data$first_resdept) # !!!! this needs editting
+
   ################ Create a list of SPCs ###############################
   # SPC is divided into multiple SPCs, if user requests depth ranges.
   # All future actions are applied to
@@ -269,6 +285,13 @@ site_level_soil_properties <- function(soil_data,
                                                                                              thk, na.rm = TRUE))
     return(x)
   })
+
+  # surface frag tot perc.
+  SPC_list <- lapply(SPC_list, FUN = function(x){
+    x <- x |> aqp::mutate_profile(surf_frag_tot_perc = )
+    return(x)
+  })
+
 
   return(SPC_list)
 
