@@ -125,7 +125,7 @@ formatted_veg_df <- function(SS = TRUE, static_location = NULL){
   veg_data_with_ecosite_coords <-
     dplyr::left_join(veg_data_with_ecosite,
                      veg_data$vegplotlocation |>
-                       dplyr::select(siteiid, utmzone, utmeasting, utmnorthing) |>
+                       dplyr::select(siteiid, horizdatnm, utmzone, utmeasting, utmnorthing) |>
                        unique())
 
   return(veg_data_with_ecosite_coords)
