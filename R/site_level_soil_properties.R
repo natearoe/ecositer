@@ -151,7 +151,7 @@ site_level_soil_properties <- function(soil_data,
 
   soil_data$depth_best <- ifelse(is.na(soil_data$first_resdept),
                                  soil_data$first_resdept,
-                                 soil_data$first_resdept) # !!!! this needs editting
+                                 soil_data$first_resdept) # !!!! this needs editing
 
   ################ Create a list of SPCs ###############################
   # SPC is divided into multiple SPCs, if user requests depth ranges.
@@ -283,12 +283,6 @@ site_level_soil_properties <- function(soil_data,
                                                                                      thk[isC], na.rm = TRUE),
                                                   full_prof_frag_vol_tot_wtd = weighted.mean(total_frags_pct,
                                                                                              thk, na.rm = TRUE))
-    return(x)
-  })
-
-  # surface frag tot perc.
-  SPC_list <- lapply(SPC_list, FUN = function(x){
-    x <- x |> aqp::mutate_profile(surf_frag_tot_perc = )
     return(x)
   })
 
