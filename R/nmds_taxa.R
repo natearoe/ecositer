@@ -22,24 +22,24 @@ nmds_taxa <- function(veg_df, taxa, spp.scr.thrshld = 0.01){
   # Reduce veg_df to taxa strings
   sites_with_taxa <- veg_df |> dplyr::filter(plantsciname %in% taxa_v)
   sites_with_taxa$taxa_id <- sites_with_taxa$plantsciname
-  sites_with_taxa$siteiid <- as.character(sites_with_taxa$siteiid)
+  sites_with_taxa$vegplotid <- as.character(sites_with_taxa$vegplotid)
 
   # Remove taxa of interest so that they do not affect the ordination results;
   # only keep sites with taxa of interest
   taxa_df <- veg_df |> dplyr::filter(!plantsciname %in% taxa_v) |>
-    dplyr::filter(siteiid %in% sites_with_taxa$siteiid)
-  taxa_df$siteiid <- as.character(taxa_df$siteiid)
+    dplyr::filter(vegplotid %in% sites_with_taxa$vegplotid)
+  taxa_df$vegplotid <- as.character(taxa_df$vegplotid)
 
   # Join in ctaxa_id
-  taxa_df <- taxa_df |> dplyr::left_join(sites_with_taxa |> dplyr::select(siteiid, taxa_id))
+  taxa_df <- taxa_df |> dplyr::left_join(sites_with_taxa |> dplyr::select(vegplotid, taxa_id))
 
   # Prep df for NMDS
-  taxa_df <- taxa_df |> dplyr::select(siteiid, plantsciname, akstratumcoverclasspct, ecositeid) |>
-    dplyr::group_by(siteiid, plantsciname) |>
+  taxa_df <- taxa_df |> dplyr::select(vegplotid, plantsciname, akstratumcoverclasspct, ecositeid) |>
+    dplyr::group_by(vegplotid, plantsciname) |>
     dplyr::summarise(total_abund = sum(akstratumcoverclasspct, na.rm = TRUE)) |>
     tidyr::pivot_wider(names_from = plantsciname,
                        values_from = total_abund) |>
-    tibble::column_to_rownames("siteiid")
+    tibble::column_to_rownames("vegplotid")
 
   # Assign NA values to zero
   taxa_df2[is.na(taxa_df2)] <- 0
@@ -49,8 +49,8 @@ nmds_taxa <- function(veg_df, taxa, spp.scr.thrshld = 0.01){
 
   # Calculate site scores
   site_scrs <- as.data.frame(vegan::scores(my_nmds, display = "sites")) |>
-    tibble::rownames_to_column("siteiid") |>
-    dplyr::left_join(taxa_df |> dplyr::select(siteiid, taxa_id) |>
+    tibble::rownames_to_column("vegplotid") |>
+    dplyr::left_join(taxa_df |> dplyr::select(vegplotid, taxa_id) |>
                        unique())
 
   # Calculate species scores
@@ -64,7 +64,7 @@ nmds_taxa <- function(veg_df, taxa, spp.scr.thrshld = 0.01){
 
   my_plot <- ggplot2::ggplot() + ggplot2::geom_point(data = site_scrs,
                                                    ggplot2::aes(x = NMDS1, y = NMDS2,
-                                                                text = siteiid,
+                                                                text = vegplotid,
                                                                 colour = taxa_id,
                                                                 position = "jitter"),
                                                    size = 2.5)  +
