@@ -34,7 +34,7 @@ nmds_taxa <- function(veg_df, taxa, spp.scr.thrshld = 0.01){
   taxa_df <- taxa_df |> dplyr::left_join(sites_with_taxa |> dplyr::select(vegplotid, taxa_id))
 
   # Prep df for NMDS
-  taxa_df <- taxa_df |> dplyr::select(vegplotid, plantsciname, akstratumcoverclasspct, ecositeid) |>
+  taxa_df2 <- taxa_df |> dplyr::select(vegplotid, plantsciname, akstratumcoverclasspct, ecositeid) |>
     dplyr::group_by(vegplotid, plantsciname) |>
     dplyr::summarise(total_abund = sum(akstratumcoverclasspct, na.rm = TRUE)) |>
     tidyr::pivot_wider(names_from = plantsciname,
