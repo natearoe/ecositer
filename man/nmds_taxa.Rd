@@ -4,12 +4,14 @@
 \alias{nmds_taxa}
 \title{Run NMDS for taxa of interest}
 \usage{
-nmds_taxa(veg_df, taxa, spp.scr.thrshld = 0.01)
+nmds_taxa(veg_df, taxa, reference_taxa = NULL, spp.scr.thrshld = 0.01)
 }
 \arguments{
 \item{veg_df}{properly formatted vegetation dataframe}
 
 \item{taxa}{taxa of interested (e.g., "Arenaria")}
+
+\item{reference_taxa}{additional taxa used to compare spread in ordination space}
 
 \item{spp.scr.thrshld}{p-value threshold for species scores being displayed}
 }

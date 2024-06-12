@@ -9,15 +9,26 @@
 #' @param veg_df properly formatted vegetation dataframe
 #' @param taxa taxa of interested (e.g., "Arenaria")
 #' @param spp.scr.thrshld p-value threshold for species scores being displayed
+#' @param reference_taxa additional taxa used to compare spread in ordination space
 #'
 #' @return an ordination of plots in species space of all plots that contain the taxa of interest
 #' @export
 #'
 #' @examples
-nmds_taxa <- function(veg_df, taxa, spp.scr.thrshld = 0.01){
-  # Determine strings matching taxa argument
-  taxa_v <- veg_df$plantsciname |>
-    stringr::str_subset(pattern = taxa)
+nmds_taxa <- function(veg_df, taxa,
+                      reference_taxa = NULL,
+                      spp.scr.thrshld = 0.01){
+
+  if(is.null(reference_taxa)){
+    taxa_v <- veg_df$plantsciname |>
+      stringr::str_subset(pattern = taxa)
+  } else {
+    taxa_v <- veg_df$plantsciname |>
+      stringr::str_subset(pattern = taxa)
+    taxa_r <- veg_df$plantsciname |>
+      stringr::str_subset(pattern = reference_taxa)
+    taxa_v <- c(taxa_v, taxa_r)
+  }
 
   # Reduce veg_df to taxa strings
   sites_with_taxa <- veg_df |> dplyr::filter(plantsciname %in% taxa_v)
