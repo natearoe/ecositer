@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   cleaning_veg_data: cleaning_veg_data.html
   intro: intro.html
-last_built: 2024-06-10T23:36Z
+last_built: 2024-06-12T22:48Z
 urls:
   reference: https://natearoe.github.io/ecositer/reference
   article: https://natearoe.github.io/ecositer/articles

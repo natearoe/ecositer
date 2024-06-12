@@ -67,7 +67,7 @@ that these two taxa can be combined.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nmds_taxa</span><span class="op">(</span><span class="va">veg_df</span>, <span class="va">taxa</span>, spp.scr.thrshld <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nmds_taxa</span><span class="op">(</span><span class="va">veg_df</span>, <span class="va">taxa</span>, reference_taxa <span class="op">=</span> <span class="cn">NULL</span>, spp.scr.thrshld <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -78,6 +78,10 @@ that these two taxa can be combined.</p>
 
 <dt>taxa</dt>
 <dd><p>taxa of interested (e.g., "Arenaria")</p></dd>
+
+
+<dt>reference_taxa</dt>
+<dd><p>additional taxa used to compare spread in ordination space</p></dd>
 
 
 <dt>spp.scr.thrshld</dt>
