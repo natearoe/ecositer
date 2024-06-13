@@ -55,6 +55,9 @@ nmds_taxa <- function(veg_df, taxa,
   # Assign NA values to zero
   taxa_df2[is.na(taxa_df2)] <- 0
 
+  tot <- rowSums(taxa_df2)
+  taxa_df2 <- taxa_df2[tot > 0, ]
+
   # Run ordination
   my_nmds <- vegan::metaMDS(taxa_df2)
 
