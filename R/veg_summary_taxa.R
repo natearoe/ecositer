@@ -20,7 +20,10 @@ veg_summary_taxa <- function(veg_df, taxa){
   veg_df_joined <- veg_df_taxa |> dplyr::left_join(taxa_siteiid |> dplyr::select(siteiid, siteiid_taxa_id, akfieldecositeid),
                                           by = "siteiid",
                                           relationship = "many-to-many")
+  veg_df_joined$siteiid <- veg_df_joined$siteiid_taxa_id
+  veg_df_joined <- veg_df_joined |> dplyr::select(-siteiid_taxa_id)
 
-  ecositer::veg_summary(veg_df = veg_df_joined)
+  my_output <- ecositer::veg_summary(veg_df = veg_df_joined)
+  return(my_output)
 
 }
