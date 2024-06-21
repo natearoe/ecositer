@@ -14,20 +14,25 @@
 #' @examples
 #' my_bbd <- big_beta_diversity(veg_df = my_veg_df)
 big_beta_diversity <- function(veg_df, wisconsin = FALSE, remove_rare = FALSE,
-                               relative_dist = TRUE){
+                               relative_dist = TRUE,
+                               trans = TRUE){
 
-  # manipulating data for process
-  .sd_veg_df <- veg_df |>
-    dplyr::select(siteiid, plantsciname, akstratumcoverclasspct) |>
-    dplyr::group_by(siteiid, plantsciname) |>
-    dplyr::summarise(abund = sum(akstratumcoverclasspct)) |>
-    tidyr::pivot_wider(names_from = plantsciname,
-                       values_from = abund) |>
-    tibble::column_to_rownames("siteiid") |>
-    dplyr::select(dplyr::contains(" "))
+  if (trans == TRUE) {
+    # manipulating data for process
+    .sd_veg_df <- veg_df |>
+      dplyr::select(siteiid, plantsciname, akstratumcoverclasspct) |>
+      dplyr::group_by(siteiid, plantsciname) |>
+      dplyr::summarise(abund = sum(akstratumcoverclasspct)) |>
+      tidyr::pivot_wider(names_from = plantsciname,
+                         values_from = abund) |>
+      tibble::column_to_rownames("siteiid") |>
+      dplyr::select(dplyr::contains(" "))
 
-  .sd_veg_df[is.na(.sd_veg_df)] <- 0
-  .sd_veg_df <- .sd_veg_df[,colSums(.sd_veg_df) > 0]
+    .sd_veg_df[is.na(.sd_veg_df)] <- 0
+    .sd_veg_df <- .sd_veg_df[,colSums(.sd_veg_df) > 0]
+  } else { .sd_veg_df = veg_df}
+
+
 
   if(wisconsin){
     .sd_veg_df <- vegan::wisconsin(.sd_veg_df)
