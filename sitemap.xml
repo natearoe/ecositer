@@ -1,99 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://natearoe.github.io/ecositer/404.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/articles/cleaning_veg_data.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/articles/intro.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/index.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/QC_plants.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/QC_taxonomy.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/QC_vegplots_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/access_example_data.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/big_beta_diversity.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/ecosite_similarity_pairwise.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/ecositer-package.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/formatted_veg_df.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/hello.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/nmds_ecosite.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/nmds_plot.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/nmds_taxa.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/nmds_taxon_comparison.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/number_plots_by_site.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/pres_abs_conversion.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/scanned_data_organizer.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/site_level_soil_properties.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/site_similarity_pairwise.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/site_soils.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/sites_in_state_phase.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/strange_bedfellows.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/vegStaticNASIS.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/veg_summary.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/veg_summary2.html</loc>
-  </url>
-  <url>
-    <loc>https://natearoe.github.io/ecositer/reference/veg_summary_taxa.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://natearoe.github.io/ecositer/404.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/articles/accessing_vegetation_data.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/articles/cleaning_veg_data.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/articles/index.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/articles/intro.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/authors.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/index.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/QC_plants.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/QC_taxonomy.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/QC_vegplots_summary.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/access_example_data.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/big_beta_diversity.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/ecosite_similarity_pairwise.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/ecositer-package.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/formatted_veg_df.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/hello.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/index.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/nmds_ecosite.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/nmds_plot.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/nmds_taxa.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/nmds_taxon_comparison.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/number_plots_by_site.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/pres_abs_conversion.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/scanned_data_organizer.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/site_level_soil_properties.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/site_similarity_pairwise.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/site_soils.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/sites_in_state_phase.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/strange_bedfellows.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/vegStaticNASIS.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/veg_summary.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/veg_summary2.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/veg_summary_taxa.html</loc></url>
 </urlset>
+
