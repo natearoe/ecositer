@@ -71,13 +71,13 @@ saved.</p></dd>
 <span class="r-in"><span><span class="va">my_formatted_veg_df</span> <span class="op">&lt;-</span> <span class="fu">formatted_veg_df</span><span class="op">(</span>static_location <span class="op">=</span> <span class="st">"C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite"</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> Local NASIS ODBC connection has not been set up. Please see `http://ncss-tech.github.io/AQP/soilDB/setup_local_nasis.html`.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">formatted_veg_df</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 function (SS = TRUE, static_location = NULL)                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 {                                                               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     if (SS == FALSE &amp; is.null(static_location))                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4         stop("If SS = FALSE, static location must be provided.")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5     veg_data &lt;- if (SS == TRUE) {                               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6         soilDB::fetchVegdata(SS = TRUE)                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 function (SS = TRUE, static_location = NULL, cover_column = c("akstratumcoverclasspct", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     "speciescancovpct", "speciescomppct", "understorygrcovpct"))                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 {                                                                                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     if (SS == FALSE &amp; is.null(static_location))                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5         stop("If SS = FALSE, static location must be provided.")                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     cover_column &lt;- match.arg(cover_column)                                             </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
