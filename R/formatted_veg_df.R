@@ -3,7 +3,7 @@
 #' @param static_location the location where a static NASIS database has been
 #' saved.
 #' @param SS TRUE or FALSE, should data be accessed from NASIS Selected Set?
-#' @param veg_column NASIS column where vegetation cover data is stored
+#' @param cover_column NASIS column where vegetation cover data is stored
 #'
 #' @return a formatted vegetation dataframe suitable for analysis
 #' @export formatted_veg_df
