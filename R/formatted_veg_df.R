@@ -27,26 +27,28 @@ formatted_veg_df <- function(SS = TRUE, static_location = NULL,
   ############# Create foundational dataframes
 
   # Access veg data
-  veg_data <- if(SS == TRUE){
-    soilDB::fetchVegdata(SS = TRUE)
+if(SS == TRUE){
+    veg_data <- soilDB::fetchVegdata(SS = TRUE)
+    ecosite_data <- soilDB::fetchNASIS(dsn = NULL,
+                                       from = "pedons",
+                                       SS = TRUE, fill = TRUE, duplicates = TRUE)
   } else {
-    soilDB::fetchVegdata(dsn = static_location, SS = FALSE)}
+    veg_data <- soilDB::fetchVegdata(dsn = static_location, SS = FALSE)
+    ecosite_data <- soilDB::fetchNASIS(dsn = static_location,
+                                       from = "pedons",
+                                       SS = FALSE, fill = TRUE, duplicates = TRUE)}
 
   # Access ecosite data
-  ecosite_data <- soilDB::fetchNASIS(dsn = static_location,
-                             from = "pedons",
-                             SS = FALSE, fill = TRUE, duplicates = TRUE)
+
+  test <- aqp::site(ecosite_data)
 
 
   ############ Choosing the best vegplot
 
   # What sites have multiple veg plots?
-  siteiid_with_dup_vegplots <- veg_data$vegplot  |>  dplyr::select(siteiid, vegplotiid, vegplot_id, peiid) |>
+  siteiid_with_dup_vegplots <- veg_data$vegplot |>  dplyr::select(siteiid, vegplotiid, vegplot_id, peiid) |>
     unique() |>  dplyr::group_by(siteiid) |>
     dplyr::filter(dplyr::n() > 1) |> dplyr::pull(siteiid)
-
-
-
 
   # Choose the least populated vegplots from plots with multiple vegplots; these are the vegplots to remove from veg data
   dup_vegplots <- veg_data$vegplotspecies |> dplyr::filter(siteiid %in% siteiid_with_dup_vegplots) |>
@@ -59,7 +61,7 @@ formatted_veg_df <- function(SS = TRUE, static_location = NULL,
 
   # Remove dup_vegplots from veg_data$vegplot
   veg_data_veg_plot_reduced <- veg_data$vegplot |>
-    dplyr::filter(!is.na(ecositeid)) |>
+    # dplyr::filter(!is.na(ecositeid)) |> I don't think I want to remove vegplots that don't have an ecosite correlation. Could be useful for things like SDMs.
     dplyr::select(siteiid, ecositeid, vegplotiid, akfieldecositeid) |>
     unique() |>
     dplyr::filter(!vegplotiid %in% dup_vegplots & vegplotiid %in% veg_data$vegplotspecies$vegplotiid)
@@ -87,10 +89,10 @@ formatted_veg_df <- function(SS = TRUE, static_location = NULL,
     dplyr::select(siteiid, vegplotid, ecositeid, everything())
 
 
-  # Remove a question mark from a couple of instances of akfieldecositeid
-  veg_data_with_ecosite$akfieldecositeid <-
-    veg_data_with_ecosite$akfieldecositeid |>
-    stringr::str_replace(pattern = "\\.\\?", replacement = "")
+  # Remove a question mark from a couple of instances of akfieldecositeid - I don't want to remove question marks without users knowledge
+  # veg_data_with_ecosite$akfieldecositeid <-
+  #   veg_data_with_ecosite$akfieldecositeid |>
+  #   stringr::str_replace(pattern = "\\.\\?", replacement = "")
 
   # Identify the akfieldecositeids missing a phase
   no_phase <-
