@@ -8,7 +8,8 @@ big_beta_diversity(
   veg_df,
   wisconsin = FALSE,
   remove_rare = FALSE,
-  relative_dist = TRUE
+  relative_dist = TRUE,
+  trans = TRUE
 )
 }
 \arguments{
