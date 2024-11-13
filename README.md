@@ -1,9 +1,3 @@
-<!-- <style>  -->
-<!-- h1 {font-size: 36px; } -->
-<!-- h2 {font-size: 30px; } -->
-<!-- h3 {font-size: 24px; } -->
-<!-- </style> -->
-
 `ecositer` is a collection of tools for the analysis, standardization,
 and automation of vegetation analysis. These tools work with data from
 the Natural Resources Conservation Service (NRCS), but the data
@@ -20,6 +14,13 @@ Get the development version from GitHub:
 
     remotes::install_github("natearoe/ecositer", dependencies = FALSE)
 
-<h1>
-Website
-</h1>
+## Website
+
+-   GitHub repository - <https://github.com/natearoe/ecositer>
+-   Package website - <https://natearoe.github.io/ecositer/>
+
+## Vignettes
+
+-   Accessing data
+-   QCing data
+-   Summarizing vegetation data
