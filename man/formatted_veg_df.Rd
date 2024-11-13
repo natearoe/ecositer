@@ -4,13 +4,20 @@
 \alias{formatted_veg_df}
 \title{Create formatted vegetation dataframe}
 \usage{
-formatted_veg_df(SS = TRUE, static_location = NULL)
+formatted_veg_df(
+  SS = TRUE,
+  static_location = NULL,
+  cover_column = c("akstratumcoverclasspct", "speciescancovpct", "speciescomppct",
+    "understorygrcovpct")
+)
 }
 \arguments{
 \item{SS}{TRUE or FALSE, should data be accessed from NASIS Selected Set?}
 
 \item{static_location}{the location where a static NASIS database has been
 saved.}
+
+\item{cover_column}{NASIS column where vegetation cover data is stored}
 }
 \value{
 a formatted vegetation dataframe suitable for analysis
