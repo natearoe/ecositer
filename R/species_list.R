@@ -18,9 +18,9 @@ species_list <- function(SS = TRUE, static_location = NULL){
 
   if(SS == TRUE){
     # pull veg data from selected set
-    my_ss <- fetchVegdata(SS = TRUE)$vegplotspecies |> dplyr::select(plantsym, plantsciname) |> unique()
+    my_ss <- soilDB::fetchVegdata(SS = TRUE)$vegplotspecies |> dplyr::select(plantsym, plantsciname) |> unique()
   } else {
-    my_ss <- fetchVegdata(SS = FALSE,
+    my_ss <- soilDB::fetchVegdata(SS = FALSE,
                           dsn = static_location)$vegplotspecies |> dplyr::select(plantsym, plantsciname) |> unique()
 
   }
