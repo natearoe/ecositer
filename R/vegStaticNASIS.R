@@ -20,7 +20,7 @@
 #' @export
 #'
 #' @examplesIf FALSE
-#' vegStaticNASIS(output_path = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
+#' vegStaticNASIS(output_path = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 #'
 
 vegStaticNASIS <- function(output_path){
