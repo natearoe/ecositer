@@ -1,6 +1,6 @@
 #' Create vegetation data Static NASIS
 #'
-#'`vegStaticNASIS` saves a NASIS selected set to your local drive. The function utilizes
+#'`create_local_veg_db` saves a NASIS selected set to your local drive. The function utilizes
 #'`soilDB::createStaticNASIS`, and includes the appropriate tables to access
 #'vegetation data. The output can be used as a reliable, local copy of query results,
 #'allowing the user to change their NASIS selected set and still access the
