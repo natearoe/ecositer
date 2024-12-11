@@ -216,11 +216,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
         by = dplyr::join_by(siteiid, siteobsiid)#,relationship = "many-to-many"
       )
 
-    vegplot <- vegplot |> dplyr::select(siteiid, site_id, siteobsiid, vegplot_id, vegplotiid, # siteecositehistoryiid,
-                                        primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
-                                        plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct,
-                                        horizdatnm, utmzone, utmeasting, utmnorthing) |> dplyr::rename(usiteid = site_id,
-                                                                                                       vegplotid = vegplot_id) |> as.data.frame()
+    vegplot <- vegplot |> dplyr::rename(usiteid = site_id, vegplotid = vegplot_id) |> as.data.frame()
 
   }
 
@@ -231,10 +227,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
       rvest::html_table(header = TRUE)
     vegplot <- web_data
 
-    vegplot <- vegplot |> dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
-                                        primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
-                                        plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct,
-                                        horizdatnm, utmzone, utmeasting, utmnorthing) |> dplyr::arrange(usiteid)
+    vegplot <- vegplot
 
 
   }
@@ -265,7 +258,12 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
   vegplot$utmeasting <- as.numeric(vegplot$utmeasting)
   vegplot$utmnorthing <- as.numeric(vegplot$utmnorthing)
 
-  vegplot <- vegplot |> dplyr::arrange(usiteid, vegplotiid, plantsym) |> as.data.frame()
+  vegplot <- vegplot |> dplyr::arrange(usiteid, vegplotiid, plantsym) |>
+    dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
+                  primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
+                  plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct,
+                  horizdatnm, utmzone, utmeasting, utmnorthing) |> dplyr::arrange(usiteid) |>
+    as.data.frame()
 
 
 
