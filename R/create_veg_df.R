@@ -10,7 +10,7 @@
 #'
 #'
 #' @return vegetation dataframe fro ecological site data
-#' @export formatted_veg_df
+#' @export create_veg_df
 #'
 #' @examples
 #'
