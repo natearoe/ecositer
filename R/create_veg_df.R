@@ -258,8 +258,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
     dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
                   primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
                   plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct,
-                  horizdatnm, utmzone, utmeasting, utmnorthing) |> dplyr::arrange(usiteid) |>
-    as.data.frame()
+                  horizdatnm, utmzone, utmeasting, utmnorthing) |> as.data.frame()
 
 
 
