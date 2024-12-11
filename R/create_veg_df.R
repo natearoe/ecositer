@@ -227,11 +227,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
       rvest::html_table(header = TRUE)
     vegplot <- web_data
 
-    vegplot <- vegplot
-
-
   }
-
 
   vegplot$siteiid <- as.character(vegplot$siteiid)
   vegplot$usiteid <- as.character(vegplot$usiteid)
