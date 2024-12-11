@@ -17,13 +17,13 @@
 #' @param output_path
 #'
 #' @return a static NASIS database that can be called independent of your current selected set in NASIS.
-#' @export create_local_veg_df
+#' @export create_local_veg_db
 #'
 #' @examplesIf FALSE
 #' vegStaticNASIS(output_path = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 #'
 
-vegStaticNASIS <- function(output_path){
+create_local_veg_db <- function(output_path){
 
   p <-
     c(
