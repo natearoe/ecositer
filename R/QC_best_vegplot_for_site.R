@@ -23,7 +23,9 @@
 
 QC_best_vegplot_for_site <- function(veg_df) {
 
-    data <- as.data.table(veg_df)
+    if(ecositer::QC_)
+
+    data <- data.table::as.data.table(veg_df)
 
     # Summarize data: count rows per vegplot for each site
     vegplot_summary <- data[, .(vegplot_count = .N), by = .(siteiid, vegplotiid)]
