@@ -1,0 +1,30 @@
+---
+title: "QC vegetation data"
+author: "Nathan Roe"
+date: "2024-12-11"
+output: html_document
+---
+
+**About**
+`ecositer` has a category of functions used for QC, all of which use a "QC_" prefix. Vegetation data stored in NASIS requires QC. There are numerous issues that exist caused by different data vintages, data origins, varying data quality, duplication caused by KSSL lab pedons, outdated plant taxonomies, and more. This vignette discusses a best practice methodology for QC NASIS vegetation data. 
+
+You should start your QC process by removing data at the coarsest level that meets your objectives. This will ensure that you do not spend time fixing obscure edge cases that are ultimately removed. 
+
+To begin with, we are going to build out dataset:
+```{r}
+B100_veg <- ecositer::create_veg_df(from = "web_report",
+                                 ecositeid = "F022AB100CA")
+```
+
+Now, we are going to create an aggregated abundance column called, "pct_cover". There are
+four columns currently where vegetation abundance data could be stored. This function will
+aggregate this four columns into one. In the case records have multiple abundance columns used,
+this function will average them and issue a warning. 
+```{r, echo=FALSE}
+B100_veg[69,18] <- 5
+```
+
+```{r}
+ecositer::QC_
+```
+
