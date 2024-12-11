@@ -1,0 +1,25 @@
+---
+title: "Accessing vegetation data"
+author: "Nathan Roe"
+date: "2024-12-11"
+output: html_document
+---
+
+This vignette will demonstrate using `ecositer` to access vegetation data associated with NRCS ecological sites. `ecositer::create_veg_df()` is the function used to access and create a vegetation dataframe. This function provide access via three possible sources:
+
+**NASIS Selected Set (SS)** - This method access data currently stored in the users NASIS SS. This data is accessed through an ODBC connection to NASIS. If you do not have this connection configured, follow the directions here, https://ncss-tech.github.io/stats_for_soil_survey/book/index.html. 
+
+**NASIS Web Reports** - Web reports are a convenient and efficient way of accessing NASIS data. Web reports can be accessed by external users who do not have access to NASIS. Web reports are built in NASIS and made accessible through URLs.
+
+**Static NASIS** - This method allows the user to access data stored in a local .sqlite NASIS database. A local .sqlite NASIS database for vegetation data can be created using `ecositer::create_local_veg_df()`.
+
+Example:
+```{r}
+B100_veg <- ecositer::create_veg_df(from = "web_report",
+                        ecositeid = "F022AB100CA")
+
+
+
+rmarkdown::paged_table(B100_veg)
+```
+
