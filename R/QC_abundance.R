@@ -1,13 +1,19 @@
-#' Title
+#' Aggregate abundance columns
 #'
 #' @param veg_df
 #'
-#' @return
+#' @description
+#' This function is used to aggregate abundance data into one column (pct_cover). Abundance can come from four columns:
+#' "akstratumcoverclasspct", "speciescancovpct", "speciescomppct", and "understorygrcovpct". If the same record uses multiple abundance
+#' columns, pct_cover is calculated as the average of those values. When only one abundance column is used for a record,
+#' that value is used for pct_cover.
+#'
+#' @return dataframe with one abundance column
 #' @export
 #' @seealso [QC_find_multiple_abundance()]
 #'
 #' @examples
-#'
+#' QC_aggregate_abundance(veg_df = B100_veg)
 QC_aggregate_abundance <- function(veg_df){
 
   abund_cols <- c("akstratumcoverclasspct",
@@ -51,6 +57,9 @@ QC_aggregate_abundance <- function(veg_df){
 
 
 #' Find vegetation records with multiple abundances
+#' @description
+#' This function returns records that use multiple abundance columns. This allows users
+#' to determine the cause and determine a better solution than averaging.
 #'
 #' @param veg_df
 #'
@@ -59,6 +68,7 @@ QC_aggregate_abundance <- function(veg_df){
 #' @seealso [QC_aggregate_abundance()]
 #'
 #' @examples
+#' QC_find_multiple_abundance(veg_df = B100_veg)
 #'
 QC_find_multiple_abundance <- function(veg_df){
 
