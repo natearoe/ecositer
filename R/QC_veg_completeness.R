@@ -13,7 +13,7 @@
 #'
 #' @param veg_df
 #'
-#' @return `QC_vegplots_summary()` returns a summary of vegetation plot sampling detail
+#' @return a summary of vegetation plot completeness
 #' @export
 #' @seealso [QC_completeness_criteria()]
 #' @examples
@@ -21,7 +21,7 @@
 QC_veg_completeness <- function(veg_df){
 
     # Ensure dt is a data.table
-    data.table::as.data.table(dt)
+    dt <- data.table::as.data.table(veg_df)
 
     # Group by vegplotiid and calculate metrics
     result <- dt[, .(
@@ -31,7 +31,7 @@ QC_veg_completeness <- function(veg_df){
       percent_with_abund = sum(!is.na(pct_cover)) / .N * 100  # Percent with non-NA pct_cover
     ), by = c("siteiid", "siteobsiid", "vegplotiid")]
 
-    return(result)
+    return(result |> as.data.frame())
 
 
   # veg_df |>
@@ -47,7 +47,6 @@ QC_veg_completeness <- function(veg_df){
   #
   #
   # veg_df |>
-
 
 }
 
