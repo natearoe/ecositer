@@ -13,7 +13,7 @@ create_local_veg_db(output_path)
 a static NASIS database that can be called independent of your current selected set in NASIS.
 }
 \description{
-\code{vegStaticNASIS} saves a NASIS selected set to your local drive. The function utilizes
+\code{create_local_veg_db} saves a NASIS selected set to your local drive. The function utilizes
 \code{soilDB::createStaticNASIS}, and includes the appropriate tables to access
 vegetation data. The output can be used as a reliable, local copy of query results,
 allowing the user to change their NASIS selected set and still access the
