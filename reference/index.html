@@ -19,6 +19,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/accessing_vegetation_data.html">Accessing vegetation data</a></li>
+    <li><a class="dropdown-item" href="../articles/qc_vegetation_data.html">QC vegetation data</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -47,10 +48,22 @@
 
       <dl><dt>
 
+          <code><a href="QC_aggregate_abundance.html">QC_aggregate_abundance()</a></code>
+
+        </dt>
+        <dd>Aggregate abundance columns</dd>
+      </dl><dl><dt>
+
           <code><a href="QC_best_vegplot_for_site.html">QC_best_vegplot_for_site()</a></code>
 
         </dt>
         <dd>Keep best vegplot when multiple exist for site</dd>
+      </dl><dl><dt>
+
+          <code><a href="QC_find_multiple_abundance.html">QC_find_multiple_abundance()</a></code>
+
+        </dt>
+        <dd>Find vegetation records with multiple abundances</dd>
       </dl><dl><dt>
 
           <code><a href="QC_multiple_vegplots_for_site.html">QC_multiple_vegplots_for_site()</a></code>
@@ -71,10 +84,10 @@
         <dd>QC taxonomy</dd>
       </dl><dl><dt>
 
-          <code><a href="QC_vegplots_summary.html">QC_vegplots_summary()</a></code> <code><a href="QC_vegplots_summary.html">QC_vegplots_remove_plots()</a></code>
+          <code><a href="QC_veg_completeness.html">QC_veg_completeness()</a></code>
 
         </dt>
-        <dd>QC vegplots</dd>
+        <dd>Summarize vegetation plot completeness</dd>
       </dl><dl><dt>
 
           <code><a href="access_example_data.html">access_example_data()</a></code>
@@ -87,6 +100,12 @@
 
         </dt>
         <dd>Big beta diversity</dd>
+      </dl><dl><dt>
+
+          <code><a href="create_local_veg_db.html">create_local_veg_db()</a></code>
+
+        </dt>
+        <dd>Create vegetation data Static NASIS</dd>
       </dl><dl><dt>
 
           <code><a href="create_veg_df.html">create_veg_df()</a></code>
@@ -183,12 +202,6 @@
 
         </dt>
         <dd>Strange bedfellows</dd>
-      </dl><dl><dt>
-
-          <code><a href="vegStaticNASIS.html">vegStaticNASIS()</a></code>
-
-        </dt>
-        <dd>Create vegetation data Static NASIS</dd>
       </dl><dl><dt>
 
           <code><a href="veg_summary.html">veg_summary()</a></code>

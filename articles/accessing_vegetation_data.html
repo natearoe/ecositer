@@ -34,6 +34,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/accessing_vegetation_data.html">Accessing vegetation data</a></li>
+    <li><a class="dropdown-item" href="../articles/qc_vegetation_data.html">QC vegetation data</a></li>
   </ul>
 </li>
       </ul>
@@ -66,11 +67,11 @@
 
     
     
-<p>This vignette will demonstrate using <code>ecositer</code> to access
-vegetation data associated with NRCS ecological sites.
-<code><a href="../reference/create_veg_df.html">ecositer::create_veg_df()</a></code> is the function used to access
-and create a vegetation dataframe. This function provide access via
-three possible sources:</p>
+<p><strong>About</strong> This vignette will demonstrate using
+<code>ecositer</code> to access vegetation data associated with NRCS
+ecological sites. <code><a href="../reference/create_veg_df.html">ecositer::create_veg_df()</a></code> is the function
+used to access and create a vegetation dataframe. This function provide
+access via three possible sources:</p>
 <p><strong>NASIS Selected Set (SS)</strong> - This method access data
 currently stored in the users NASIS SS. This data is accessed through an
 ODBC connection to NASIS. If you do not have this connection configured,
@@ -83,7 +84,7 @@ NASIS and made accessible through URLs.</p>
 data stored in a local .sqlite NASIS database. A local .sqlite NASIS
 database for vegetation data can be created using
 <code>ecositer::create_local_veg_df()</code>.</p>
-<p>Example:</p>
+<p><strong>Example:</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">B100_veg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/create_veg_df.html">create_veg_df</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"web_report"</span>,</span>
 <span>                        ecositeid <span class="op">=</span> <span class="st">"F022AB100CA"</span><span class="op">)</span></span>
