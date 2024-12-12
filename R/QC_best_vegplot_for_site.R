@@ -23,7 +23,7 @@
 
 QC_best_vegplot_for_site <- function(veg_df) {
 
-    if(ecositer::QC_)
+
 
     data <- data.table::as.data.table(veg_df)
 
