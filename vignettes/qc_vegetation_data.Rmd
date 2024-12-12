@@ -6,25 +6,42 @@ output: html_document
 ---
 
 **About**
+
 `ecositer` has a category of functions used for QC, all of which use a "QC_" prefix. Vegetation data stored in NASIS requires QC. There are numerous issues that exist caused by different data vintages, data origins, varying data quality, duplication caused by KSSL lab pedons, outdated plant taxonomies, and more. This vignette discusses a best practice methodology for QC NASIS vegetation data. 
 
 You should start your QC process by removing data at the coarsest level that meets your objectives. This will ensure that you do not spend time fixing obscure edge cases that are ultimately removed. 
 
-To begin with, we are going to build out dataset:
+To begin with, we are going to build our dataset:
 ```{r}
 B100_veg <- ecositer::create_veg_df(from = "web_report",
                                  ecositeid = "F022AB100CA")
 ```
 
-Now, we are going to create an aggregated abundance column called, "pct_cover". There are
-four columns currently where vegetation abundance data could be stored. This function will
-aggregate this four columns into one. In the case records have multiple abundance columns used,
-this function will average them and issue a warning. 
+**Creating an aggregated abundance column**
+
+Now, we are going to create an aggregated abundance column called, "pct_cover". There are four columns where abundance data could be stored: akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct. A couple of functions will be used to inspect what abundance columns are used in your dataset and whether any records in your dataset have multiple abundance columns used. 
+
+`QC_aggregate_abundance()` aggregates the four abundance columns into the new "pct_cover" column. If any records have multiple abundance columns used,
+this function will average them and issue a warning or error depending on the `fail_on_dup` argument. For details on this function - `?QC_aggregate_abundance()`.  
 ```{r, echo=FALSE}
 B100_veg[69,18] <- 5
 ```
 
 ```{r}
-ecositer::QC_
+B100_veg_agg <- ecositer::QC_aggregate_abundance(veg_df = B100_veg)
 ```
 
+Note the warning above. As mentioned in the warning, `QC_find_multiple_abundance()` will allow you to inspect which records have abundance data in multiple columns. These should be inspected to determine why multiple abundance columns are used. 
+```{r}
+abund_dups <- ecositer::QC_find_multiple_abundance(veg_df = B100_veg)
+abund_dups
+```
+
+**Assign minimum criteria for vegetation data quality**
+
+Now that we have an aggregated abundance column, we can begin with our coarse filter of the data. First we will use `QC_veg_completeness()` to describe the completeness and quality of vegplot observations. 
+```{r}
+ecositer::QC_veg_completeness(veg_df = B100_veg_agg) |> head()
+```
+
+  
