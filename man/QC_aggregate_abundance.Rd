@@ -4,10 +4,11 @@
 \alias{QC_aggregate_abundance}
 \title{Aggregate abundance columns}
 \usage{
-QC_aggregate_abundance(veg_df)
+QC_aggregate_abundance(veg_df, fail_on_dup = FALSE)
 }
 \arguments{
-\item{veg_df}{}
+\item{fail_on_dup}{logical - whether the function should fail if any records
+have multiple abundance columns populated.}
 }
 \value{
 dataframe with one abundance column
