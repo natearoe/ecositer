@@ -13,9 +13,28 @@ You should start your QC process by removing data at the coarsest level that mee
 
 To begin with, we are going to build our dataset:
 ```{r}
-B100_veg <- ecositer::create_veg_df(from = "web_report",
-                                 ecositeid = "F022AB100CA")
+D104_veg <- ecositer::create_veg_df(from = "web_report",
+                                 ecositeid = "F022AD104CA")
 ```
+
+**Choose the best vegetation plot for site**
+
+Sites may have multiple vegetation plots with differing data qualities. If there are multiple vegetation plots associated with a site, `QC_best_vegplot_for_site()` chooses the vegetation plot with the most records.
+
+```{r}
+D104_veg_best <- ecositer::QC_best_vegplot_for_site(veg_df = D104_veg)
+```
+
+To look at all the sites with multiple vegetation plots:
+```{r}
+D104_multi_veg <- D104_veg |> dplyr::group_by(siteiid) |> 
+  dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |> 
+  dplyr::mutate(has_multiple_vegplots = unique_vegplots > 1) |> 
+  dplyr::filter(has_multiple_vegplots == TRUE)
+
+head(D104_multi_veg)
+```
+
 
 **Creating an aggregated abundance column**
 
@@ -24,16 +43,16 @@ Now, we are going to create an aggregated abundance column called, "pct_cover". 
 `QC_aggregate_abundance()` aggregates the four abundance columns into the new "pct_cover" column. If any records have multiple abundance columns used,
 this function will average them and issue a warning or error depending on the `fail_on_dup` argument. For details on this function - `?QC_aggregate_abundance()`.  
 ```{r, echo=FALSE}
-B100_veg[69,18] <- 5
+D104_veg_best[69,18] <- 5
 ```
 
 ```{r}
-B100_veg_agg <- ecositer::QC_aggregate_abundance(veg_df = B100_veg)
+D104_veg_agg <- ecositer::QC_aggregate_abundance(veg_df = D104_veg_best)
 ```
 
-Note the warning above. As mentioned in the warning, `QC_find_multiple_abundance()` will allow you to inspect which records have abundance data in multiple columns. These should be inspected to determine why multiple abundance columns are used. 
+Note the two warnings above. As mentioned in the warning, `QC_find_multiple_abundance()` will allow you to inspect which records have abundance data in multiple columns. These should be inspected to determine why multiple abundance columns are used. The other warning shows that two total abundance columns were used in this dataset. 
 ```{r}
-abund_dups <- ecositer::QC_find_multiple_abundance(veg_df = B100_veg)
+abund_dups <- ecositer::QC_find_multiple_abundance(veg_df = D104_veg)
 abund_dups
 ```
 
@@ -41,7 +60,19 @@ abund_dups
 
 Now that we have an aggregated abundance column, we can begin with our coarse filter of the data. First we will use `QC_veg_completeness()` to describe the completeness and quality of vegplot observations. 
 ```{r}
-ecositer::QC_veg_completeness(veg_df = B100_veg_agg) |> head()
+ecositer::QC_veg_completeness(veg_df = D104_veg_agg) |> head()
 ```
 
-  
+Next, we can remove plots that do not meet a minimum threshold for data quality and completeness. The threshold should be specific to your data set and study area. 
+```{r}
+D104_veg_agg <- ecositer::QC_completeness_criteria(veg_df = D104_veg_agg,
+                                   min_unique_species = )
+```
+
+**Update taxonomy using USDA PLANTS**
+
+```{r}
+D104_veg_agg <- ecositer::QC_update_taxonomy(veg_df = D104_veg_agg)
+```
+
+
