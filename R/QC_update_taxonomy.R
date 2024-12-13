@@ -18,6 +18,8 @@ QC_update_taxonomy <- function(veg_df){
   USDA_cols_ <- gsub(" ", "_", USDA_cols)
   colnames(USDA_plants) <- USDA_cols_
 
+  veg_df[veg_df == ""] <- NA
+
   veg_df_tax <- veg_df |> dplyr::left_join(USDA_plants |>
                                        dplyr::select(Synonym_Symbol, Accepted_Symbol),
                                      dplyr::join_by(plantsym == Synonym_Symbol)) |>
@@ -27,7 +29,13 @@ QC_update_taxonomy <- function(veg_df){
   tax_change <- veg_df_tax |> dplyr::select(Scientific_Name, plantsciname) |>
     dplyr::filter(!is.na(Scientific_Name) & !is.na(plantsciname))
 
-  message(paste(tax_change$plantsciname, "changed to", tax_change$Scientific_Name, "\n"))
+  if(nrow(tax_change) > 0){
+    message(paste(tax_change$plantsciname, "changed to", tax_change$Scientific_Name, "\n"))
+  }
+
+  if(nrow(tax_change) == 0){
+    message("All taxonomies up-to-date.")
+  }
 
   veg_df_tax$plantsym <- ifelse(is.na(veg_df_tax$Accepted_Symbol), veg_df_tax$plantsym, veg_df_tax$Accepted_Symbol)
   veg_df_tax$plantsciname <- ifelse(is.na(veg_df_tax$Scientific_Name), veg_df_tax$plantsciname, veg_df_tax$Scientific_Name)
@@ -36,7 +44,5 @@ QC_update_taxonomy <- function(veg_df){
   veg_df_tax$Accepted_Symbol <- NULL
   veg_df_tax$Scientific_Name <- NULL
   veg_df_tax$Common_Name <- NULL
-
-  return(veg_df_tax)
 
 }
