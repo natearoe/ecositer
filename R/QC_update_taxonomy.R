@@ -45,4 +45,6 @@ QC_update_taxonomy <- function(veg_df){
   veg_df_tax$Scientific_Name <- NULL
   veg_df_tax$Common_Name <- NULL
 
+  veg_df_tax
+
 }
