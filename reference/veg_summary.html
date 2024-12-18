@@ -43,7 +43,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">veg_summary</span><span class="op">(</span><span class="va">veg_df</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">veg_summary</span><span class="op">(</span></span>
+<span>  <span class="va">veg_df</span>,</span>
+<span>  agg_abund <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  update_taxonomy <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  best_vegplot <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -64,6 +69,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#' my_veg_summary &lt;- veg_summary(veg_df = ecositer::vegetation_dataframe)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_veg_summary</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'my_veg_summary' not found</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
