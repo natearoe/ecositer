@@ -1,22 +1,22 @@
 #' Keep best vegplot when multiple exist for site
 #'
 #' @description
-#' This function determines what sites have multiple vegplots and
-#' keeps only the best vegplot. The best vegplot is decided based on
-#' the number of records for the vegplot (i.e., the number of rows in the
-#' vegplot table). This function is intended to
+#' This function determines what sites have multiple vegetation plots and
+#' keeps only the best. The best vegetation plot is decided based on
+#' the number of records for the vegetation plot (i.e., the number of rows in the
+#' vegetation plot table). This function is intended to
 #' provide basic functionality to avoid gross misrepresentations (i.e.,
-#' pseudo-replication of vegplot/site relationships). This function should
-#' not be considered a replacement for careful review of vegplots. If,
-#' there are multiple vegplots with the same number of records, this function
-#' will error. This most commonly occurs when there are two vegplots with
+#' pseudo-replication of vegetation plot/site relationships). This function should
+#' not be considered a replacement for careful review of vegetation plots. If,
+#' there are multiple vegetation plots with the same number of records, this function
+#' will error. This most commonly occurs when there are two vegetation plots with
 #' identical data. The best solution in that case is to remove duplicated
-#' vegplots from NASIS.
+#' vegetation plots from NASIS.
 #'
 #'
 #' @param veg_df
 #'
-#' @return a vegetation dataframe with one vegplot per site
+#' @return a vegetation dataframe with one vegetation plot per site
 #' @export
 #'
 #' @examples
@@ -24,8 +24,17 @@
 QC_best_vegplot_for_site <- function(veg_df) {
 
 
-
     data <- data.table::as.data.table(veg_df)
+
+    # Are there multiple vegplotiids for any siteiids?
+    multi_logi <- output <- data[, data.table::uniqueN(vegplotiid) > 1, by = siteiid][, any(V1)]
+
+    if(multi_logi){
+      message("Warning: There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:
+              'Your veg_df' |> dplyr::group_by(siteiid) |>
+                               dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |>
+                               dplyr::filter(unique_vegplots > 1)")
+    }
 
     # Summarize data: count rows per vegplot for each site
     vegplot_summary <- data[, .(vegplot_count = .N), by = .(siteiid, vegplotiid)]
@@ -39,7 +48,7 @@ QC_best_vegplot_for_site <- function(veg_df) {
     # If ties exist, throw an error
     if (length(tie_sites) > 0) {
       stop("Cannot choose the best vegplot using number of records because there is a tie. ",
-           "The following sites have ties: ", paste(tie_sites, collapse = ", "))
+           "The following siteiids have ties: ", paste(tie_sites, collapse = ", "))
     }
 
     # Keep only the vegplot(s) with the maximum count for each site
