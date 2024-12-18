@@ -66,7 +66,9 @@ ecositer::QC_veg_completeness(veg_df = D104_veg_agg) |> head()
 Next, we can remove plots that do not meet a minimum threshold for data quality and completeness. The threshold should be specific to your data set and study area. 
 ```{r}
 D104_veg_agg <- ecositer::QC_completeness_criteria(veg_df = D104_veg_agg,
-                                   min_unique_species = )
+                                   min_unique_species = 5,
+                                   min_perc_to_species = 60,
+                                   min_perc_with_abund = 80)
 ```
 
 **Update taxonomy using USDA PLANTS**
