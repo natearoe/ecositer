@@ -7,7 +7,7 @@
 QC_veg_completeness(veg_df)
 }
 \arguments{
-\item{veg_df}{}
+\item{veg_df}{vegetation dataframe}
 }
 \value{
 a summary of vegetation plot completeness
@@ -18,9 +18,6 @@ total_records - the total number of records associated with each \code{vegplotii
 unique_species - The number of unique species recorded for each \code{vegplotiid}.
 percent_to_species - the percentage of observations identified to the species level (determined by the presence of a space in \code{plantsciname}).
 percent_with_abund - the percentage of observations with a non-NA value in the \code{pct_cover} column.
-
-\code{QC_vegplots_remove_plots()} allows you to remove vegplots from your dataset
-based on siteiids and parameters related to vegplot completeness.
 }
 \examples{
 my_QC_vegplots <- QC_veg_completeness(veg_df = my_veg_df)

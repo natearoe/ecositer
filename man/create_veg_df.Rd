@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_veg_df.R
 \name{create_veg_df}
 \alias{create_veg_df}
-\title{Create formatted vegetation dataframe}
+\title{Create vegetation dataframe from multiple possible locations}
 \usage{
 create_veg_df(
   from = c("web_report", "SS", "static"),
@@ -12,7 +12,7 @@ create_veg_df(
 )
 }
 \arguments{
-\item{from}{origin of vegetation data. "web_report" provides public data in NASIS. "SS" uses the users NASIS selected set (NASIS connection required).
+\item{from}{origin of vegetation data. "web_report" queries NASIS for vegetation data by ecosite - NASIS credentials are not needed. "SS" uses the users NASIS selected set (NASIS connection required).
 "static" uses a local .sqlite NASIS database.}
 
 \item{ecositeid}{ecositeid of interest - required when using from = "web_report". If used with from = "SS" or from = "static", limits returns to only ecositeid provided.}
@@ -20,14 +20,15 @@ create_veg_df(
 \item{static_location}{file path to static NASIS .sqlite database - typically generated using \code{ecositer::vegStaticNASIS()}}
 }
 \value{
-vegetation dataframe fro ecological site data
+vegetation dataframe
 }
 \description{
-This function provides access to vegetation data from multiple sources and returns the data in the same format. No QC is performed in this function.
+This function provides access to vegetation data from multiple sources and returns the data in the same format regardless of source. This function provides raw data. QC should be performed on data
+before analyzing.
 }
 \examples{
-
+\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 my_formatted_veg_df <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 head(formatted_veg_df)
-
+\dontshow{\}) # examplesIf}
 }

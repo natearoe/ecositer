@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_local_veg_db.R
 \name{create_local_veg_db}
 \alias{create_local_veg_db}
-\title{Create vegetation data Static NASIS}
+\title{Create local vegetation database}
 \usage{
 create_local_veg_db(output_path)
 }
@@ -10,23 +10,21 @@ create_local_veg_db(output_path)
 \item{output_path}{}
 }
 \value{
-a static NASIS database that can be called independent of your current selected set in NASIS.
+a local .sqlite database of your SS
 }
 \description{
-\code{create_local_veg_db} saves a NASIS selected set to your local drive. The function utilizes
+\code{create_local_veg_db} saves your NASIS selected set to your local drive as a .sqlite database. The function utilizes
 \code{soilDB::createStaticNASIS}, and includes the appropriate tables to access
 vegetation data. The output can be used as a reliable, local copy of query results,
 allowing the user to change their NASIS selected set and still access the
-data of interest. The file extension needs to be ".sqlite" If you are working with a
+data of interest. The file extension needs to be ".sqlite". If you are working with a
 dataset that commonly has new data entered, it is probably best to work off of your
-NASIS selected set rather than using a static, local sqlite database.
+NASIS selected set rather than using a local sqlite database.
 }
 \details{
-An appropriate queries to run to populate your selected set include: MLRA13_Wasilla >
+Appropriate queries to run to populate your selected set with vegetation data include: MLRA13_Wasilla >
 Pedon/Site/Transect/Vegetation Plot by usiteid (multiple) & MLRA13_Wasilla >
 Pedon/Site/Vegetation Plot by site area overlap table
-
-Code written by Andrew Brown
 }
 \examples{
 \dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

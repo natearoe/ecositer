@@ -4,7 +4,12 @@
 \alias{veg_summary}
 \title{Produce vegetation summary of ecosites and states/phases}
 \usage{
-veg_summary(veg_df)
+veg_summary(
+  veg_df,
+  agg_abund = TRUE,
+  update_taxonomy = TRUE,
+  best_vegplot = TRUE
+)
 }
 \arguments{
 \item{veg_df}{a properly formatted vegetation dataframe}
@@ -18,5 +23,6 @@ Produce vegetation summary of ecosites and states/phases
 \examples{
 #' my_veg_summary <- veg_summary(veg_df = ecositer::vegetation_dataframe)
 head(my_veg_summary)
+
 
 }
