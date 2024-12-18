@@ -10,18 +10,18 @@ QC_best_vegplot_for_site(veg_df)
 \item{veg_df}{}
 }
 \value{
-a vegetation dataframe with one vegplot per site
+a vegetation dataframe with one vegetation plot per site
 }
 \description{
-This function determines what sites have multiple vegplots and
-keeps only the best vegplot. The best vegplot is decided based on
-the number of records for the vegplot (i.e., the number of rows in the
-vegplot table). This function is intended to
+This function determines what sites have multiple vegetation plots and
+keeps only the best. The best vegetation plot is decided based on
+the number of records for the vegetation plot (i.e., the number of rows in the
+vegetation plot table). This function is intended to
 provide basic functionality to avoid gross misrepresentations (i.e.,
-pseudo-replication of vegplot/site relationships). This function should
-not be considered a replacement for careful review of vegplots. If,
-there are multiple vegplots with the same number of records, this function
-will error. This most commonly occurs when there are two vegplots with
+pseudo-replication of vegetation plot/site relationships). This function should
+not be considered a replacement for careful review of vegetation plots. If,
+there are multiple vegetation plots with the same number of records, this function
+will error. This most commonly occurs when there are two vegetation plots with
 identical data. The best solution in that case is to remove duplicated
-vegplots from NASIS.
+vegetation plots from NASIS.
 }
