@@ -21,6 +21,7 @@ Get the development version from GitHub:
 
 ## Vignettes
 
--   Accessing data
+-   [Accessing
+    data](https://natearoe.github.io/ecositer/articles/accessing_vegetation_data.html)
 -   QCing data
 -   Summarizing vegetation data

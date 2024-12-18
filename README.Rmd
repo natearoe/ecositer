@@ -19,8 +19,7 @@ remotes::install_github("natearoe/ecositer", dependencies = FALSE)
 - Package website - https://natearoe.github.io/ecositer/
 
 ## Vignettes
-- Accessing data
-- QCing data
-- Summarizing vegetation data
+- [Accessing vegetation data](https://natearoe.github.io/ecositer/articles/accessing_vegetation_data.html)
+- [QCing vegetation data](https://natearoe.github.io/ecositer/articles/qc_vegetation_data.html)
 
 
