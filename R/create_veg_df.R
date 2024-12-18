@@ -1,19 +1,19 @@
-#' Create formatted vegetation dataframe
+#' Create vegetation dataframe from multiple possible locations
 #'
-#' @param from origin of vegetation data. "web_report" provides public data in NASIS. "SS" uses the users NASIS selected set (NASIS connection required).
+#' @param from origin of vegetation data. "web_report" queries NASIS for vegetation data by ecosite - NASIS credentials are not needed. "SS" uses the users NASIS selected set (NASIS connection required).
 #' "static" uses a local .sqlite NASIS database.
 #' @param ecositeid ecositeid of interest - required when using from = "web_report". If used with from = "SS" or from = "static", limits returns to only ecositeid provided.
 #' @param static_location file path to static NASIS .sqlite database - typically generated using `ecositer::vegStaticNASIS()`
 #'
 #' @description
-#' This function provides access to vegetation data from multiple sources and returns the data in the same format. No QC is performed in this function.
+#' This function provides access to vegetation data from multiple sources and returns the data in the same format regardless of source. This function provides raw data. QC should be performed on data
+#' before analyzing.
 #'
 #'
-#' @return vegetation dataframe fro ecological site data
+#' @return vegetation dataframe
 #' @export
 #'
-#' @examples
-#'
+#' @examplesIf FALSE
 #' my_formatted_veg_df <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 #' head(formatted_veg_df)
 #'
