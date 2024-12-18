@@ -24,5 +24,3 @@ QC_multiple_vegplots_for_site <- function(veg_df, choose_best = FALSE) {
   return(output)
 }
 
-
-
