@@ -1,6 +1,8 @@
 #' Aggregate abundance columns
 #'
 #' @param veg_df
+#' @param fail_on_dup logical - whether the function should fail if any records
+#' have multiple abundance columns populated.
 #'
 #' @description
 #' This function is used to aggregate abundance data into one column (pct_cover). Abundance can come from four columns:
@@ -14,49 +16,88 @@
 #'
 #' @examples
 #' QC_aggregate_abundance(veg_df = B100_veg)
-QC_aggregate_abundance <- function(veg_df){
+QC_aggregate_abundance <- function(veg_df,
+                                   fail_on_dup = FALSE){
 
   abund_cols <- c("akstratumcoverclasspct",
                   "speciescancovpct",
                   "speciescomppct",
                   "understorygrcovpct")
 
-  # Convert to data.table
-  data <- data.table::as.data.table(veg_df)
-
-  # Add a column counting non-NA values across abundance columns
-  data[, non_na_abundance_count := rowSums(!is.na(.SD)),
-       .SDcols = abund_cols]
-
-  # Identify problematic records
-  problematic_records <- data[non_na_abundance_count > 1]
-
-  # If problematic records exist, issue a warning
-  if (nrow(problematic_records) > 0) {
-    warning(
-      "Some records have multiple abundance values populated.\n",
-      "Use `ecositer::QC_find_multiple_abundance()` to investigate the affected plots and records."
-    )
+  if("pct_cover" %in% abund_cols){
+    print("Abundance columns have already been aggregated to 'pct_cover'.")
   }
 
-  # Create the 'abundance_master' column
-  data[, pct_cover := rowMeans(.SD, na.rm = TRUE),
-       .SDcols = abund_cols]
+  if(sum(abund_cols %in% colnames(veg_df)) < 3){
+    stop("Not all default abundance columns are present.")
+  }
 
-  # Remove the helper column and drop original abundance columns
-  data[, `:=`(non_na_abundance_count = NULL,
-              akstratumcoverclasspct = NULL, speciescancovpct = NULL, speciescomppct = NULL, understorygrcovpct = NULL)]
+  if(sum(abund_cols %in% colnames(veg_df)) == 4){
 
-  return(data |> as.data.frame() |>
-           dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
-                         primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
-                         plantsciname, plantnatvernm, pct_cover,
-                         horizdatnm, utmzone, utmeasting, utmnorthing))
+    # Convert to data.table
+    data <- data.table::as.data.table(veg_df)
+
+    abund_cols_count <- data[, lapply(.SD, function(x) sum (x > 0, na.rm = TRUE)), .SDcols = abund_cols]
+
+    abund_cols_used <- names(abund_cols_count)[unlist(abund_cols_count) > 0]
+
+    if(length(abund_cols_used) > 1){
+      warning(sprintf("Multiple abundance columns are used in this dataset: %s", paste(abund_cols_used, collapse = ", ")))
+    }
+
+    if(length(abund_cols_used) == 1){
+      message(paste("Note:", abund_cols_used, "is the only abundance column used in this dataset"))
+    }
+
+    names(abund_cols_used)[unlist(abund_cols_used) > 0]
+
+    # Add a column counting non-NA values across abundance columns
+    data[, non_na_abundance_count := rowSums(!is.na(.SD)),
+         .SDcols = abund_cols]
+
+    # Identify problematic records
+    problematic_records <- data[non_na_abundance_count > 1]
+
+    # If problematic records exist, issue a warning
+    if(fail_on_dup == TRUE){
+      if (nrow(problematic_records) > 0) {
+        stop(
+          "Some records have multiple abundance values populated. Use `ecositer::QC_find_multiple_abundance()` to investigate the affected plots and records."
+        )
+      }
+    } else {
+      if (nrow(problematic_records) > 0) {
+        warning(
+          "Some records have multiple abundance values populated. Use `ecositer::QC_find_multiple_abundance()` to investigate the affected plots and records."
+        )
+      }
+    }
+
+
+
+
+
+    # Create the 'abundance_master' column
+    data[, pct_cover := rowMeans(.SD, na.rm = TRUE),
+         .SDcols = abund_cols]
+
+    # Remove the helper column and drop original abundance columns
+    data[, `:=`(non_na_abundance_count = NULL,
+                akstratumcoverclasspct = NULL, speciescancovpct = NULL, speciescomppct = NULL, understorygrcovpct = NULL)]
+
+    return(data |> as.data.frame() |>
+             dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
+                           primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
+                           plantsciname, plantnatvernm, pct_cover,
+                           horizdatnm, utmzone, utmeasting, utmnorthing))
+
+  }
 
 }
 
 
 #' Find vegetation records with multiple abundances
+#'
 #' @description
 #' This function returns records that use multiple abundance columns. This allows users
 #' to determine the cause and determine a better solution than averaging.
@@ -86,12 +127,12 @@ QC_find_multiple_abundance <- function(veg_df){
        .SDcols = abund_cols]
 
   # Return only the rows with multiple abundance columns populated
-  data[non_na_abundance_count > 1]
+  data_red <- data[non_na_abundance_count > 1]
 
   # Remove the helper column
-  data[, non_na_abundance_count := NULL]
+  data_red[, non_na_abundance_count := NULL]
 
-  return(data |> as.data.frame())
+  return(data_red |> as.data.frame())
 
 }
 
