@@ -135,7 +135,7 @@ summarize_veg_by_ecosite <- function(veg_df,
     # reduce wide data to ecosite of interest
     site_veg_w <- veg_df_w[veg_df_w$ecositeid == i,]
 
-    sum_df <- sapply(site_veg_w[, ..cols_species], FUN = function(x){
+    sum_df <- sapply(site_veg_w[, ..species_cols], FUN = function(x){
       c(100*sum(x > 0, na.rm = TRUE)/nrow(site_veg_w),
         mean(x, na.rm = TRUE),
         median(x, na.rm = TRUE),
