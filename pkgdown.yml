@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   accessing_vegetation_data: accessing_vegetation_data.html
   qc_vegetation_data: qc_vegetation_data.html
-last_built: 2024-12-18T07:01Z
+last_built: 2025-01-02T03:23Z
 urls:
   reference: https://natearoe.github.io/ecositer/reference
   article: https://natearoe.github.io/ecositer/articles

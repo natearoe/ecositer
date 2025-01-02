@@ -81,19 +81,21 @@ time fixing obscure edge cases that are ultimately removed.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/create_veg_df.html">create_veg_df</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"web_report"</span>,</span>
 <span>                                 ecositeid <span class="op">=</span> <span class="st">"F022AD104CA"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
+<span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
 <p><strong>Choose the best vegetation plot for site</strong></p>
 <p>Sites may have multiple vegetation plots with differing data
 qualities. If there are multiple vegetation plots associated with a
 site, <code><a href="../reference/QC_best_vegplot_for_site.html">QC_best_vegplot_for_site()</a></code> chooses the vegetation
 plot with the most records.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_best</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_best_vegplot_for_site.html">QC_best_vegplot_for_site</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:</span></span>
 <span><span class="co">##               'Your veg_df' |&gt; dplyr::group_by(siteiid) |&gt;</span></span>
 <span><span class="co">##                                dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |&gt;</span></span>
 <span><span class="co">##                                dplyr::filter(unique_vegplots &gt; 1)</span></span></code></pre>
 <p>To look at all the sites with multiple vegetation plots:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_multi_veg</span> <span class="op">&lt;-</span> <span class="va">D104_veg</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">siteiid</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>unique_vegplots <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">vegplotiid</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>has_multiple_vegplots <span class="op">=</span> <span class="va">unique_vegplots</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -121,7 +123,7 @@ columns into the new “pct_cover” column. If any records have multiple
 abundance columns used, this function will average them and issue a
 warning or error depending on the <code>fail_on_dup</code> argument. For
 details on this function - <code>?QC_aggregate_abundance()</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_agg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_aggregate_abundance.html">QC_aggregate_abundance</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_best</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in ecositer::QC_aggregate_abundance(veg_df = D104_veg_best): Multiple</span></span>
 <span><span class="co">## abundance columns are used in this dataset: akstratumcoverclasspct,</span></span>
@@ -136,7 +138,7 @@ which records have abundance data in multiple columns. These should be
 inspected to determine why multiple abundance columns are used. The
 other warning shows that two total abundance columns were used in this
 dataset.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">abund_dups</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_find_multiple_abundance.html">QC_find_multiple_abundance</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg</span><span class="op">)</span></span>
 <span><span class="va">abund_dups</span></span></code></pre></div>
 <pre><code><span><span class="co">##  [1] siteiid                usiteid                siteobsiid            </span></span>
@@ -154,7 +156,7 @@ quality</strong></p>
 our coarse filter of the data. First we will use
 <code><a href="../reference/QC_veg_completeness.html">QC_veg_completeness()</a></code> to describe the completeness and
 quality of vegplot observations.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_veg_completeness.html">QC_veg_completeness</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_agg</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   siteiid siteobsiid vegplotiid primarydatacollector           vegdataorigin</span></span>
 <span><span class="co">## 1 1093611    1069569     277250                      site existing veg table</span></span>
@@ -173,14 +175,15 @@ quality of vegplot observations.</p>
 <p>Next, we can remove plots that do not meet a minimum threshold for
 data quality and completeness. The threshold should be specific to your
 data set and study area.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_agg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_completeness_criteria.html">QC_completeness_criteria</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_agg</span>,</span>
 <span>                                   min_unique_species <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>                                   min_perc_to_species <span class="op">=</span> <span class="fl">60</span>,</span>
 <span>                                   min_perc_with_abund <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Update taxonomy using USDA PLANTS</strong></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_agg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_update_taxonomy.html">QC_update_taxonomy</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_agg</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Note: The following taxonomical changes have been made.</span></span></code></pre>
 <pre><code><span><span class="co">## Pinus latifolia changed to Pinus engelmannii</span></span></code></pre>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
