@@ -1,0 +1,29 @@
+---
+title: "summarizing_vegetation_data"
+author: "Nathan Roe"
+date: "2025-01-02"
+output: html_document
+---
+
+**About**
+
+`ecositer` has a category of functions used for summarizing, all of which use a "summarize_" prefix. QC should be performed prior to summarizing - [QCing vegetation data](https://natearoe.github.io/ecositer/articles/qc_vegetation_data.html). 
+
+**Summarizing vegetation data by ecosite**
+`QC_best_vegplot_for_site()` is used to summarize vegetation data by ecosite, state, and phase. This function evaluates several elements of data quality, and in some cases performs QC. An example of performing QC is `QC_aggregate_abundance()`, which is run by default in this function. An example of evaluating elements of QC is reporting if there are multiple state names associated with a stateid. The messages produced by this function should be read and efforts should be made to address the data quality conditions that are described in the messages. 
+
+Load data
+```{r}
+D104_veg <- ecositer::create_veg_df(from = "web_report",
+                                 ecositeid = "R232XY222AK")
+```
+
+Summarize data
+```{r}
+ecositer::summarize_veg_by_ecosite(veg_df = D104_veg)
+
+```
+
+
+
+
