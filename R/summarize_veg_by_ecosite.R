@@ -153,14 +153,14 @@ summarize_veg_by_ecosite <- function(veg_df,
     colnames(sum_df) <- c("plantsym","constancy", "mean", "median", "min", "max", "sum", "20th", "80th",
                                                  "sites_present", "sites_absent")
 
-    # order by constancy
-    data.table::setorder(sum_df, -constancy)
-
     # merge in the plantsciname and plantnatvernm
     sum_df <- merge(x = sum_df, y = plant_sym_sci)
 
     # rearrange order
     data.table::setcolorder(sum_df, col_order)
+
+    # order by constancy
+    data.table::setorder(sum_df, -constancy)
 
     # set sum_df to list
     ecosite_list[[i]][["species_summary"]] <- sum_df
@@ -193,14 +193,14 @@ summarize_veg_by_ecosite <- function(veg_df,
       colnames(sum_df) <- c("plantsym","constancy", "mean", "median", "min", "max", "sum", "20th", "80th",
                             "sites_present", "sites_absent")
 
-      # order by constancy
-      data.table::setorder(sum_df, -constancy)
-
       # merge in the plantsciname and plantnatvernm
       sum_df <- merge(x = sum_df, y = plant_sym_sci)
 
       # rearrange order
       data.table::setcolorder(sum_df, col_order)
+
+      # order by constancy
+      data.table::setorder(sum_df, -constancy)
 
       # set sum_df to list
       ecosite_list[[i]][["STM"]][[paste0("state", j)]][["species_summary"]] <- sum_df
@@ -233,14 +233,14 @@ summarize_veg_by_ecosite <- function(veg_df,
         colnames(sum_df) <- c("plantsym","constancy", "mean", "median", "min", "max", "sum", "20th", "80th",
                               "sites_present", "sites_absent")
 
-        # order by constancy
-        data.table::setorder(sum_df, -constancy)
-
         # merge in the plantsciname and plantnatvernm
         sum_df <- merge(x = sum_df, y = plant_sym_sci)
 
         # rearrange order
         data.table::setcolorder(sum_df, col_order)
+
+        # order by constancy
+        data.table::setorder(sum_df, -constancy)
 
         # set sum_df to list
         ecosite_list[[i]][["STM"]][[paste0("state", j)]][[paste0("comm", k)]][["species_summary"]] <- sum_df
