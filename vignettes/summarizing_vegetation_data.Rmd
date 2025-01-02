@@ -1,5 +1,5 @@
 ---
-title: "summarizing_vegetation_data"
+title: "Summarizing vegetation data"
 author: "Nathan Roe"
 date: "2025-01-02"
 output: html_document
@@ -14,16 +14,33 @@ output: html_document
 
 Load data
 ```{r}
-D104_veg <- ecositer::create_veg_df(from = "web_report",
+Y222_veg <- ecositer::create_veg_df(from = "web_report",
                                  ecositeid = "R232XY222AK")
 ```
 
 Summarize data
 ```{r}
-ecositer::summarize_veg_by_ecosite(veg_df = D104_veg)
+Y222_summary <- ecositer::summarize_veg_by_ecosite(veg_df = Y222_veg)
 
 ```
 
+Note the warnings produced, such as multiple state names being associated with the same stateid. The code to inspect such situations is also supplied. 
+
+```{r}
+    Y222_veg |>
+    dplyr::group_by(ecositeid, ecostateid) |>
+    dplyr::filter(dplyr::n_distinct(ecostatename) > 1) |>
+    dplyr::distinct(ecositeid, ecostateid, ecostatename) |>
+    dplyr::arrange(ecositeid, ecostateid, ecostatename)
+```
+In this situation, the different state names are differences in capitalized letters. I have seen many other cases in NASIS where completely different state names are associated with the same stateid, so it is worth checking this. Also, for the sake standardization, it is worth having the names be exactly same (i.e., using the same capitalization). 
+
+To examine the summarized data, type Y222_summary and put a '$' at the end of it. The data structure output by `summarize_veg_by_ecosite()` is called a list. Lists are extremely flexible data structure that work well for storing complex, heterogeneous data.
+
+The "$" allows you to access the elements at that location of the list. After choosing an element, use the dollar sign again to access the next level of the list. Here is an example of a dataframe stored within the list structure. 
+```{r}
+Y222_summary$R232XY222AK$species_summary 
+```
 
 
 
