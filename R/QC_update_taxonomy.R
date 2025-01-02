@@ -12,7 +12,7 @@ QC_update_taxonomy <- function(veg_df){
   zip_url <- "https://github.com/natearoe/ecositer_data/blob/main/PLANTS_2024_official.zip?raw=TRUE"
 
 
-  USDA_plants <- data.table::fread(zip_url)
+  USDA_plants <- data.table::fread(zip_url, showProgress = FALSE)
 
   USDA_cols <- colnames(USDA_plants)
   USDA_cols_ <- gsub(" ", "_", USDA_cols)
@@ -30,6 +30,7 @@ QC_update_taxonomy <- function(veg_df){
     dplyr::filter(!is.na(Scientific_Name) & !is.na(plantsciname))
 
   if(nrow(tax_change) > 0){
+    message("Note: The following taxonomical changes have been made.")
     message(paste(tax_change$plantsciname, "changed to", tax_change$Scientific_Name, "\n"))
   }
 
