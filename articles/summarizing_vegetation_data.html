@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>summarizing_vegetation_data • ecositer</title>
+<title>Summarizing vegetation data • ecositer</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="summarizing_vegetation_data">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Summarizing vegetation data">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -35,7 +35,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/accessing_vegetation_data.html">Accessing vegetation data</a></li>
     <li><a class="dropdown-item" href="../articles/qc_vegetation_data.html">QC vegetation data</a></li>
-    <li><a class="dropdown-item" href="../articles/summarizing_vegetation_data.html">summarizing_vegetation_data</a></li>
+    <li><a class="dropdown-item" href="../articles/summarizing_vegetation_data.html">Summarizing vegetation data</a></li>
   </ul>
 </li>
       </ul>
@@ -57,7 +57,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>summarizing_vegetation_data</h1>
+      <h1>Summarizing vegetation data</h1>
                         <h4 data-toc-skip class="author">Nathan Roe</h4>
             
             <h4 data-toc-skip class="date">2025-01-02</h4>
@@ -85,13 +85,13 @@ be made to address the data quality conditions that are described in the
 messages.</p>
 <p>Load data</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">D104_veg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/create_veg_df.html">create_veg_df</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"web_report"</span>,</span>
+<code class="sourceCode R"><span><span class="va">Y222_veg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/create_veg_df.html">create_veg_df</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"web_report"</span>,</span>
 <span>                                 ecositeid <span class="op">=</span> <span class="st">"R232XY222AK"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
 <span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
 <p>Summarize data</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_veg_by_ecosite.html">summarize_veg_by_ecosite</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">Y222_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_veg_by_ecosite.html">summarize_veg_by_ecosite</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">Y222_veg</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Note: speciescancovpct is the only abundance column used in this dataset</span></span></code></pre>
 <pre><code><span><span class="co">## Note: The following taxonomical changes have been made.</span></span></code></pre>
 <pre><code><span><span class="co">## Alopecurus alpinus changed to Alopecurus magellanicus </span></span>
@@ -119,499 +119,77 @@ messages.</p>
 <span><span class="co">##     dplyr::distinct(ecositeid, ecostateid, commphaseid, commphasename) |&gt;</span></span>
 <span><span class="co">##     dplyr::arrange(ecositeid, ecostateid, commphaseid, commphasename)</span></span></code></pre>
 <pre><code><span><span class="co">## Warning: 414 records missing abundance. These records are removed from results.</span></span></code></pre>
-<pre><code><span><span class="co">## $R232XY222AK</span></span>
-<span><span class="co">## $R232XY222AK$raw_data</span></span>
-<span><span class="co">## Key: &lt;vegplotiid&gt;</span></span>
-<span><span class="co">## Indices: &lt;ecostateid&gt;, &lt;commphaseid&gt;</span></span>
-<span><span class="co">##      vegplotiid siteiid       usiteid siteobsiid     vegplotid</span></span>
-<span><span class="co">##          &lt;char&gt;  &lt;char&gt;        &lt;char&gt;     &lt;char&gt;        &lt;char&gt;</span></span>
-<span><span class="co">##   1:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   2:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   3:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   4:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   5:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##  ---                                                          </span></span>
-<span><span class="co">## 691:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 692:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 693:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 694:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 695:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">##      primarydatacollector                    vegdataorigin   ecositeid</span></span>
-<span><span class="co">##                    &lt;char&gt;                           &lt;char&gt;      &lt;char&gt;</span></span>
-<span><span class="co">##   1:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   2:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   3:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   4:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   5:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##  ---                                                                  </span></span>
-<span><span class="co">## 691:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 692:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 693:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 694:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 695:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##                                       ecositenm ecostateid    ecostatename</span></span>
-<span><span class="co">##                                          &lt;char&gt;     &lt;char&gt;          &lt;char&gt;</span></span>
-<span><span class="co">##   1: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   2: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   3: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   4: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   5: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##  ---                                                                      </span></span>
-<span><span class="co">## 691: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 692: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 693: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 694: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 695: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##      commphaseid                     commphasename plantsym pct_cover</span></span>
-<span><span class="co">##           &lt;char&gt;                            &lt;char&gt;   &lt;char&gt;     &lt;num&gt;</span></span>
-<span><span class="co">##   1:        &lt;NA&gt;              not assigned for PES     CAAQ         6</span></span>
-<span><span class="co">##   2:        &lt;NA&gt;              not assigned for PES    CACA4         5</span></span>
-<span><span class="co">##   3:        &lt;NA&gt;              not assigned for PES     CAUT         1</span></span>
-<span><span class="co">##   4:        &lt;NA&gt;              not assigned for PES   COPA28         1</span></span>
-<span><span class="co">##   5:        &lt;NA&gt;              not assigned for PES     EQVA        55</span></span>
-<span><span class="co">##  ---                                                                 </span></span>
-<span><span class="co">## 691:           1 Slimstem reedgrass-foxtail barley     JUFI        25</span></span>
-<span><span class="co">## 692:           1 Slimstem reedgrass-foxtail barley     PLER         2</span></span>
-<span><span class="co">## 693:           1 Slimstem reedgrass-foxtail barley   SACA14         4</span></span>
-<span><span class="co">## 694:           1 Slimstem reedgrass-foxtail barley    SYBO2         2</span></span>
-<span><span class="co">## 695:           1 Slimstem reedgrass-foxtail barley   TRPA28         1</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $R232XY222AK$species_summary</span></span>
-<span><span class="co">## Key: &lt;plantsym&gt;</span></span>
-<span><span class="co">##      plantsym            plantsciname</span></span>
-<span><span class="co">##        &lt;char&gt;                  &lt;char&gt;</span></span>
-<span><span class="co">##   1:    2FORB                    &lt;NA&gt;</span></span>
-<span><span class="co">##   2:    2GRAM                    &lt;NA&gt;</span></span>
-<span><span class="co">##   3:   2LICHN                    &lt;NA&gt;</span></span>
-<span><span class="co">##   4:    2MOSS                    &lt;NA&gt;</span></span>
-<span><span class="co">##   5:    ACMI2    Achillea millefolium</span></span>
-<span><span class="co">##  ---                                 </span></span>
-<span><span class="co">## 130:     SYFA Symphyotrichum falcatum</span></span>
-<span><span class="co">## 131:    TRIGL              Triglochin</span></span>
-<span><span class="co">## 132:   TRMA20     Triglochin maritima</span></span>
-<span><span class="co">## 133:   TRPA28    Triglochin palustris</span></span>
-<span><span class="co">## 134:     TYLA         Typha latifolia</span></span>
-<span><span class="co">##                                   plantnatvernm  constancy       mean median</span></span>
-<span><span class="co">##                                          &lt;char&gt;      &lt;num&gt;      &lt;num&gt;  &lt;num&gt;</span></span>
-<span><span class="co">##   1: Forb (herbaceous, not grass nor grasslike)  0.9259259 0.04629630      0</span></span>
-<span><span class="co">##   2:             Graminoid (grass or grasslike)  8.3333333 2.00000000      0</span></span>
-<span><span class="co">##   3:                                     Lichen  0.9259259 0.04629630      0</span></span>
-<span><span class="co">##   4:                                       Moss 15.7407407 2.59259259      0</span></span>
-<span><span class="co">##   5:                              common yarrow 14.8148148 0.46296296      0</span></span>
-<span><span class="co">##  ---                                                                        </span></span>
-<span><span class="co">## 130:                        white prairie aster  1.8518519 0.02777778      0</span></span>
-<span><span class="co">## 131:                                 arrowgrass  0.9259259 0.01851852      0</span></span>
-<span><span class="co">## 132:                         seaside arrowgrass  1.8518519 0.01851852      0</span></span>
-<span><span class="co">## 133:                           marsh arrowgrass  1.8518519 0.14814815      0</span></span>
-<span><span class="co">## 134:                          broadleaf cattail  3.7037037 0.39814815      0</span></span>
-<span><span class="co">##        min   max   sum  20th  80th sites_present sites_absent</span></span>
-<span><span class="co">##      &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;         &lt;num&gt;        &lt;num&gt;</span></span>
-<span><span class="co">##   1:     0     5     5     0     0             1          107</span></span>
-<span><span class="co">##   2:     0    80   216     0     0             9           99</span></span>
-<span><span class="co">##   3:     0     5     5     0     0             1          107</span></span>
-<span><span class="co">##   4:     0    50   280     0     0            17           91</span></span>
-<span><span class="co">##   5:     0    12    50     0     0            16           92</span></span>
-<span><span class="co">##  ---                                                         </span></span>
-<span><span class="co">## 130:     0     2     3     0     0             2          106</span></span>
-<span><span class="co">## 131:     0     2     2     0     0             1          107</span></span>
-<span><span class="co">## 132:     0     1     2     0     0             2          106</span></span>
-<span><span class="co">## 133:     0    15    16     0     0             2          106</span></span>
-<span><span class="co">## 134:     0    20    43     0     0             4          104</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $R232XY222AK$STM</span></span>
-<span><span class="co">## $R232XY222AK$STM$state1</span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$raw_data</span></span>
-<span><span class="co">## Key: &lt;vegplotiid&gt;</span></span>
-<span><span class="co">##      vegplotiid siteiid       usiteid siteobsiid     vegplotid</span></span>
-<span><span class="co">##          &lt;char&gt;  &lt;char&gt;        &lt;char&gt;     &lt;char&gt;        &lt;char&gt;</span></span>
-<span><span class="co">##   1:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   2:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   3:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   4:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   5:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##  ---                                                          </span></span>
-<span><span class="co">## 691:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 692:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 693:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 694:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 695:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">##      primarydatacollector                    vegdataorigin   ecositeid</span></span>
-<span><span class="co">##                    &lt;char&gt;                           &lt;char&gt;      &lt;char&gt;</span></span>
-<span><span class="co">##   1:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   2:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   3:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   4:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   5:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##  ---                                                                  </span></span>
-<span><span class="co">## 691:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 692:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 693:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 694:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 695:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##                                       ecositenm ecostateid    ecostatename</span></span>
-<span><span class="co">##                                          &lt;char&gt;     &lt;char&gt;          &lt;char&gt;</span></span>
-<span><span class="co">##   1: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   2: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   3: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   4: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   5: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##  ---                                                                      </span></span>
-<span><span class="co">## 691: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 692: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 693: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 694: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 695: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##      commphaseid                     commphasename plantsym pct_cover</span></span>
-<span><span class="co">##           &lt;char&gt;                            &lt;char&gt;   &lt;char&gt;     &lt;num&gt;</span></span>
-<span><span class="co">##   1:        &lt;NA&gt;              not assigned for PES     CAAQ         6</span></span>
-<span><span class="co">##   2:        &lt;NA&gt;              not assigned for PES    CACA4         5</span></span>
-<span><span class="co">##   3:        &lt;NA&gt;              not assigned for PES     CAUT         1</span></span>
-<span><span class="co">##   4:        &lt;NA&gt;              not assigned for PES   COPA28         1</span></span>
-<span><span class="co">##   5:        &lt;NA&gt;              not assigned for PES     EQVA        55</span></span>
-<span><span class="co">##  ---                                                                 </span></span>
-<span><span class="co">## 691:           1 Slimstem reedgrass-foxtail barley     JUFI        25</span></span>
-<span><span class="co">## 692:           1 Slimstem reedgrass-foxtail barley     PLER         2</span></span>
-<span><span class="co">## 693:           1 Slimstem reedgrass-foxtail barley   SACA14         4</span></span>
-<span><span class="co">## 694:           1 Slimstem reedgrass-foxtail barley    SYBO2         2</span></span>
-<span><span class="co">## 695:           1 Slimstem reedgrass-foxtail barley   TRPA28         1</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$species_summary</span></span>
-<span><span class="co">## Key: &lt;plantsym&gt;</span></span>
-<span><span class="co">##      plantsym            plantsciname</span></span>
-<span><span class="co">##        &lt;char&gt;                  &lt;char&gt;</span></span>
-<span><span class="co">##   1:    2FORB                    &lt;NA&gt;</span></span>
-<span><span class="co">##   2:    2GRAM                    &lt;NA&gt;</span></span>
-<span><span class="co">##   3:   2LICHN                    &lt;NA&gt;</span></span>
-<span><span class="co">##   4:    2MOSS                    &lt;NA&gt;</span></span>
-<span><span class="co">##   5:    ACMI2    Achillea millefolium</span></span>
-<span><span class="co">##  ---                                 </span></span>
-<span><span class="co">## 130:     SYFA Symphyotrichum falcatum</span></span>
-<span><span class="co">## 131:    TRIGL              Triglochin</span></span>
-<span><span class="co">## 132:   TRMA20     Triglochin maritima</span></span>
-<span><span class="co">## 133:   TRPA28    Triglochin palustris</span></span>
-<span><span class="co">## 134:     TYLA         Typha latifolia</span></span>
-<span><span class="co">##                                   plantnatvernm  constancy       mean median</span></span>
-<span><span class="co">##                                          &lt;char&gt;      &lt;num&gt;      &lt;num&gt;  &lt;num&gt;</span></span>
-<span><span class="co">##   1: Forb (herbaceous, not grass nor grasslike)  0.9259259 0.04629630      0</span></span>
-<span><span class="co">##   2:             Graminoid (grass or grasslike)  8.3333333 2.00000000      0</span></span>
-<span><span class="co">##   3:                                     Lichen  0.9259259 0.04629630      0</span></span>
-<span><span class="co">##   4:                                       Moss 15.7407407 2.59259259      0</span></span>
-<span><span class="co">##   5:                              common yarrow 14.8148148 0.46296296      0</span></span>
-<span><span class="co">##  ---                                                                        </span></span>
-<span><span class="co">## 130:                        white prairie aster  1.8518519 0.02777778      0</span></span>
-<span><span class="co">## 131:                                 arrowgrass  0.9259259 0.01851852      0</span></span>
-<span><span class="co">## 132:                         seaside arrowgrass  1.8518519 0.01851852      0</span></span>
-<span><span class="co">## 133:                           marsh arrowgrass  1.8518519 0.14814815      0</span></span>
-<span><span class="co">## 134:                          broadleaf cattail  3.7037037 0.39814815      0</span></span>
-<span><span class="co">##        min   max   sum  20th  80th sites_present sites_absent</span></span>
-<span><span class="co">##      &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;         &lt;num&gt;        &lt;num&gt;</span></span>
-<span><span class="co">##   1:     0     5     5     0     0             1          107</span></span>
-<span><span class="co">##   2:     0    80   216     0     0             9           99</span></span>
-<span><span class="co">##   3:     0     5     5     0     0             1          107</span></span>
-<span><span class="co">##   4:     0    50   280     0     0            17           91</span></span>
-<span><span class="co">##   5:     0    12    50     0     0            16           92</span></span>
-<span><span class="co">##  ---                                                         </span></span>
-<span><span class="co">## 130:     0     2     3     0     0             2          106</span></span>
-<span><span class="co">## 131:     0     2     2     0     0             1          107</span></span>
-<span><span class="co">## 132:     0     1     2     0     0             2          106</span></span>
-<span><span class="co">## 133:     0    15    16     0     0             2          106</span></span>
-<span><span class="co">## 134:     0    20    43     0     0             4          104</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$comm1</span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$comm1$raw_data</span></span>
-<span><span class="co">## Key: &lt;vegplotiid&gt;</span></span>
-<span><span class="co">##      vegplotiid siteiid       usiteid siteobsiid     vegplotid</span></span>
-<span><span class="co">##          &lt;char&gt;  &lt;char&gt;        &lt;char&gt;     &lt;char&gt;        &lt;char&gt;</span></span>
-<span><span class="co">##   1:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   2:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   3:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   4:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   5:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##  ---                                                          </span></span>
-<span><span class="co">## 691:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 692:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 693:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 694:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 695:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">##      primarydatacollector                    vegdataorigin   ecositeid</span></span>
-<span><span class="co">##                    &lt;char&gt;                           &lt;char&gt;      &lt;char&gt;</span></span>
-<span><span class="co">##   1:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   2:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   3:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   4:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   5:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##  ---                                                                  </span></span>
-<span><span class="co">## 691:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 692:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 693:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 694:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 695:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##                                       ecositenm ecostateid    ecostatename</span></span>
-<span><span class="co">##                                          &lt;char&gt;     &lt;char&gt;          &lt;char&gt;</span></span>
-<span><span class="co">##   1: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   2: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   3: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   4: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   5: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##  ---                                                                      </span></span>
-<span><span class="co">## 691: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 692: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 693: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 694: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 695: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##      commphaseid                     commphasename plantsym pct_cover</span></span>
-<span><span class="co">##           &lt;char&gt;                            &lt;char&gt;   &lt;char&gt;     &lt;num&gt;</span></span>
-<span><span class="co">##   1:        &lt;NA&gt;              not assigned for PES     CAAQ         6</span></span>
-<span><span class="co">##   2:        &lt;NA&gt;              not assigned for PES    CACA4         5</span></span>
-<span><span class="co">##   3:        &lt;NA&gt;              not assigned for PES     CAUT         1</span></span>
-<span><span class="co">##   4:        &lt;NA&gt;              not assigned for PES   COPA28         1</span></span>
-<span><span class="co">##   5:        &lt;NA&gt;              not assigned for PES     EQVA        55</span></span>
-<span><span class="co">##  ---                                                                 </span></span>
-<span><span class="co">## 691:           1 Slimstem reedgrass-foxtail barley     JUFI        25</span></span>
-<span><span class="co">## 692:           1 Slimstem reedgrass-foxtail barley     PLER         2</span></span>
-<span><span class="co">## 693:           1 Slimstem reedgrass-foxtail barley   SACA14         4</span></span>
-<span><span class="co">## 694:           1 Slimstem reedgrass-foxtail barley    SYBO2         2</span></span>
-<span><span class="co">## 695:           1 Slimstem reedgrass-foxtail barley   TRPA28         1</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$comm1$species_summary</span></span>
-<span><span class="co">## Key: &lt;plantsym&gt;</span></span>
-<span><span class="co">##      plantsym            plantsciname</span></span>
-<span><span class="co">##        &lt;char&gt;                  &lt;char&gt;</span></span>
-<span><span class="co">##   1:    2FORB                    &lt;NA&gt;</span></span>
-<span><span class="co">##   2:    2GRAM                    &lt;NA&gt;</span></span>
-<span><span class="co">##   3:   2LICHN                    &lt;NA&gt;</span></span>
-<span><span class="co">##   4:    2MOSS                    &lt;NA&gt;</span></span>
-<span><span class="co">##   5:    ACMI2    Achillea millefolium</span></span>
-<span><span class="co">##  ---                                 </span></span>
-<span><span class="co">## 130:     SYFA Symphyotrichum falcatum</span></span>
-<span><span class="co">## 131:    TRIGL              Triglochin</span></span>
-<span><span class="co">## 132:   TRMA20     Triglochin maritima</span></span>
-<span><span class="co">## 133:   TRPA28    Triglochin palustris</span></span>
-<span><span class="co">## 134:     TYLA         Typha latifolia</span></span>
-<span><span class="co">##                                   plantnatvernm constancy       mean median</span></span>
-<span><span class="co">##                                          &lt;char&gt;     &lt;num&gt;      &lt;num&gt;  &lt;num&gt;</span></span>
-<span><span class="co">##   1: Forb (herbaceous, not grass nor grasslike)  0.000000 0.00000000      0</span></span>
-<span><span class="co">##   2:             Graminoid (grass or grasslike)  8.571429 1.02857143      0</span></span>
-<span><span class="co">##   3:                                     Lichen  0.000000 0.00000000      0</span></span>
-<span><span class="co">##   4:                                       Moss  8.571429 0.71428571      0</span></span>
-<span><span class="co">##   5:                              common yarrow 34.285714 0.82857143      0</span></span>
-<span><span class="co">##  ---                                                                       </span></span>
-<span><span class="co">## 130:                        white prairie aster  2.857143 0.05714286      0</span></span>
-<span><span class="co">## 131:                                 arrowgrass  2.857143 0.05714286      0</span></span>
-<span><span class="co">## 132:                         seaside arrowgrass  0.000000 0.00000000      0</span></span>
-<span><span class="co">## 133:                           marsh arrowgrass  2.857143 0.02857143      0</span></span>
-<span><span class="co">## 134:                          broadleaf cattail  0.000000 0.00000000      0</span></span>
-<span><span class="co">##        min   max   sum  20th  80th sites_present sites_absent</span></span>
-<span><span class="co">##      &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;         &lt;num&gt;        &lt;num&gt;</span></span>
-<span><span class="co">##   1:     0     0     0     0     0             0           35</span></span>
-<span><span class="co">##   2:     0    30    36     0     0             3           32</span></span>
-<span><span class="co">##   3:     0     0     0     0     0             0           35</span></span>
-<span><span class="co">##   4:     0    10    25     0     0             3           32</span></span>
-<span><span class="co">##   5:     0     5    29     0     2            12           23</span></span>
-<span><span class="co">##  ---                                                         </span></span>
-<span><span class="co">## 130:     0     2     2     0     0             1           34</span></span>
-<span><span class="co">## 131:     0     2     2     0     0             1           34</span></span>
-<span><span class="co">## 132:     0     0     0     0     0             0           35</span></span>
-<span><span class="co">## 133:     0     1     1     0     0             1           34</span></span>
-<span><span class="co">## 134:     0     0     0     0     0             0           35</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$comm2</span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$comm2$raw_data</span></span>
-<span><span class="co">## Key: &lt;vegplotiid&gt;</span></span>
-<span><span class="co">##      vegplotiid siteiid       usiteid siteobsiid     vegplotid</span></span>
-<span><span class="co">##          &lt;char&gt;  &lt;char&gt;        &lt;char&gt;     &lt;char&gt;        &lt;char&gt;</span></span>
-<span><span class="co">##   1:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   2:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   3:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   4:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   5:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##  ---                                                          </span></span>
-<span><span class="co">## 691:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 692:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 693:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 694:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 695:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">##      primarydatacollector                    vegdataorigin   ecositeid</span></span>
-<span><span class="co">##                    &lt;char&gt;                           &lt;char&gt;      &lt;char&gt;</span></span>
-<span><span class="co">##   1:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   2:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   3:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   4:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   5:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##  ---                                                                  </span></span>
-<span><span class="co">## 691:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 692:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 693:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 694:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 695:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##                                       ecositenm ecostateid    ecostatename</span></span>
-<span><span class="co">##                                          &lt;char&gt;     &lt;char&gt;          &lt;char&gt;</span></span>
-<span><span class="co">##   1: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   2: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   3: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   4: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   5: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##  ---                                                                      </span></span>
-<span><span class="co">## 691: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 692: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 693: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 694: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 695: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##      commphaseid                     commphasename plantsym pct_cover</span></span>
-<span><span class="co">##           &lt;char&gt;                            &lt;char&gt;   &lt;char&gt;     &lt;num&gt;</span></span>
-<span><span class="co">##   1:        &lt;NA&gt;              not assigned for PES     CAAQ         6</span></span>
-<span><span class="co">##   2:        &lt;NA&gt;              not assigned for PES    CACA4         5</span></span>
-<span><span class="co">##   3:        &lt;NA&gt;              not assigned for PES     CAUT         1</span></span>
-<span><span class="co">##   4:        &lt;NA&gt;              not assigned for PES   COPA28         1</span></span>
-<span><span class="co">##   5:        &lt;NA&gt;              not assigned for PES     EQVA        55</span></span>
-<span><span class="co">##  ---                                                                 </span></span>
-<span><span class="co">## 691:           1 Slimstem reedgrass-foxtail barley     JUFI        25</span></span>
-<span><span class="co">## 692:           1 Slimstem reedgrass-foxtail barley     PLER         2</span></span>
-<span><span class="co">## 693:           1 Slimstem reedgrass-foxtail barley   SACA14         4</span></span>
-<span><span class="co">## 694:           1 Slimstem reedgrass-foxtail barley    SYBO2         2</span></span>
-<span><span class="co">## 695:           1 Slimstem reedgrass-foxtail barley   TRPA28         1</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$comm2$species_summary</span></span>
-<span><span class="co">## Key: &lt;plantsym&gt;</span></span>
-<span><span class="co">##      plantsym            plantsciname</span></span>
-<span><span class="co">##        &lt;char&gt;                  &lt;char&gt;</span></span>
-<span><span class="co">##   1:    2FORB                    &lt;NA&gt;</span></span>
-<span><span class="co">##   2:    2GRAM                    &lt;NA&gt;</span></span>
-<span><span class="co">##   3:   2LICHN                    &lt;NA&gt;</span></span>
-<span><span class="co">##   4:    2MOSS                    &lt;NA&gt;</span></span>
-<span><span class="co">##   5:    ACMI2    Achillea millefolium</span></span>
-<span><span class="co">##  ---                                 </span></span>
-<span><span class="co">## 130:     SYFA Symphyotrichum falcatum</span></span>
-<span><span class="co">## 131:    TRIGL              Triglochin</span></span>
-<span><span class="co">## 132:   TRMA20     Triglochin maritima</span></span>
-<span><span class="co">## 133:   TRPA28    Triglochin palustris</span></span>
-<span><span class="co">## 134:     TYLA         Typha latifolia</span></span>
-<span><span class="co">##                                   plantnatvernm constancy      mean median</span></span>
-<span><span class="co">##                                          &lt;char&gt;     &lt;num&gt;     &lt;num&gt;  &lt;num&gt;</span></span>
-<span><span class="co">##   1: Forb (herbaceous, not grass nor grasslike)  0.000000 0.0000000      0</span></span>
-<span><span class="co">##   2:             Graminoid (grass or grasslike)  6.666667 0.3333333      0</span></span>
-<span><span class="co">##   3:                                     Lichen  0.000000 0.0000000      0</span></span>
-<span><span class="co">##   4:                                       Moss 20.000000 1.2000000      0</span></span>
-<span><span class="co">##   5:                              common yarrow  0.000000 0.0000000      0</span></span>
-<span><span class="co">##  ---                                                                      </span></span>
-<span><span class="co">## 130:                        white prairie aster  0.000000 0.0000000      0</span></span>
-<span><span class="co">## 131:                                 arrowgrass  0.000000 0.0000000      0</span></span>
-<span><span class="co">## 132:                         seaside arrowgrass  0.000000 0.0000000      0</span></span>
-<span><span class="co">## 133:                           marsh arrowgrass  0.000000 0.0000000      0</span></span>
-<span><span class="co">## 134:                          broadleaf cattail  6.666667 0.1333333      0</span></span>
-<span><span class="co">##        min   max   sum  20th  80th sites_present sites_absent</span></span>
-<span><span class="co">##      &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;         &lt;num&gt;        &lt;num&gt;</span></span>
-<span><span class="co">##   1:     0     0     0     0   0.0             0           15</span></span>
-<span><span class="co">##   2:     0     5     5     0   0.0             1           14</span></span>
-<span><span class="co">##   3:     0     0     0     0   0.0             0           15</span></span>
-<span><span class="co">##   4:     0    15    18     0   0.2             3           12</span></span>
-<span><span class="co">##   5:     0     0     0     0   0.0             0           15</span></span>
-<span><span class="co">##  ---                                                         </span></span>
-<span><span class="co">## 130:     0     0     0     0   0.0             0           15</span></span>
-<span><span class="co">## 131:     0     0     0     0   0.0             0           15</span></span>
-<span><span class="co">## 132:     0     0     0     0   0.0             0           15</span></span>
-<span><span class="co">## 133:     0     0     0     0   0.0             0           15</span></span>
-<span><span class="co">## 134:     0     2     2     0   0.0             1           14</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$comm3</span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$comm3$raw_data</span></span>
-<span><span class="co">## Key: &lt;vegplotiid&gt;</span></span>
-<span><span class="co">##      vegplotiid siteiid       usiteid siteobsiid     vegplotid</span></span>
-<span><span class="co">##          &lt;char&gt;  &lt;char&gt;        &lt;char&gt;     &lt;char&gt;        &lt;char&gt;</span></span>
-<span><span class="co">##   1:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   2:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   3:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   4:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##   5:     661668  712504     10BB00401     695063     10BB00401</span></span>
-<span><span class="co">##  ---                                                          </span></span>
-<span><span class="co">## 691:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 692:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 693:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 694:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">## 695:     668682 1168183 S2015AK290009    1071382 S2015AK290009</span></span>
-<span><span class="co">##      primarydatacollector                    vegdataorigin   ecositeid</span></span>
-<span><span class="co">##                    &lt;char&gt;                           &lt;char&gt;      &lt;char&gt;</span></span>
-<span><span class="co">##   1:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   2:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   3:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   4:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##   5:                   TT other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##  ---                                                                  </span></span>
-<span><span class="co">## 691:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 692:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 693:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 694:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">## 695:                   BS other field data collection tool R232XY222AK</span></span>
-<span><span class="co">##                                       ecositenm ecostateid    ecostatename</span></span>
-<span><span class="co">##                                          &lt;char&gt;     &lt;char&gt;          &lt;char&gt;</span></span>
-<span><span class="co">##   1: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   2: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   3: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   4: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##   5: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##  ---                                                                      </span></span>
-<span><span class="co">## 691: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 692: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 693: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 694: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">## 695: Boreal Graminoid Loamy Terrace Depressions          1 reference state</span></span>
-<span><span class="co">##      commphaseid                     commphasename plantsym pct_cover</span></span>
-<span><span class="co">##           &lt;char&gt;                            &lt;char&gt;   &lt;char&gt;     &lt;num&gt;</span></span>
-<span><span class="co">##   1:        &lt;NA&gt;              not assigned for PES     CAAQ         6</span></span>
-<span><span class="co">##   2:        &lt;NA&gt;              not assigned for PES    CACA4         5</span></span>
-<span><span class="co">##   3:        &lt;NA&gt;              not assigned for PES     CAUT         1</span></span>
-<span><span class="co">##   4:        &lt;NA&gt;              not assigned for PES   COPA28         1</span></span>
-<span><span class="co">##   5:        &lt;NA&gt;              not assigned for PES     EQVA        55</span></span>
-<span><span class="co">##  ---                                                                 </span></span>
-<span><span class="co">## 691:           1 Slimstem reedgrass-foxtail barley     JUFI        25</span></span>
-<span><span class="co">## 692:           1 Slimstem reedgrass-foxtail barley     PLER         2</span></span>
-<span><span class="co">## 693:           1 Slimstem reedgrass-foxtail barley   SACA14         4</span></span>
-<span><span class="co">## 694:           1 Slimstem reedgrass-foxtail barley    SYBO2         2</span></span>
-<span><span class="co">## 695:           1 Slimstem reedgrass-foxtail barley   TRPA28         1</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $R232XY222AK$STM$state1$comm3$species_summary</span></span>
-<span><span class="co">## Key: &lt;plantsym&gt;</span></span>
-<span><span class="co">##      plantsym            plantsciname</span></span>
-<span><span class="co">##        &lt;char&gt;                  &lt;char&gt;</span></span>
-<span><span class="co">##   1:    2FORB                    &lt;NA&gt;</span></span>
-<span><span class="co">##   2:    2GRAM                    &lt;NA&gt;</span></span>
-<span><span class="co">##   3:   2LICHN                    &lt;NA&gt;</span></span>
-<span><span class="co">##   4:    2MOSS                    &lt;NA&gt;</span></span>
-<span><span class="co">##   5:    ACMI2    Achillea millefolium</span></span>
-<span><span class="co">##  ---                                 </span></span>
-<span><span class="co">## 130:     SYFA Symphyotrichum falcatum</span></span>
-<span><span class="co">## 131:    TRIGL              Triglochin</span></span>
-<span><span class="co">## 132:   TRMA20     Triglochin maritima</span></span>
-<span><span class="co">## 133:   TRPA28    Triglochin palustris</span></span>
-<span><span class="co">## 134:     TYLA         Typha latifolia</span></span>
-<span><span class="co">##                                   plantnatvernm constancy  mean median   min</span></span>
-<span><span class="co">##                                          &lt;char&gt;     &lt;num&gt; &lt;num&gt;  &lt;num&gt; &lt;num&gt;</span></span>
-<span><span class="co">##   1: Forb (herbaceous, not grass nor grasslike)         0   0.0      0     0</span></span>
-<span><span class="co">##   2:             Graminoid (grass or grasslike)         0   0.0      0     0</span></span>
-<span><span class="co">##   3:                                     Lichen         0   0.0      0     0</span></span>
-<span><span class="co">##   4:                                       Moss        20   5.2      0     0</span></span>
-<span><span class="co">##   5:                              common yarrow         0   0.0      0     0</span></span>
-<span><span class="co">##  ---                                                                        </span></span>
-<span><span class="co">## 130:                        white prairie aster        10   0.1      0     0</span></span>
-<span><span class="co">## 131:                                 arrowgrass         0   0.0      0     0</span></span>
-<span><span class="co">## 132:                         seaside arrowgrass         0   0.0      0     0</span></span>
-<span><span class="co">## 133:                           marsh arrowgrass         0   0.0      0     0</span></span>
-<span><span class="co">## 134:                          broadleaf cattail        30   4.1      0     0</span></span>
-<span><span class="co">##        max   sum  20th  80th sites_present sites_absent</span></span>
-<span><span class="co">##      &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;         &lt;num&gt;        &lt;num&gt;</span></span>
-<span><span class="co">##   1:     0     0     0   0.0             0           10</span></span>
-<span><span class="co">##   2:     0     0     0   0.0             0           10</span></span>
-<span><span class="co">##   3:     0     0     0   0.0             0           10</span></span>
-<span><span class="co">##   4:    50    52     0   0.4             2            8</span></span>
-<span><span class="co">##   5:     0     0     0   0.0             0           10</span></span>
-<span><span class="co">##  ---                                                   </span></span>
-<span><span class="co">## 130:     1     1     0   0.0             1            9</span></span>
-<span><span class="co">## 131:     0     0     0   0.0             0           10</span></span>
-<span><span class="co">## 132:     0     0     0   0.0             0           10</span></span>
-<span><span class="co">## 133:     0     0     0   0.0             0           10</span></span>
-<span><span class="co">## 134:    20    41     0   4.8             3            7</span></span></code></pre>
+<p>Note the warnings produced, such as multiple state names being
+associated with the same stateid. The code to inspect such situations is
+also supplied.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>    <span class="va">Y222_veg</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ecositeid</span>, <span class="va">ecostateid</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">ecostatename</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">ecositeid</span>, <span class="va">ecostateid</span>, <span class="va">ecostatename</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">ecositeid</span>, <span class="va">ecostateid</span>, <span class="va">ecostatename</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 3</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Groups:   ecositeid, ecostateid [1]</span></span></span>
+<span><span class="co">##   ecositeid   ecostateid ecostatename   </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> R232XY222AK 1          Reference State</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> R232XY222AK 1          reference state</span></span></code></pre>
+<p>In this situation, the different state names are differences in
+capitalized letters. I have seen many other cases in NASIS where
+completely different state names are associated with the same stateid,
+so it is worth checking this. Also, for the sake standardization, it is
+worth having the names be exactly same (i.e., using the same
+capitalization).</p>
+<p>To examine the summarized data, type Y222_summary and put a ‘$’ at
+the end of it. The data structure output by
+<code><a href="../reference/summarize_veg_by_ecosite.html">summarize_veg_by_ecosite()</a></code> is called a list. Lists are
+extremely flexible data structure that work well for storing complex,
+heterogeneous data.</p>
+<p>The “$” allows you to access the elements at that location of the
+list. After choosing an element, use the dollar sign again to access the
+next level of the list. Here is an example of a dataframe stored within
+the list structure.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Y222_summary</span><span class="op">$</span><span class="va">R232XY222AK</span><span class="op">$</span><span class="va">species_summary</span> </span></code></pre></div>
+<pre><code><span><span class="co">##      plantsym             plantsciname         plantnatvernm  constancy</span></span>
+<span><span class="co">##        &lt;char&gt;                   &lt;char&gt;                &lt;char&gt;      &lt;num&gt;</span></span>
+<span><span class="co">##   1:     CAAQ          Carex aquatilis           water sedge 46.2962963</span></span>
+<span><span class="co">##   2:     HOJU          Hordeum jubatum        foxtail barley 43.5185185</span></span>
+<span><span class="co">##   3:    CACA4 Calamagrostis canadensis             bluejoint 31.4814815</span></span>
+<span><span class="co">##   4:    GEMA4        Geum macrophyllum       largeleaf avens 22.2222222</span></span>
+<span><span class="co">##   5:    CAAT2          Carex atherodes           wheat sedge 20.3703704</span></span>
+<span><span class="co">##  ---                                                                   </span></span>
+<span><span class="co">## 130:    SAUN8        Sanionia uncinata         sanionia moss  0.9259259</span></span>
+<span><span class="co">## 131:    SENEC                  Senecio               ragwort  0.9259259</span></span>
+<span><span class="co">## 132:     SPRO Spiranthes romanzoffiana hooded lady's tresses  0.9259259</span></span>
+<span><span class="co">## 133:    STLO2       Stellaria longipes    longstalk starwort  0.9259259</span></span>
+<span><span class="co">## 134:    TRIGL               Triglochin            arrowgrass  0.9259259</span></span>
+<span><span class="co">##             mean median   min   max   sum  20th  80th sites_present</span></span>
+<span><span class="co">##            &lt;num&gt;  &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;         &lt;num&gt;</span></span>
+<span><span class="co">##   1: 15.87962963      0     0    80  1715     0  30.0            50</span></span>
+<span><span class="co">##   2:  5.24074074      0     0    50   566     0   5.0            47</span></span>
+<span><span class="co">##   3:  4.32407407      0     0    65   467     0   2.6            34</span></span>
+<span><span class="co">##   4:  1.29629630      0     0    25   140     0   1.0            24</span></span>
+<span><span class="co">##   5:  5.26851852      0     0    70   569     0   0.6            22</span></span>
+<span><span class="co">##  ---                                                               </span></span>
+<span><span class="co">## 130:  0.37037037      0     0    40    40     0   0.0             1</span></span>
+<span><span class="co">## 131:  0.02777778      0     0     3     3     0   0.0             1</span></span>
+<span><span class="co">## 132:  0.02777778      0     0     3     3     0   0.0             1</span></span>
+<span><span class="co">## 133:  0.01851852      0     0     2     2     0   0.0             1</span></span>
+<span><span class="co">## 134:  0.01851852      0     0     2     2     0   0.0             1</span></span>
+<span><span class="co">##      sites_absent</span></span>
+<span><span class="co">##             &lt;num&gt;</span></span>
+<span><span class="co">##   1:           58</span></span>
+<span><span class="co">##   2:           61</span></span>
+<span><span class="co">##   3:           74</span></span>
+<span><span class="co">##   4:           84</span></span>
+<span><span class="co">##   5:           86</span></span>
+<span><span class="co">##  ---             </span></span>
+<span><span class="co">## 130:          107</span></span>
+<span><span class="co">## 131:          107</span></span>
+<span><span class="co">## 132:          107</span></span>
+<span><span class="co">## 133:          107</span></span>
+<span><span class="co">## 134:          107</span></span></code></pre>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
