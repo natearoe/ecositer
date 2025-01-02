@@ -154,7 +154,7 @@ summarize_veg_by_ecosite <- function(veg_df,
                                                  "sites_present", "sites_absent")
 
     # order by constancy
-    data.table::setorder(sum_df, constancy)
+    data.table::setorder(sum_df, -constancy)
 
     # merge in the plantsciname and plantnatvernm
     sum_df <- merge(x = sum_df, y = plant_sym_sci)
@@ -194,7 +194,7 @@ summarize_veg_by_ecosite <- function(veg_df,
                             "sites_present", "sites_absent")
 
       # order by constancy
-      data.table::setorder(sum_df, constancy)
+      data.table::setorder(sum_df, -constancy)
 
       # merge in the plantsciname and plantnatvernm
       sum_df <- merge(x = sum_df, y = plant_sym_sci)
@@ -234,7 +234,7 @@ summarize_veg_by_ecosite <- function(veg_df,
                               "sites_present", "sites_absent")
 
         # order by constancy
-        data.table::setorder(sum_df, constancy)
+        data.table::setorder(sum_df, -constancy)
 
         # merge in the plantsciname and plantnatvernm
         sum_df <- merge(x = sum_df, y = plant_sym_sci)
