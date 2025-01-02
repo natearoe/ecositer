@@ -26,16 +26,6 @@ QC_best_vegplot_for_site <- function(veg_df) {
 
     data <- data.table::as.data.table(veg_df)
 
-    # Are there multiple vegplotiids for any siteiids?
-    multi_logi <- output <- data[, data.table::uniqueN(vegplotiid) > 1, by = siteiid][, any(V1)]
-
-    if(multi_logi){
-      message("Warning: There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:
-              'Your veg_df' |> dplyr::group_by(siteiid) |>
-                               dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |>
-                               dplyr::filter(unique_vegplots > 1)")
-    }
-
     # Summarize data: count rows per vegplot for each site
     vegplot_summary <- data[, .(vegplot_count = .N), by = .(siteiid, vegplotiid)]
 
@@ -49,6 +39,16 @@ QC_best_vegplot_for_site <- function(veg_df) {
     if (length(tie_sites) > 0) {
       stop("Cannot choose the best vegplot using number of records because there is a tie. ",
            "The following siteiids have ties: ", paste(tie_sites, collapse = ", "))
+    }
+
+    # Are there multiple vegplotiids for any siteiids?
+    multi_logi <- data[, data.table::uniqueN(vegplotiid) > 1, by = siteiid][, any(V1)]
+
+    if(multi_logi){
+      message("Warning: There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:
+              'Your veg_df' |> dplyr::group_by(siteiid) |>
+                               dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |>
+                               dplyr::filter(unique_vegplots > 1)")
     }
 
     # Keep only the vegplot(s) with the maximum count for each site
