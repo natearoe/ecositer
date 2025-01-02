@@ -8,11 +8,12 @@ summarize_veg(
   veg_df,
   agg_abund = TRUE,
   update_taxonomy = TRUE,
-  best_vegplot = TRUE
+  best_vegplot = TRUE,
+  use_id = TRUE
 )
 }
 \arguments{
-\item{best_vegplot}{}
+\item{use_id}{logical whether to use state and phase id (i.e., numeric) or name}
 }
 \value{
 list of summarized vegetation data
