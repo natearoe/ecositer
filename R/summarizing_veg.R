@@ -5,6 +5,7 @@
 #' @param agg_abund
 #' @param update_taxonomy
 #' @param best_vegplot
+#' @param use_id logical whether to use state and phase id (i.e., numeric) or name
 #'
 #' @return list of summarized vegetation data
 #' @export
@@ -13,7 +14,8 @@
 summarize_veg <- function(veg_df,
                           agg_abund = TRUE,
                           update_taxonomy = TRUE,
-                          best_vegplot = TRUE){
+                          best_vegplot = TRUE,
+                          use_id = TRUE){
 
 
   # Convert to data.table
@@ -34,6 +36,31 @@ summarize_veg <- function(veg_df,
     veg_df <- ecositer::QC_update_taxonomy(veg_df)
   }
 
+  # check for multiple statenames per stateid
+  multi_state_name_per_stateid <- veg_df[, data.table::uniqueN(ecostatename) > 1, by = c("ecositeid", "ecostateid")][,any(V1)]
+
+  # check for multiple phasenames per phaseid
+  multi_phase_name_per_phaseid <- veg_df[, data.table::uniqueN(commphasename) > 1, by = c("ecositeid", "commphaseid")][,any(V1)]
+
+  # provide warning for mult statename per stateid
+  if(multi_state_name_per_stateid){
+    message("Warning: There are multiple state names associated with the same stateid. To identify these situations, use:
+          `Your veg df` |>
+    dplyr::group_by(ecositeid, ecostateid) |>
+    dplyr::filter(dplyr::n_distinct(ecostatename) > 1) |>
+    dplyr::distinct(ecositeid, ecostateid, ecostatename) |>
+    dplyr::arrange(ecositeid, ecostateid, ecostatename)")
+  }
+
+  # provide warning for mult phasename per phaseid
+  if(multi_phase_name_per_phaseid){
+    message("Warning: There are multiple phase names associated with the same phaseid. To identify these situations, use:
+            `Your veg df` |>
+    dplyr::group_by(ecositeid, ecostateid, commphaseid) |>
+    dplyr::filter(dplyr::n_distinct(commphasename) > 1) |>
+    dplyr::distinct(ecositeid, ecostateid, commphaseid, commphasename) |>
+    dplyr::arrange(ecositeid, ecostateid, commphaseid, commphasename)")
+  }
 
   # If plant scientific name is NA, call it unknown
   veg_df$plantsciname[is.na(veg_df$plantsciname)] <- "undefined"
@@ -44,9 +71,8 @@ summarize_veg <- function(veg_df,
   # If strata is NA, call it unknown
   veg_df$ecostateid[is.na(veg_df$ecostateid)] <- "undefined"
 
-  # remove instances where ecosite, vegplotid, or pct_cover
+  # remove instances where ecosite, vegplotid, or pct_cover in NA
   veg_df <- veg_df |> dplyr::filter(!is.na(ecositeid) & !is.na(vegplotid) & !is.na(pct_cover))
-
 
   # aggregate plant abundances. this means that if the same plot has two records of the same species in
   # different strata, they will be combined. then pivot data wider. this data.table is what veg
@@ -83,6 +109,11 @@ summarize_veg <- function(veg_df,
 
   # loop through ecosites
   for(i in unique(veg_df$ecositeid[!is.na(veg_df$ecositeid)])){
+
+    if(use_id){
+      ecosite_list[["i"]][["Raw_data"]] <- veg_df[veg_df$ecositeid == i, ]
+
+    }
 
     # reduce data to ecosite of interest
     ecosite_list[[i]][["Raw_data"]] <- veg_df[veg_df$ecositeid == i, ]
@@ -167,11 +198,12 @@ summarize_veg <- function(veg_df,
     # create empty list
     ecosite_list[[i]][["STM"]] <- list()
 
+
     # loop through ecostateids (AKA state) within ecosite
     for(j in ecosite_list[[i]][["Raw_data"]]$ecostateid[!is.na(ecosite_list[[i]][["Raw_data"]]$ecostateid)] |> unique()){
 
       # create empty list
-      ecosite_list[[i]][["STM"]][[j]] <- list()
+      ecosite_list[[i]][["STM"]][[`j`]] <- list()
 
       # reduce raw data to state
       ecosite_list[[i]][["STM"]][[j]][["Raw_data"]] <- ecosite_list[[i]][["Raw_data"]] |> dplyr::filter(ecostateid == j)
