@@ -9,8 +9,8 @@
 #' QC_taxonomy(veg_df = my_veg_df)
 QC_taxonomy <- function(veg_df){
   # there is a lot of room for efficiency improvements. the regex is pretty complicated but could be done in a more elegant way.
-  PLANTS <- read.delim2("https://plants.usda.gov/assets/docs/CompletePLANTSList/plantlst.txt",
-                        sep = ",")
+  PLANTS <- suppressMessages(read.delim2("https://plants.usda.gov/assets/docs/CompletePLANTSList/plantlst.txt",
+                                         sep = ","))
 
   sym_key <- veg_df |> dplyr::select(plantsym, plantsciname) |>
     dplyr::filter(plantsym %in% PLANTS$Synonym.Symbol) |>
