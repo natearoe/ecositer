@@ -153,6 +153,9 @@ summarize_veg_by_ecosite <- function(veg_df,
     colnames(sum_df) <- c("plantsym","constancy", "mean", "median", "min", "max", "sum", "20th", "80th",
                                                  "sites_present", "sites_absent")
 
+    # order by constancy
+    data.table::setorder(sum_df, constancy)
+
     # merge in the plantsciname and plantnatvernm
     sum_df <- merge(x = sum_df, y = plant_sym_sci)
 
@@ -172,7 +175,7 @@ summarize_veg_by_ecosite <- function(veg_df,
       # reduce wide data to state of interest
       state_veg_w <- site_veg_w[site_veg_w$ecostateid == j,]
 
-      sum_df <- sapply(state_veg_w[, ..cols_species], FUN = function(x){
+      sum_df <- sapply(state_veg_w[, ..species_cols], FUN = function(x){
         c(100*sum(x > 0, na.rm = TRUE)/nrow(state_veg_w),
           mean(x, na.rm = TRUE),
           median(x, na.rm = TRUE),
@@ -189,6 +192,9 @@ summarize_veg_by_ecosite <- function(veg_df,
       # add column names
       colnames(sum_df) <- c("plantsym","constancy", "mean", "median", "min", "max", "sum", "20th", "80th",
                             "sites_present", "sites_absent")
+
+      # order by constancy
+      data.table::setorder(sum_df, constancy)
 
       # merge in the plantsciname and plantnatvernm
       sum_df <- merge(x = sum_df, y = plant_sym_sci)
@@ -209,7 +215,7 @@ summarize_veg_by_ecosite <- function(veg_df,
         # reduce wide data to state of interest
         comm_veg_w <- state_veg_w[state_veg_w$commphaseid == k,]
 
-        sum_df <- sapply(comm_veg_w[, ..cols_species], FUN = function(x){
+        sum_df <- sapply(comm_veg_w[, ..species_cols], FUN = function(x){
           c(100*sum(x > 0, na.rm = TRUE)/nrow(comm_veg_w),
             mean(x, na.rm = TRUE),
             median(x, na.rm = TRUE),
@@ -226,6 +232,9 @@ summarize_veg_by_ecosite <- function(veg_df,
         # add column names
         colnames(sum_df) <- c("plantsym","constancy", "mean", "median", "min", "max", "sum", "20th", "80th",
                               "sites_present", "sites_absent")
+
+        # order by constancy
+        data.table::setorder(sum_df, constancy)
 
         # merge in the plantsciname and plantnatvernm
         sum_df <- merge(x = sum_df, y = plant_sym_sci)
