@@ -37,10 +37,12 @@ In this situation, the different state names are differences in capitalized lett
 
 To examine the summarized data, type Y222_summary and put a '$' at the end of it. The data structure output by `summarize_veg_by_ecosite()` is called a list. Lists are extremely flexible data structure that work well for storing complex, heterogeneous data.
 
-The "$" allows you to access the elements at that location of the list. After choosing an element, use the dollar sign again to access the next level of the list. Here is an example of a dataframe stored within the list structure. 
+The "$" allows you to access the elements at that location of the list. Here is an example of accessing a dataframe stored within the list structure. 
 ```{r}
-Y222_summary$R232XY222AK$species_summary 
+Y222_summary$R232XY222AK$STM$state1$comm1$species_summary |> View()
 ```
+
+**Summarizing pedon level soils data**
 
 
 
