@@ -34,6 +34,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/accessing_vegetation_data.html">Accessing vegetation data</a></li>
+    <li><a class="dropdown-item" href="../articles/ordinating_vegetation_data.html">Vegetation data ordination</a></li>
     <li><a class="dropdown-item" href="../articles/qc_vegetation_data.html">QC vegetation data</a></li>
     <li><a class="dropdown-item" href="../articles/summarizing_vegetation_data.html">Summarizing vegetation data</a></li>
   </ul>
@@ -53,7 +54,13 @@
 
 
 
-
+<link href="qc_vegetation_data_files/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="qc_vegetation_data_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><link href="qc_vegetation_data_files/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="qc_vegetation_data_files/leaflet-1.3.1/leaflet.js"></script><link href="qc_vegetation_data_files/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="qc_vegetation_data_files/proj4-2.6.2/proj4.min.js"></script><script src="qc_vegetation_data_files/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="qc_vegetation_data_files/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="qc_vegetation_data_files/leaflet-binding-2.2.2/leaflet.js"></script><script src="qc_vegetation_data_files/leaflet-providers-2.0.0/leaflet-providers_2.0.0.js"></script><script src="qc_vegetation_data_files/leaflet-providers-plugin-2.2.2/leaflet-providers-plugin.js"></script><link href="qc_vegetation_data_files/HomeButton-0.0.1/home-button.css" rel="stylesheet">
+<script src="qc_vegetation_data_files/HomeButton-0.0.1/home-button.js"></script><script src="qc_vegetation_data_files/HomeButton-0.0.1/easy-button-src.min.js"></script><script src="qc_vegetation_data_files/clipboard-0.0.1/setClipboardText.js"></script><link href="qc_vegetation_data_files/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet">
+<link href="qc_vegetation_data_files/mapviewCSS-0.0.1/mapview.css" rel="stylesheet">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
@@ -68,6 +75,9 @@
 
     
     
+<p>library</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></code></pre></div>
 <p><strong>About</strong></p>
 <p><code>ecositer</code> has a category of functions used for QC, all of
 which use a “QC_” prefix. Vegetation data stored in NASIS requires QC.
@@ -79,7 +89,7 @@ best practice methodology for QC NASIS vegetation data.</p>
 level that meets your objectives. This will ensure that you do not spend
 time fixing obscure edge cases that are ultimately removed.</p>
 <p>To begin with, we are going to build our dataset:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/create_veg_df.html">create_veg_df</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"web_report"</span>,</span>
 <span>                                 ecositeid <span class="op">=</span> <span class="st">"F022AD104CA"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
@@ -89,14 +99,14 @@ time fixing obscure edge cases that are ultimately removed.</p>
 qualities. If there are multiple vegetation plots associated with a
 site, <code><a href="../reference/QC_best_vegplot_for_site.html">QC_best_vegplot_for_site()</a></code> chooses the vegetation
 plot with the most records.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_best</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_best_vegplot_for_site.html">QC_best_vegplot_for_site</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:</span></span>
 <span><span class="co">##               'Your veg_df' |&gt; dplyr::group_by(siteiid) |&gt;</span></span>
 <span><span class="co">##                                dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |&gt;</span></span>
 <span><span class="co">##                                dplyr::filter(unique_vegplots &gt; 1)</span></span></code></pre>
 <p>To look at all the sites with multiple vegetation plots:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_multi_veg</span> <span class="op">&lt;-</span> <span class="va">D104_veg</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">siteiid</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>unique_vegplots <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">vegplotiid</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>has_multiple_vegplots <span class="op">=</span> <span class="va">unique_vegplots</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -124,15 +134,9 @@ columns into the new “pct_cover” column. If any records have multiple
 abundance columns used, this function will average them and issue a
 warning or error depending on the <code>fail_on_dup</code> argument. For
 details on this function - <code>?QC_aggregate_abundance()</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_agg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_aggregate_abundance.html">QC_aggregate_abundance</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_best</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in ecositer::QC_aggregate_abundance(veg_df = D104_veg_best): Multiple</span></span>
-<span><span class="co">## abundance columns are used in this dataset: akstratumcoverclasspct,</span></span>
-<span><span class="co">## speciescancovpct</span></span></code></pre>
-<pre><code><span><span class="co">## Warning in ecositer::QC_aggregate_abundance(veg_df = D104_veg_best): Some</span></span>
-<span><span class="co">## records have multiple abundance values populated. Use</span></span>
-<span><span class="co">## `ecositer::QC_find_multiple_abundance()` to investigate the affected plots and</span></span>
-<span><span class="co">## records.</span></span></code></pre>
+<pre><code><span><span class="co">## Note: akstratumcoverclasspct is the only abundance column used in this dataset</span></span></code></pre>
 <p>Note the two warnings above. As mentioned in the warning,
 <code><a href="../reference/QC_find_multiple_abundance.html">QC_find_multiple_abundance()</a></code> will allow you to inspect
 which records have abundance data in multiple columns. These should be
@@ -181,12 +185,90 @@ data set and study area.</p>
 <span>                                   min_unique_species <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>                                   min_perc_to_species <span class="op">=</span> <span class="fl">60</span>,</span>
 <span>                                   min_perc_with_abund <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span></code></pre></div>
-<p><strong>Update taxonomy using USDA PLANTS</strong></p>
+<p><strong>Update taxonomy using USDA PLANTS</strong> NASIS allows plant
+taxonomies to be used that are not up-to-date. This function
+cross-references the taxonomies in your dataset to see if there is an
+updated taxonomy in the USDA PLANTS database. If there is, it updates
+the taxonomy and provides a message notifying you of the changes
+made.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_agg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_update_taxonomy.html">QC_update_taxonomy</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_agg</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Note: The following taxonomical changes have been made.</span></span></code></pre>
 <pre><code><span><span class="co">## Pinus latifolia changed to Pinus engelmannii</span></span></code></pre>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+<p><strong>Unify taxonomies, where possible</strong> Often times, a
+dataset has taxonomies that can be unified. Examples include records
+where species were identified to subspecies or variety when other
+observations were recorded to species. Sometimes, such a distinction is
+meaningful, other times it is not. Additionally, sometimes during field
+data collection, observations are recorded to genus and it is possible
+to determine species at a later date.</p>
+<p>For statistical reasons, taxonomies should be unified where possible.
+Statistical analyses, including multivariate distance measure (which are
+essential tools for analysis of ecological communities), do not
+recognize similarities between taxa. Observations that share the same
+species (i.e., differ at the subspecies or variety level) are not
+recognized to have any relationship in most statistical analyses. For
+this reason, unifying taxa is important. In extreme cases, you may even
+consider unifying species within a genus, if for example there are
+limited observations of one species (i.e., it would be removed from the
+analysis due to lack of observations) and it occupies a very similar
+niche to another species in the genus. The question is whether unifying
+creates more signal-to-noise or less. This process requires careful
+consideration and expert knowledge.</p>
+<p><code>ecositer::QC_unifying_taxa</code> returns a dataframe of taxa
+to QC for unification and the number of observations there are of each
+taxa. The rules for this function are: an observation to species level
+&amp; an observation beyond species level (e.g., subspecies, variety)
+within the same species OR an observation to genus level and an
+observation to species within the same genus.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_unify_taxa.html">QC_unify_taxa</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_agg</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##               plantsciname occurences</span></span>
+<span><span class="co">##                     &lt;char&gt;      &lt;int&gt;</span></span>
+<span><span class="co">## 1:             Achnatherum          9</span></span>
+<span><span class="co">## 2: Achnatherum occidentale          1</span></span>
+<span><span class="co">## 3:              Antennaria          1</span></span>
+<span><span class="co">## 4:        Antennaria rosea          1</span></span>
+<span><span class="co">## 5:                  Arabis          4</span></span>
+<span><span class="co">## 6:       Arabis holboellii          1</span></span></code></pre>
+<p>Another taxonomic consideration - within this package, observations
+to genus will be removed from statistical analyses. Genus is too
+variable to produce meaningful results. Consider the genus, Pinus. In
+California, Pinus sabiniana (foothill pine) grows nearly to sea-level.
+Pinus albicaulis (whitebark pine) grows up to tree-line. Observations to
+Pinus, in a dataset like the Sequoia and Kings Canyon National Park Soil
+Survey, could theoretically be foothill pine or whitebark pine, and this
+creatse far too much variability in that class to be meaningful.</p>
+<p>Looking at the result above, we see Achnatherum occidentale has one
+observation. There are 9 observations to the genus, Achnatherum. If you
+thought that the genus Achnatherum was consistent enough for your
+analysis (e.g., similar species-site relationships), such that using
+Achnatherum at the genus level would create more signal-to-noise that
+all observations of Achnatherum being omitted, you could change these
+observations to ‘Achnatherum spp.’ and they would be included in
+analyses.</p>
+<p>Change Achnatherum occidentale to Achnatherum</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># define columns to be changed </span></span>
+<span><span class="va">columns_to_update</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plantsym"</span>, <span class="st">"plantsciname"</span>, <span class="st">"plantnatvernm"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">new_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ACHNA"</span>, <span class="st">"Achnatherum"</span>, <span class="st">"needlegrass"</span><span class="op">)</span> <span class="co"># plantsym = ACHNA, plantsciname = Achnatherum, plantnatvernm = needlegrass</span></span>
+<span></span>
+<span><span class="co"># make changes</span></span>
+<span><span class="va">D104_veg_agg</span><span class="op">[</span><span class="va">D104_veg_agg</span><span class="op">$</span><span class="va">plantsciname</span> <span class="op">==</span> <span class="st">"Achnatherum occidentale"</span> <span class="op">&amp;</span> </span>
+<span>               <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">D104_veg_agg</span><span class="op">$</span><span class="va">plantsciname</span><span class="op">)</span>, <span class="va">columns_to_update</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">new_values</span><span class="op">)</span></span></code></pre></div>
+<p>Change Achnatherum to Achnatherum spp.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">D104_veg_agg</span><span class="op">$</span><span class="va">plantsciname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"Achnatherum"</span>,</span>
+<span>                                  replacement <span class="op">=</span> <span class="st">"Achnatherum spp."</span>,</span>
+<span>                                  x <span class="op">=</span> <span class="va">D104_veg_agg</span><span class="op">$</span><span class="va">plantsciname</span><span class="op">)</span></span></code></pre></div>
+<p>An additional tool that can be useful for unifying species is looking
+at the distribution of taxa.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ecositerSpatial</span><span class="fu">::</span><span class="fu"><a href="https://natearoe.github.io/ecositer/reference/mapping_taxon.html">mapping_taxon</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_agg</span>,</span>
+<span>                               taxon <span class="op">=</span> <span class="st">"Elymus"</span><span class="op">)</span></span></code></pre></div>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:700px;height:432.632880098888px;"></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"options":{"minZoom":1,"maxZoom":52,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"preferCanvas":false,"bounceAtZoomLimits":false,"maxBounds":[[[-90,-370]],[[90,370]]]},"calls":[{"method":"addProviderTiles","args":["CartoDB.Positron","CartoDB.Positron","CartoDB.Positron",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["CartoDB.DarkMatter","CartoDB.DarkMatter","CartoDB.DarkMatter",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenStreetMap","OpenStreetMap","OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["Esri.WorldImagery","Esri.WorldImagery","Esri.WorldImagery",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"addProviderTiles","args":["OpenTopoMap","OpenTopoMap","OpenTopoMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false,"pane":"tilePane"}]},{"method":"createMapPane","args":["point",440]},{"method":"addCircleMarkers","args":[36.60468976274773,-118.7534705592161,6,null,"Elymus",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":0.9,"fill":true,"fillColor":"#E41A1C","fillOpacity":0.6},null,null,"<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>3&emsp;<\/td><\/tr><tr><td>1<\/td><th>vegplotid&emsp;<\/th><td>2015CA7923039&emsp;<\/td><\/tr><tr><td>2<\/td><th>plantsciname&emsp;<\/th><td>Elymus&emsp;<\/td><\/tr><tr><td>3<\/td><th>utmzone&emsp;<\/th><td>11&emsp;<\/td><\/tr><tr><td>4<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>",{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},"3",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addScaleBar","args":[{"maxWidth":100,"metric":true,"imperial":true,"updateWhenIdle":true,"position":"bottomleft"}]},{"method":"addHomeButton","args":[-118.7534705592161,36.60468976274773,-118.7534705592161,36.60468976274773,true,"Elymus","Zoom to Elymus","<strong> Elymus <\/strong>","bottomright"]},{"method":"addLegend","args":[{"colors":["#E41A1C"],"labels":["Elymus"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"","extra":null,"layerId":null,"className":"info legend","group":"Elymus"}]},{"method":"addCircleMarkers","args":[36.42535132721699,-118.4302244655505,6,null,"Elymus elymoides",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":0.9,"fill":true,"fillColor":"#377EB8","fillOpacity":0.6},null,null,"<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>7&emsp;<\/td><\/tr><tr><td>1<\/td><th>vegplotid&emsp;<\/th><td>2016CA7925026N&emsp;<\/td><\/tr><tr><td>2<\/td><th>plantsciname&emsp;<\/th><td>Elymus elymoides&emsp;<\/td><\/tr><tr><td>3<\/td><th>utmzone&emsp;<\/th><td>11&emsp;<\/td><\/tr><tr><td>4<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>",{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},"7",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addHomeButton","args":[-118.4302244655505,36.42535132721699,-118.4302244655505,36.42535132721699,true,"Elymus elymoides","Zoom to Elymus elymoides","<strong> Elymus elymoides <\/strong>","bottomright"]},{"method":"addLegend","args":[{"colors":["#377EB8"],"labels":["Elymus elymoides"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"","extra":null,"layerId":null,"className":"info legend","group":"Elymus elymoides"}]},{"method":"addCircleMarkers","args":[[36.41837814283041,36.42493913959788],[-118.4296031343282,-118.4128623827635],6,null,"Elymus elymoides ssp. californicus",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":0.9,"fill":true,"fillColor":"#4DAF4A","fillOpacity":0.6},null,null,["<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>5&emsp;<\/td><\/tr><tr><td>1<\/td><th>vegplotid&emsp;<\/th><td>2016CA7925018N&emsp;<\/td><\/tr><tr><td>2<\/td><th>plantsciname&emsp;<\/th><td>Elymus elymoides ssp. californicus&emsp;<\/td><\/tr><tr><td>3<\/td><th>utmzone&emsp;<\/th><td>11&emsp;<\/td><\/tr><tr><td>4<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>6&emsp;<\/td><\/tr><tr><td>1<\/td><th>vegplotid&emsp;<\/th><td>2016CA7925021&emsp;<\/td><\/tr><tr><td>2<\/td><th>plantsciname&emsp;<\/th><td>Elymus elymoides ssp. californicus&emsp;<\/td><\/tr><tr><td>3<\/td><th>utmzone&emsp;<\/th><td>11&emsp;<\/td><\/tr><tr><td>4<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>"],{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},["5","6"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addHomeButton","args":[-118.4296031343282,36.41837814283041,-118.4128623827635,36.42493913959788,true,"Elymus elymoides ssp. californicus","Zoom to Elymus elymoides ssp. californicus","<strong> Elymus elymoides ssp. californicus <\/strong>","bottomright"]},{"method":"addLegend","args":[{"colors":["#4DAF4A"],"labels":["Elymus elymoides ssp. californicus"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"","extra":null,"layerId":null,"className":"info legend","group":"Elymus elymoides ssp. californicus"}]},{"method":"addCircleMarkers","args":[36.7180595189864,-118.6698328599508,6,null,"Elymus multisetus",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":0.9,"fill":true,"fillColor":"#984EA3","fillOpacity":0.6},null,null,"<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>1&emsp;<\/td><\/tr><tr><td>1<\/td><th>vegplotid&emsp;<\/th><td>2014CA7925081&emsp;<\/td><\/tr><tr><td>2<\/td><th>plantsciname&emsp;<\/th><td>Elymus multisetus&emsp;<\/td><\/tr><tr><td>3<\/td><th>utmzone&emsp;<\/th><td>11&emsp;<\/td><\/tr><tr><td>4<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>",{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},"1",{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addHomeButton","args":[-118.6698328599508,36.7180595189864,-118.6698328599508,36.7180595189864,true,"Elymus multisetus","Zoom to Elymus multisetus","<strong> Elymus multisetus <\/strong>","bottomright"]},{"method":"addLegend","args":[{"colors":["#984EA3"],"labels":["Elymus multisetus"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"","extra":null,"layerId":null,"className":"info legend","group":"Elymus multisetus"}]},{"method":"addCircleMarkers","args":[[36.61691710295322,36.609855841504],[-118.7887879527058,-118.7102776284914],6,null,"Elymus trachycaulus ssp. trachycaulus",{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"pane":"point","stroke":true,"color":"#333333","weight":1,"opacity":0.9,"fill":true,"fillColor":"#FF7F00","fillOpacity":0.6},null,null,["<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>2&emsp;<\/td><\/tr><tr><td>1<\/td><th>vegplotid&emsp;<\/th><td>2015CA7921029&emsp;<\/td><\/tr><tr><td>2<\/td><th>plantsciname&emsp;<\/th><td>Elymus trachycaulus ssp. trachycaulus&emsp;<\/td><\/tr><tr><td>3<\/td><th>utmzone&emsp;<\/th><td>11&emsp;<\/td><\/tr><tr><td>4<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>","<div class='scrollableContainer'><table class=mapview-popup id='popup'><tr class='coord'><td><\/td><th><b>Feature ID&emsp;<\/b><\/th><td>4&emsp;<\/td><\/tr><tr><td>1<\/td><th>vegplotid&emsp;<\/th><td>2015CA7925037&emsp;<\/td><\/tr><tr><td>2<\/td><th>plantsciname&emsp;<\/th><td>Elymus trachycaulus ssp. trachycaulus&emsp;<\/td><\/tr><tr><td>3<\/td><th>utmzone&emsp;<\/th><td>11&emsp;<\/td><\/tr><tr><td>4<\/td><th>geometry&emsp;<\/th><td>sfc_POINT&emsp;<\/td><\/tr><\/table><\/div>"],{"maxWidth":800,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"closeOnClick":true,"className":""},["2","4"],{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addHomeButton","args":[-118.7887879527058,36.609855841504,-118.7102776284914,36.61691710295322,true,"Elymus trachycaulus ssp. trachycaulus","Zoom to Elymus trachycaulus ssp. trachycaulus","<strong> Elymus trachycaulus ssp. trachycaulus <\/strong>","bottomright"]},{"method":"addLayersControl","args":[["CartoDB.Positron","CartoDB.DarkMatter","OpenStreetMap","Esri.WorldImagery","OpenTopoMap"],["Elymus","Elymus elymoides","Elymus elymoides ssp. californicus","Elymus multisetus","Elymus trachycaulus ssp. trachycaulus"],{"collapsed":true,"autoZIndex":true,"position":"topleft"}]},{"method":"addLegend","args":[{"colors":["#FF7F00"],"labels":["Elymus trachycaulus ssp. trachycaulus"],"na_color":null,"na_label":"NA","opacity":1,"position":"topright","type":"factor","title":"","extra":null,"layerId":null,"className":"info legend","group":"Elymus trachycaulus ssp. trachycaulus"}]},{"method":"addHomeButton","args":[-118.7887879527058,36.41837814283041,-118.4128623827635,36.7180595189864,true,null,"Zoom to full extent","<strong>Zoom full<\/strong>","bottomleft"]}],"limits":{"lat":[36.60468976274773,36.60468976274773],"lng":[-118.7534705592161,-118.7534705592161]},"fitBounds":[36.41837814283041,-118.7887879527058,36.7180595189864,-118.4128623827635,[]]},"evals":[],"jsHooks":{"render":[{"code":"function(el, x, data) {\n  return (\n      function(el, x, data) {\n      // get the leaflet map\n      var map = this; //HTMLWidgets.find('#' + el.id);\n      // we need a new div element because we have to handle\n      // the mouseover output separately\n      // debugger;\n      function addElement () {\n      // generate new div Element\n      var newDiv = $(document.createElement('div'));\n      // append at end of leaflet htmlwidget container\n      $(el).append(newDiv);\n      //provide ID and style\n      newDiv.addClass('lnlt');\n      newDiv.css({\n      'position': 'relative',\n      'bottomleft':  '0px',\n      'background-color': 'rgba(255, 255, 255, 0.7)',\n      'box-shadow': '0 0 2px #bbb',\n      'background-clip': 'padding-box',\n      'margin': '0',\n      'padding-left': '5px',\n      'color': '#333',\n      'font': '9px/1.5 \"Helvetica Neue\", Arial, Helvetica, sans-serif',\n      'z-index': '700',\n      });\n      return newDiv;\n      }\n\n\n      // check for already existing lnlt class to not duplicate\n      var lnlt = $(el).find('.lnlt');\n\n      if(!lnlt.length) {\n      lnlt = addElement();\n\n      // grab the special div we generated in the beginning\n      // and put the mousmove output there\n\n      map.on('mousemove', function (e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                           ' lon: ' + (e.latlng.lng).toFixed(5) +\n                           ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                           ' | zoom: ' + map.getZoom() +\n                           ' | x: ' + L.CRS.EPSG3857.project(e.latlng).x.toFixed(0) +\n                           ' | y: ' + L.CRS.EPSG3857.project(e.latlng).y.toFixed(0) +\n                           ' | epsg: 3857 ' +\n                           ' | proj4: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs ');\n      } else {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      }\n      });\n\n      // remove the lnlt div when mouse leaves map\n      map.on('mouseout', function (e) {\n      var strip = document.querySelector('.lnlt');\n      if( strip !==null) strip.remove();\n      });\n\n      };\n\n      //$(el).keypress(67, function(e) {\n      map.on('preclick', function(e) {\n      if (e.originalEvent.ctrlKey) {\n      if (document.querySelector('.lnlt') === null) lnlt = addElement();\n      lnlt.text(\n                      ' lon: ' + (e.latlng.lng).toFixed(5) +\n                      ' | lat: ' + (e.latlng.lat).toFixed(5) +\n                      ' | zoom: ' + map.getZoom() + ' ');\n      var txt = document.querySelector('.lnlt').textContent;\n      console.log(txt);\n      //txt.innerText.focus();\n      //txt.select();\n      setClipboardText('\"' + txt + '\"');\n      }\n      });\n\n      }\n      ).call(this.getMap(), el, x, data);\n}","data":null},{"code":"function(el, x, data) {\n  return (function(el,x,data){\n           var map = this;\n\n           map.on('keypress', function(e) {\n               console.log(e.originalEvent.code);\n               var key = e.originalEvent.code;\n               if (key === 'KeyE') {\n                   var bb = this.getBounds();\n                   var txt = JSON.stringify(bb);\n                   console.log(txt);\n\n                   setClipboardText('\\'' + txt + '\\'');\n               }\n           })\n        }).call(this.getMap(), el, x, data);\n}","data":null}]}}</script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 

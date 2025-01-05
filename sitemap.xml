@@ -2,6 +2,7 @@
 <url><loc>https://natearoe.github.io/ecositer/404.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/articles/accessing_vegetation_data.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/articles/index.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/articles/ordinating_vegetation_data.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/articles/qc_vegetation_data.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/articles/summarizing_vegetation_data.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/authors.html</loc></url>
@@ -10,7 +11,7 @@
 <url><loc>https://natearoe.github.io/ecositer/reference/QC_best_vegplot_for_site.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/QC_completeness_criteria.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/QC_find_multiple_abundance.html</loc></url>
-<url><loc>https://natearoe.github.io/ecositer/reference/QC_plants.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/QC_unify_taxa.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/QC_update_taxonomy.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/QC_veg_completeness.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/access_example_data.html</loc></url>
@@ -34,6 +35,7 @@
 <url><loc>https://natearoe.github.io/ecositer/reference/sites_in_state_phase.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/species_list.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/strange_bedfellows.html</loc></url>
+<url><loc>https://natearoe.github.io/ecositer/reference/summarize_pedon_soil_properties.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/summarize_veg.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/summarize_veg_by_ecosite.html</loc></url>
 <url><loc>https://natearoe.github.io/ecositer/reference/veg_summary.html</loc></url>
