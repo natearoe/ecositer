@@ -5,6 +5,11 @@ date: "2024-12-11"
 output: html_document
 ---
 
+library
+```{r}
+library(data.table)
+```
+
 **About**
 
 `ecositer` has a category of functions used for QC, all of which use a "QC_" prefix. Vegetation data stored in NASIS requires QC. There are numerous issues that exist caused by different data vintages, data origins, varying data quality, duplication caused by KSSL lab pedons, outdated plant taxonomies, and more. This vignette discusses a best practice methodology for QC NASIS vegetation data. 
@@ -43,7 +48,7 @@ Now, we are going to create an aggregated abundance column called, "pct_cover". 
 `QC_aggregate_abundance()` aggregates the four abundance columns into the new "pct_cover" column. If any records have multiple abundance columns used,
 this function will average them and issue a warning or error depending on the `fail_on_dup` argument. For details on this function - `?QC_aggregate_abundance()`.  
 ```{r, echo=FALSE}
-D104_veg_best[69,18] <- 5
+D104_veg_best[69,17] <- 5
 ```
 
 ```{r}
@@ -72,9 +77,48 @@ D104_veg_agg <- ecositer::QC_completeness_criteria(veg_df = D104_veg_agg,
 ```
 
 **Update taxonomy using USDA PLANTS**
-
+NASIS allows plant taxonomies to be used that are not up-to-date. This function cross-references the taxonomies in your dataset to see if there is an updated taxonomy in the USDA PLANTS database. If there is, it updates the taxonomy and provides a message notifying you of the changes made. 
 ```{r}
 D104_veg_agg <- ecositer::QC_update_taxonomy(veg_df = D104_veg_agg)
+```
+
+**Unify taxonomies, where possible** 
+Often times, a dataset has taxonomies that can be unified. Examples include records where species were identified to subspecies or variety when other observations were recorded to species. Sometimes, such a distinction is meaningful, other times it is not. Additionally, sometimes during field data collection, observations are recorded to genus and it is possible to determine species at a later date.
+
+For statistical reasons, taxonomies should be unified where possible. Statistical analyses, including multivariate distance measure (which are essential tools for analysis of ecological communities), do not recognize similarities between taxa. Observations that share the same species (i.e., differ at the subspecies or variety level) are not recognized to have any relationship in most statistical analyses. For this reason, unifying taxa is important. In extreme cases, you may even consider unifying species within a genus, if for example there are limited observations of one species (i.e., it would be removed from the analysis due to lack of observations) and it occupies a very similar niche to another species in the genus. The question is whether unifying creates more signal-to-noise or less. This process requires careful consideration and expert knowledge. 
+
+`ecositer::QC_unifying_taxa` returns a dataframe of taxa to QC for unification and the number of observations there are of each taxa. The rules for this function are: an observation to species level & an observation beyond species level (e.g., subspecies, variety) within the same species OR an observation to genus level and an observation to species within the same genus. 
+
+```{r}
+ecositer::QC_unify_taxa(veg_df = D104_veg_agg) |> head()
+```
+Another taxonomic consideration - within this package, observations to genus will be removed from statistical analyses. Genus is too variable to produce meaningful results. Consider the genus, Pinus. In California, Pinus sabiniana (foothill pine) grows nearly to sea-level. Pinus albicaulis (whitebark pine) grows up to tree-line. Observations to Pinus, in a dataset like the Sequoia and Kings Canyon National Park Soil Survey, could theoretically be foothill pine or whitebark pine, and this creatse far too much variability in that class to be meaningful. 
+
+Looking at the result above, we see Achnatherum occidentale has one observation. There are 9 observations to the genus, Achnatherum. If you thought that the genus Achnatherum was consistent enough for your analysis (e.g., similar species-site relationships), such that using Achnatherum at the genus level would create more signal-to-noise that all observations of Achnatherum being omitted, you could change these observations to 'Achnatherum spp.' and they would be included in analyses. 
+
+Change Achnatherum occidentale to Achnatherum
+```{r}
+# define columns to be changed 
+columns_to_update <- c("plantsym", "plantsciname", "plantnatvernm")
+
+new_values <- c("ACHNA", "Achnatherum", "needlegrass") # plantsym = ACHNA, plantsciname = Achnatherum, plantnatvernm = needlegrass
+
+# make changes
+D104_veg_agg[D104_veg_agg$plantsciname == "Achnatherum occidentale" & 
+               !is.na(D104_veg_agg$plantsciname), columns_to_update] <- as.list(new_values)
+```
+
+Change Achnatherum to Achnatherum spp. 
+```{r}
+D104_veg_agg$plantsciname <- gsub(pattern = "Achnatherum",
+                                  replacement = "Achnatherum spp.",
+                                  x = D104_veg_agg$plantsciname)
+```
+
+An additional tool that can be useful for unifying species is looking at the distribution of taxa. 
+```{r}
+ecositerSpatial::mapping_taxon(veg_df = D104_veg_agg,
+                               taxon = "Elymus")
 ```
 
 
