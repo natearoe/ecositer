@@ -37,12 +37,13 @@ In this situation, the different state names are differences in capitalized lett
 
 To examine the summarized data, type Y222_summary and put a '$' at the end of it. The data structure output by `summarize_veg_by_ecosite()` is called a list. Lists are extremely flexible data structure that work well for storing complex, heterogeneous data.
 
-The "$" allows you to access the elements at that location of the list. Here is an example of accessing a dataframe stored within the list structure. 
+The "$" allows you to access the elements at that location of the list. Here is an example of accessing a dataframe stored within the list structure. In this example, I am using `head()` to concisely show the output, but I recommend using `View()` to see the full output and be able to sort by columns. 
 ```{r}
-Y222_summary$R232XY222AK$STM$state1$comm1$species_summary |> View()
+Y222_summary$R232XY222AK$STM$state1$comm1$species_summary |> head()
 ```
 
-**Summarizing pedon level soils data**
+**Summarizing pedon level soil data**
+When analyzing ecological communities, it is often helpful to work with summarized soil properties that are not directly accessible from pedon data. Properties of interest could include depth, texture, color, rock fragments, pH, etc. Users may be interested in these properties within particular depth ranges, across the entire soil profile, or within a particular master horizon. An example could be weighted average clay percentage in the first 100 cms or thickness of the surface O horizons (i.e., using O master horizon). 
 
-
+`summarize_pedon_soil_properties()` 
 
