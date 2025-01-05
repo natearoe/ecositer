@@ -1,0 +1,49 @@
+---
+title: "Summarizing ecological data"
+author: "Nathan Roe"
+date: "2025-01-02"
+output: html_document
+---
+
+**About**
+
+`ecositer` has a category of functions used for summarizing, all of which use a "summarize_" prefix. QC should be performed prior to summarizing - [QCing vegetation data](https://natearoe.github.io/ecositer/articles/qc_vegetation_data.html). 
+
+**Summarizing vegetation data by ecosite**
+`QC_best_vegplot_for_site()` is used to summarize vegetation data by ecosite, state, and phase. This function evaluates several elements of data quality, and in some cases performs QC. An example of performing QC is `QC_aggregate_abundance()`, which is run by default in this function. An example of evaluating elements of QC is reporting if there are multiple state names associated with a stateid. The messages produced by this function should be read and efforts should be made to address the data quality conditions that are described in the messages. 
+
+Load data
+```{r}
+Y222_veg <- ecositer::create_veg_df(from = "web_report",
+                                 ecositeid = "R232XY222AK")
+```
+
+Summarize data
+```{r}
+Y222_summary <- ecositer::summarize_veg_by_ecosite(veg_df = Y222_veg)
+
+```
+
+Note the warnings produced, such as multiple state names being associated with the same stateid. The code to inspect such situations is also supplied. 
+
+```{r}
+    Y222_veg |>
+    dplyr::group_by(ecositeid, ecostateid) |>
+    dplyr::filter(dplyr::n_distinct(ecostatename) > 1) |>
+    dplyr::distinct(ecositeid, ecostateid, ecostatename) |>
+    dplyr::arrange(ecositeid, ecostateid, ecostatename)
+```
+In this situation, the different state names are differences in capitalized letters. I have seen many other cases in NASIS where completely different state names are associated with the same stateid, so it is worth checking this. Also, for the sake standardization, it is worth having the names be exactly same (i.e., using the same capitalization). 
+
+To examine the summarized data, type Y222_summary and put a '$' at the end of it. The data structure output by `summarize_veg_by_ecosite()` is called a list. Lists are extremely flexible data structure that work well for storing complex, heterogeneous data.
+
+The "$" allows you to access the elements at that location of the list. Here is an example of accessing a dataframe stored within the list structure. In this example, I am using `head()` to concisely show the output, but I recommend using `View()` to see the full output and be able to sort by columns. 
+```{r}
+Y222_summary$R232XY222AK$STM$state1$comm1$species_summary |> head()
+```
+
+**Summarizing pedon level soil data**
+When analyzing ecological communities, it is often helpful to work with summarized soil properties that are not directly accessible from pedon data. Properties of interest could include depth, texture, color, rock fragments, pH, etc. Users may be interested in these properties within particular depth ranges, across the entire soil profile, or within a particular master horizon. An example could be weighted average clay percentage in the first 100 cms or thickness of the surface O horizons (i.e., using O master horizon). 
+
+`summarize_pedon_soil_properties()` 
+
