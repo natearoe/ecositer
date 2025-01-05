@@ -1,0 +1,8 @@
+---
+title: "Vegetation data ordination"
+author: "Nathan Roe"
+date: "2025-01-02"
+output: html_document
+---
+
+Ordination is a multivariate statistical technique that is excellent for 
