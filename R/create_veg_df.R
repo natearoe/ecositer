@@ -85,45 +85,6 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
     stop("Could not find local NASIS odbc data source. Visit this tutorial - https://ncss-tech.github.io/AQP/soilDB/setup_local_nasis.html")
   }
 
-  # # QC on SS
-  # if(from = "SS"){
-  #
-  # }
-  #
-  # check_nasis_selected_set <- function(required_table = "site") {
-  #   # Try connecting to the NASIS selected set
-  #   conn <- tryCatch({
-  #     soilDB::NASIS()
-  #   }, warning = function(w) {
-  #     stop("Error in SS: Could not connect to the NASIS database.")
-  #   }, error = function(e) {
-  #     stop("Error in SS: Could not connect to the NASIS database.")
-  #   })
-  #
-  #   # Check if the connection is valid by attempting to read the required table
-  #   selected_data <- tryCatch({
-  #     if (required_table == "site") {
-  #       soilDB::get_site_data_from_NASIS()
-  #     } else if (required_table == "pedons") {
-  #       soilDB::get_pedons_from_NASIS()
-  #     } else {
-  #       stop(sprintf("Error: Table '%s' is not recognized or unsupported.", required_table))
-  #     }
-  #   }, warning = function(w) {
-  #     stop(sprintf("Error: The required table '%s' could not be retrieved.", required_table))
-  #   }, error = function(e) {
-  #     stop(sprintf("Error: The required table '%s' could not be retrieved.", required_table))
-  #   })
-  #
-  #   # Check if the required data exists in the selected set
-  #   if (nrow(selected_data) == 0) {
-  #     stop(sprintf("Error: The selected set does not contain any data for the table '%s'.", required_table))
-  #   }
-  #
-  #   # If all checks pass, return TRUE or silently complete
-  #   invisible(TRUE)
-  # }
-
   ## Create dateframes
 
   # follow similar methodology for "SS" and "static"
