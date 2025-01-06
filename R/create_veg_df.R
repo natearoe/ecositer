@@ -226,20 +226,20 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
   vegplot$latdegrees <- as.numeric(vegplot$latdegrees)
   vegplot$latminutes <- as.numeric(vegplot$latminutes)
   vegplot$latseconds <- as.numeric(vegplot$latseconds)
-  vegplot$latdir <- as.numeric(vegplot$latdir)
+  vegplot$latdir <- as.character(vegplot$latdir)
   vegplot$longdegrees <- as.numeric(vegplot$longdegrees)
   vegplot$longminutes <- as.numeric(vegplot$longminutes)
   vegplot$longseconds <- as.numeric(vegplot$longseconds)
-  vegplot$longdir <- as.numeric(vegplot$longdir)
-  vegplot$latstddecimaldegrees <- as.numeric(vegplot$latstddecimaldegrees)
-  vegplot$longstddecimaldegrees <- as.numeric(vegplot$longstddecimaldegrees)
+  vegplot$longdir <- as.character(vegplot$longdir)
+  vegplot$latstDD <- as.numeric(vegplot$latstDD)
+  vegplot$longstDD <- as.numeric(vegplot$longstDD)
 
   vegplot <- vegplot |> dplyr::arrange(usiteid, vegplotiid, plantsym) |>
     dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
                   primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
                   plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct,
                   horizdatnm, utmzone, utmeasting, utmnorthing, latdegrees, latminutes, latseconds, latdir, longdegrees,
-                  longminutes, longseconds, longdir, latstddecimaldegrees, longstddecimaldegrees) |> as.data.frame()
+                  longminutes, longseconds, longdir, latstDD, longstDD) |> as.data.frame()
 
   return(vegplot)
 
