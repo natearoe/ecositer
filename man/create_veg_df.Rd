@@ -7,8 +7,7 @@
 create_veg_df(
   from = c("web_report", "SS", "static"),
   ecositeid = NULL,
-  static_location = NULL,
-  best_vegplot = TRUE
+  static_location = NULL
 )
 }
 \arguments{
