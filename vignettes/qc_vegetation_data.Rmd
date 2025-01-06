@@ -61,6 +61,18 @@ abund_dups <- ecositer::QC_find_multiple_abundance(veg_df = D104_veg)
 abund_dups
 ```
 
+**Choosing coordinate format**
+
+The NASIS site table has several possible columns where location data can be populated. The three categories are UTM; lat/long degrees, minutes, seconds (DMS), and lat/long decimal degrees. `QC_location_data()` reports what percent of the required columns are populated for each of these three categories and prompts the user to specify which category of coordinate format they would like to use. By default, `coordinate_format = NULL`, this function is interactive. I recommend using it that way. Alternatively, users can specify the desired coordinate format using the `coordinate_format` argument. This option is used here because it performs better in an Rmarkdown document. 
+```{r}
+D104_veg_agg <- ecositer::QC_location_data(veg_df = D104_veg_agg,
+                                           coordinate_format = "DD")
+# test2 <- ecositer::QC_location_data(veg_df = D104_veg_agg,
+#                                     coordinate_format = "DD")
+
+```
+
+
 **Assign minimum criteria for vegetation data quality**
 
 Now that we have an aggregated abundance column, we can begin with our coarse filter of the data. First we will use `QC_veg_completeness()` to describe the completeness and quality of vegplot observations. 
@@ -118,7 +130,10 @@ D104_veg_agg$plantsciname <- gsub(pattern = "Achnatherum",
 An additional tool that can be useful for unifying species is looking at the distribution of taxa. 
 ```{r}
 ecositerSpatial::mapping_taxon(veg_df = D104_veg_agg,
-                               taxon = "Elymus")
+                               taxon = "Pinus",
+                               x = "longstDD",
+                               y = "latstDD",
+                               EPSG = "EPSG:4326")
 ```
 
 
