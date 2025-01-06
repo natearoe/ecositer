@@ -7,6 +7,7 @@
 #' @export
 #'
 #' @examples
+#' ecositer::QC_location_data(veg_df = my_veg_df)
 #' QC_location_data(veg_df = my_veg_df)
 QC_location_data <- function(veg_df, coordinate_format = NULL){
   # valid coordinate format, in not NULL
@@ -44,6 +45,7 @@ QC_location_data <- function(veg_df, coordinate_format = NULL){
                   therefore datum column is not inspected.", lat_long_dd_compl))
 
 
+  ## create function for interactive behavior when coordinate_format = NULL
   choose_coordinate_format <- function() {
     # Display options to the user
     cat("What coordinate format do you want to use?\n")
@@ -81,14 +83,11 @@ QC_location_data <- function(veg_df, coordinate_format = NULL){
     return(veg_df)
   }
 
-  # if coordinate_format == NULL, perform interactive functionality
-  if(is.null(coordinate_format)){
-    selected_format <- choose_coordinate_format()
-    return(selected_format)
-  }
 
-  # if coordinate_format not NULL..
-  if(coordinate_format %in% valid_choices){
+
+
+  ## create function for when coordinate_format is defined
+  defined_coordinate_format <- function(){
     # UTM
     if(coordinate_format == "UTM"){
       veg_df <- veg_df[, !names(veg_df) %in% c(colnames(lat_long_dms)[colnames(lat_long_dms) != "horizdatnm"],
@@ -104,11 +103,18 @@ QC_location_data <- function(veg_df, coordinate_format = NULL){
       veg_df <- veg_df[, !names(veg_df) %in% c(colnames(lat_long_dms)[colnames(lat_long_dms) != "horizdatnm"],
                                                colnames(utm)[colnames(utm) != "horizdatnm"])]
     }
-
     return(veg_df)
-
   }
 
-  return(veg_df)
 
+
+
+  # if coordinate_format == NULL, perform interactive functionality
+  if(is.null(coordinate_format)){
+    selected_format <- choose_coordinate_format()
+  } else { # else run defined function
+    selected_format <- defined_coordinate_format()
+  }
+
+  return(selected_format)
 }
