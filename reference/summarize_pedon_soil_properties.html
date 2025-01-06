@@ -25,7 +25,7 @@ Properties include texture, pH, fragment volume,"></head><body>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/accessing_vegetation_data.html">Accessing vegetation data</a></li>
     <li><a class="dropdown-item" href="../articles/ordinating_vegetation_data.html">Vegetation data ordination</a></li>
     <li><a class="dropdown-item" href="../articles/qc_vegetation_data.html">QC vegetation data</a></li>
-    <li><a class="dropdown-item" href="../articles/summarizing_vegetation_data.html">Summarizing vegetation data</a></li>
+    <li><a class="dropdown-item" href="../articles/summarizing_ecological_data.html">Summarizing ecological data</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -54,6 +54,7 @@ Properties include texture, pH, fragment volume,</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summarize_pedon_soil_properties</span><span class="op">(</span></span>
 <span>  SS <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  static_location <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  r_object <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  byDepth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -62,7 +63,11 @@ Properties include texture, pH, fragment volume,</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-bydepth">byDepth<a class="anchor" aria-label="anchor" href="#arg-bydepth"></a></dt>
+<dl><dt id="arg-r-object">r_object<a class="anchor" aria-label="anchor" href="#arg-r-object"></a></dt>
+<dd><p>R object where SoilProfileCollection is stored</p></dd>
+
+
+<dt id="arg-bydepth">byDepth<a class="anchor" aria-label="anchor" href="#arg-bydepth"></a></dt>
 <dd></dd>
 
 </dl></div>
