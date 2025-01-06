@@ -8,6 +8,7 @@
 #'
 #' @param SS
 #' @param static_location
+#' @param r_object R object where SoilProfileCollection is stored
 #' @param byDepth
 #'
 #' @return
@@ -16,12 +17,13 @@
 #' @examples
 summarize_pedon_soil_properties <- function(SS = TRUE,
                                             static_location = NULL,
+                                            r_object = NULL,
                                             byDepth = list(c(0,25), c(0,50))){
 
 
   # static location must be provided if SS = FALSE
-  if (SS == FALSE && is.null(static_location)) {
-    stop("Static location must be provided if SS = FALSE.")
+  if (SS == FALSE && is.null(static_location) && is.null(r_object)) {
+    stop("Data must be accessed from SS, static_location, or r_object.")
   }
 
   # class of byDepth must be list
@@ -32,10 +34,9 @@ summarize_pedon_soil_properties <- function(SS = TRUE,
     )
   }
 
-  if (SS == TRUE && !is.null(static_location)) {
-    stop(
-      "Choose between accessing data by SS or static_location. Currently, static_location given and SS = TRUE."
-    )
+  if(sum(SS, !is.null(static_location), !is.null(r_object)) > 1){
+    stop("Only one of SS, static_location, or r_object should be used. Currently, arguments suggest accessing data
+         from multiple locations.")
   }
 
   if (SS == TRUE) {
@@ -105,6 +106,15 @@ summarize_pedon_soil_properties <- function(SS = TRUE,
     soil_data <- soilDB::fetchNASIS(from = "pedons",
                                     SS = FALSE,
                                     dsn = static_location)
+  }
+
+
+  if(!is.null(r_object)){
+    if(class(r_object) != "SoilProfileCollection"){
+      stop("r_object should be a soil SoilProfileCollection but is not.")
+    }
+
+    soil_data <- r_object
   }
 
 
