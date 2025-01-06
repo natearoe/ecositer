@@ -86,10 +86,8 @@ QC_aggregate_abundance <- function(veg_df,
                 akstratumcoverclasspct = NULL, speciescancovpct = NULL, speciescomppct = NULL, understorygrcovpct = NULL)]
 
     return(data |> as.data.frame() |>
-             dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
-                           primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
-                           plantsciname, plantnatvernm, pct_cover,
-                           horizdatnm, utmzone, utmeasting, utmnorthing))
+             dplyr::relocate(pct_cover, .after = 16)
+           )
 
   }
 
