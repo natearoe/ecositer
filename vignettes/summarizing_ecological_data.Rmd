@@ -4,6 +4,11 @@ author: "Nathan Roe"
 date: "2025-01-02"
 output: html_document
 ---
+Library
+```{r}
+library(ecositer.data)
+```
+
 
 **About**
 
@@ -42,13 +47,46 @@ Y222_summary$R232XY222AK$STM$state1$comm1$species_summary |> head()
 ```
 
 **Summarizing pedon level soil data**
-When analyzing ecological communities, it is often helpful to work with summarized soil properties that are not directly accessible from pedon data. Properties of interest could include depth, texture, color, rock fragments, pH, etc. Users may be interested in these properties within particular depth ranges, across the entire soil profile, or within a particular master horizon. An example could be weighted average clay percentage in the first 100 cms or thickness of the surface O horizons (i.e., using O master horizon). 
+When analyzing ecological communities, it is often helpful to work with summarized soil properties that are not directly accessible from pedon data. Properties of interest could include depth, texture, color, rock fragments, pH, etc. Users may be interested in these properties within particular depth ranges, across the entire soil profile, or within a particular master horizon. An example could be weighted average clay percentage in the first 100 cms or thickness of the surface O horizons (i.e., using O master horizon). `summarize_pedon_soil_properties()` generates a variety of summarized properties that are useful for ecological analysis. I would like to develop this function further, so if you have other ideas of properties to summarize, please share! 
 
-`summarize_pedon_soil_properties()` 
+```{r, eval=FALSE}
+# run summaries from NASIS 
+CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = TRUE,
+                                          byDepth = list(c(0, 25), c(0, 50)))
+
+# look at some of the new columns generated
+CA792_pedon_summary[, setdiff(names(CA792_pedon_summary[["full_profile"]]), names(CA792_pedon_data))[c(15,19,45,60)]] |> head()
+
+```
+
+
+```{r, echo=FALSE}
+# load package data
+#data(CA792_pedon_data, package = "ecositer.data")
+# perform pedon soil property summaries
+
+data(CA792_pedon_data)
+
+head(CA792_pedon_data)
+
+# test <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
+#                                           r_object = CA792_pedon_data,
+#                                           byDepth = list(c(0, 25), c(0, 50)))
+
+# CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
+#                                            r_object = CA792_pedon_data,
+#                                            byDepth = list(c(0, 25), c(0, 50)))
+# 
+# # look at some of the new columns generated
+# CA792_pedon_summary[, setdiff(names(CA792_pedon_summary[["full_profile"]]), names(CA792_pedon_data))[c(15,19,45,60)]] |> head()
+
+```
+
+
 
 ```{r}
-ecositer::summarize_pedon_soil_properties(SS = TRUE,
-                                          byDepth = list(c(0, 50), c(0, 100)))
+# ecositer::summarize_pedon_soil_properties(SS = TRUE,
+#                                           byDepth = list(c(0, 50), c(0, 100)))
 ```
 
 
