@@ -19,8 +19,7 @@
 #'
 create_veg_df <- function(from = c("web_report", "SS", "static"),
                              ecositeid = NULL,
-                             static_location = NULL,
-                             best_vegplot = TRUE){
+                             static_location = NULL){
 
   ## Error handling
 
@@ -162,7 +161,17 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
           horizdatnm,
           utmzone,
           utmeasting,
-          utmnorthing
+          utmnorthing,
+          latdegrees,
+          latminutes,
+          latseconds,
+          latdir,
+          longdegrees,
+          longminutes,
+          longseconds,
+          longdir,
+          latstddecimaldegrees,
+          longstddecimaldegrees
         ),
         dplyr::join_by(siteiid, vegplotiid, siteobsiid)
       ) |>
@@ -214,118 +223,23 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
   vegplot$utmzone <- as.integer(vegplot$utmzone)
   vegplot$utmeasting <- as.numeric(vegplot$utmeasting)
   vegplot$utmnorthing <- as.numeric(vegplot$utmnorthing)
+  vegplot$latdegrees <- as.numeric(vegplot$latdegrees)
+  vegplot$latminutes <- as.numeric(vegplot$latminutes)
+  vegplot$latseconds <- as.numeric(vegplot$latseconds)
+  vegplot$latdir <- as.numeric(vegplot$latdir)
+  vegplot$longdegrees <- as.numeric(vegplot$longdegrees)
+  vegplot$longminutes <- as.numeric(vegplot$longminutes)
+  vegplot$longseconds <- as.numeric(vegplot$longseconds)
+  vegplot$longdir <- as.numeric(vegplot$longdir)
+  vegplot$latstddecimaldegrees <- as.numeric(vegplot$latstddecimaldegrees)
+  vegplot$longstddecimaldegrees <- as.numeric(vegplot$longstddecimaldegrees)
 
   vegplot <- vegplot |> dplyr::arrange(usiteid, vegplotiid, plantsym) |>
     dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
                   primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
                   plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct,
-                  horizdatnm, utmzone, utmeasting, utmnorthing) |> as.data.frame()
-
-
-
-  # # Access ecosite data
-  #
-  # test <- aqp::site(ecosite_data)
-
-
-  ############ Choosing the best vegplot
-
-  # # What sites have multiple veg plots?
-  # siteiid_with_dup_vegplots <- veg_data$vegplot |>  dplyr::select(siteiid, vegplotiid, vegplot_id, peiid) |>
-  #   unique() |>  dplyr::group_by(siteiid) |>
-  #   dplyr::filter(dplyr::n() > 1) |> dplyr::pull(siteiid)
-  #
-  #
-  # siteiid_with_dup_vegplots <- veg_data$vegplot |>  dplyr::select(siteiid, vegplotiid) |>
-  #   unique() |>  dplyr::group_by(siteiid) |>
-  #   dplyr::filter(dplyr::n() > 1) |> dplyr::pull(siteiid)
-  #
-  # # Choose the least populated vegplots from plots with multiple vegplots; these are the vegplots to remove from veg data
-  # dup_vegplots <- veg_data$vegplotspecies |> dplyr::filter(siteiid %in% siteiid_with_dup_vegplots) |>
-  #   dplyr::group_by(siteiid, vegplotiid) |> dplyr::summarise(n = dplyr::n()) |>
-  #   dplyr::arrange(siteiid, desc(n)) |> dplyr::group_by(siteiid) |>
-  #   dplyr::filter(dplyr::row_number() != 1) |>  dplyr::pull(vegplotiid)
-  #
-  # # Remove dup_vegplots from veg_data$vegplotsspecies
-  # veg_data_species_reduced <- veg_data$vegplotspecies |> dplyr::filter(!vegplotiid %in% dup_vegplots)
-  #
-  # # Remove dup_vegplots from veg_data$vegplot
-  # veg_data_veg_plot_reduced <- veg_data$vegplot |>
-  #   # dplyr::filter(!is.na(ecositeid)) |> I don't think I want to remove vegplots that don't have an ecosite correlation. Could be useful for things like SDMs.
-  #   dplyr::select(siteiid, ecositeid, vegplotiid, akfieldecositeid) |>
-  #   unique() |>
-  #   dplyr::filter(!vegplotiid %in% dup_vegplots & vegplotiid %in% veg_data$vegplotspecies$vegplotiid)
-  #
-  #
-  # ########### Joining ecositeid to veg_data_species_reduced
-  # veg_data_with_ecosite <-
-  #   dplyr::left_join(
-  #     veg_data_species_reduced |>
-  #       dplyr::select(
-  #         siteiid,
-  #         vegplotid,
-  #         vegplotiid,
-  #         plantsym,
-  #         primarydatacollector,
-  #         plantsciname,
-  #         plantnatvernm,
-  #         akstratumcoverclass,
-  #         akstratumcoverclasspct
-  #       ),
-  #     aqp::site(ecosite_data) |>
-  #       dplyr::select(siteiid, ecositeid) |> unique()
-  #   ) |>
-  #   dplyr::left_join(veg_data_veg_plot_reduced |> dplyr::select(siteiid, vegplotiid, akfieldecositeid)) |>
-  #   dplyr::select(siteiid, vegplotid, ecositeid, everything())
-  #
-  #
-  # # Remove a question mark from a couple of instances of akfieldecositeid - I don't want to remove question marks without users knowledge
-  # # veg_data_with_ecosite$akfieldecositeid <-
-  # #   veg_data_with_ecosite$akfieldecositeid |>
-  # #   stringr::str_replace(pattern = "\\.\\?", replacement = "")
-  #
-  # # Identify the akfieldecositeids missing a phase
-  # no_phase <-
-  #   veg_data_with_ecosite$akfieldecositeid[!veg_data_with_ecosite$akfieldecositeid %in%
-  #                                        stringr::str_subset(veg_data_with_ecosite$akfieldecositeid,
-  #                                                            "[:digit:]\\.[:digit:]\\.[:digit:]") &
-  #                                        !is.na(veg_data_with_ecosite$akfieldecositeid)]
-  #
-  # # Add default phase to those missing - default being .1
-  # veg_data_with_ecosite$akfieldecositeid_edit <-
-  #   ifelse(
-  #     veg_data_with_ecosite$akfieldecositeid %in%
-  #       no_phase,
-  #     paste0(veg_data_with_ecosite$akfieldecositeid, ".1"),
-  #     veg_data_with_ecosite$akfieldecositeid
-  #   )
-  #
-  # # Still missing a phase?
-  # no_phase <-
-  #   veg_data_with_ecosite$akfieldecositeid_edit[!veg_data_with_ecosite$akfieldecositeid_edit %in%
-  #                                            stringr::str_subset(veg_data_with_ecosite$akfieldecositeid_edit,
-  #                                                                "[:digit:]\\.[:digit:]\\.[:digit:]") &
-  #                                            !is.na(veg_data_with_ecosite$akfieldecositeid_edit)]
-  #
-  #
-  # # Add default phase to those missing - default being .1
-  # veg_data_with_ecosite$akfieldecositeid_edit <-
-  #   ifelse(
-  #     veg_data_with_ecosite$akfieldecositeid_edit %in%
-  #       no_phase,
-  #     paste0(veg_data_with_ecosite$akfieldecositeid_edit, ".1"),
-  #     veg_data_with_ecosite$akfieldecositeid_edit
-  #   )
-  #
-  # veg_data_with_ecosite <- veg_data_with_ecosite |> dplyr::select(-akfieldecositeid) |>
-  #   dplyr::rename(akfieldecositeid = akfieldecositeid_edit)
-  #
-  # # Append coordinates
-  # veg_data_with_ecosite_coords <-
-  #   dplyr::left_join(veg_data_with_ecosite,
-  #                    veg_data$vegplotlocation |>
-  #                      dplyr::select(siteiid, horizdatnm, utmzone, utmeasting, utmnorthing) |>
-  #                      unique())
+                  horizdatnm, utmzone, utmeasting, utmnorthing, latdegrees, latminutes, latseconds, latdir, longdegrees,
+                  longminutes, longseconds, longdir, latstddecimaldegrees, longstddecimaldegrees) |> as.data.frame()
 
   return(vegplot)
 
