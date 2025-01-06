@@ -18,5 +18,6 @@ dataframe uneeded coordinate format columns removed
 QC site location data
 }
 \examples{
+ecositer::QC_location_data(veg_df = my_veg_df)
 QC_location_data(veg_df = my_veg_df)
 }
