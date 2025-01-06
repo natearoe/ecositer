@@ -7,10 +7,13 @@
 summarize_pedon_soil_properties(
   SS = TRUE,
   static_location = NULL,
+  r_object = NULL,
   byDepth = list(c(0, 25), c(0, 50))
 )
 }
 \arguments{
+\item{r_object}{R object where SoilProfileCollection is stored}
+
 \item{byDepth}{}
 }
 \description{
