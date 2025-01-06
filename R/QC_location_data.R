@@ -1,13 +1,23 @@
 #' QC site location data
 #'
 #' @param veg_df vegetation dataframe, commonly created using `ecositer::create_veg_df()`
+#' @param coordinate_format by default, 'NULL' allowing for function to be interactive - otherwise, must be "UTM", "DMS", or "DD".
 #'
 #' @return dataframe uneeded coordinate format columns removed
 #' @export
 #'
 #' @examples
 #' QC_location_data(veg_df = my_veg_df)
-QC_location_data <- function(veg_df){
+QC_location_data <- function(veg_df, coordinate_format = NULL){
+  # valid coordinate format, in not NULL
+  valid_choices = c("UTM", "DMS", "DD")
+
+  # error handle coordinate format
+  if(!is.null(coordinate_format) && !coordinate_format %in% valid_choices){
+    stop(sprintf("Invalid coordinate_format. Choose one of: %s", paste(valid_choices, collapse = ", ")))
+  }
+
+
 
   # utm df
   utm <- veg_df[, c("horizdatnm", "utmzone", "utmeasting", "utmnorthing")]
@@ -71,10 +81,34 @@ QC_location_data <- function(veg_df){
     return(veg_df)
   }
 
+  # if coordinate_format == NULL, perform interactive functionality
+  if(is.null(coordinate_format)){
+    selected_format <- choose_coordinate_format()
+    return(selected_format)
+  }
 
-  # format
-  selected_format <- choose_coordinate_format()
+  # if coordinate_format not NULL..
+  if(coordinate_format %in% valid_choices){
+    # UTM
+    if(coordinate_format == "UTM"){
+      veg_df <- veg_df[, !names(veg_df) %in% c(colnames(lat_long_dms)[colnames(lat_long_dms) != "horizdatnm"],
+                                               colnames(lat_long_dd))]
+    }
+    # DMS
+    if(coordinate_format == "DMS"){
+      veg_df <- veg_df[, !names(veg_df) %in% c(colnames(utm)[colnames(utm) != "horizdatnm"],
+                                               colnames(lat_long_dd))]
+    }
+    # DD
+    if(coordinate_format == "DD"){
+      veg_df <- veg_df[, !names(veg_df) %in% c(colnames(lat_long_dms)[colnames(lat_long_dms) != "horizdatnm"],
+                                               colnames(utm)[colnames(utm) != "horizdatnm"])]
+    }
 
-  return(selected_format)
+    return(veg_df)
+
+  }
+
+  return(veg_df)
 
 }
