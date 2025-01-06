@@ -21,7 +21,6 @@ Y222_veg <- ecositer::create_veg_df(from = "web_report",
 Summarize data
 ```{r}
 Y222_summary <- ecositer::summarize_veg_by_ecosite(veg_df = Y222_veg)
-
 ```
 
 Note the warnings produced, such as multiple state names being associated with the same stateid. The code to inspect such situations is also supplied. 
@@ -46,4 +45,31 @@ Y222_summary$R232XY222AK$STM$state1$comm1$species_summary |> head()
 When analyzing ecological communities, it is often helpful to work with summarized soil properties that are not directly accessible from pedon data. Properties of interest could include depth, texture, color, rock fragments, pH, etc. Users may be interested in these properties within particular depth ranges, across the entire soil profile, or within a particular master horizon. An example could be weighted average clay percentage in the first 100 cms or thickness of the surface O horizons (i.e., using O master horizon). 
 
 `summarize_pedon_soil_properties()` 
+
+```{r}
+ecositer::summarize_pedon_soil_properties(SS = TRUE,
+                                          byDepth = list(c(0, 50), c(0, 100)))
+```
+
+
+```{r}
+# test <- ecositerSpatial::site_prism_annual_normals(site_df = Y222_veg,
+#                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
+#                                            id = "siteiid",
+#                                            x = "utmeasting",
+#                                            y = "utmnorthing",
+#                                            EPSG = "EPSG:6335")
+
+# test <- ecositer::create_veg_df(from = "web",
+#                                 ecositeid = "F022AD104CA")
+# 
+# test <- ecositerSpatial::site_prism_annual_normals(site_df = test,
+#                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
+#                                            id = "siteiid",
+#                                            x = "utmeasting",
+#                                            y = "utmnorthing",
+#                                            EPSG = "EPSG:32611")
+
+```
+
 
