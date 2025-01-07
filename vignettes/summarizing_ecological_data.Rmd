@@ -65,9 +65,7 @@ aqp::site(CA792_pedon_summary[["full_profile"]])[, c("siteiid", "d_L_lowest_mine
 
 **Summarizing site climate data**
 Climate data is a critical factor driving the distribution of ecological communities and individual species. `ecositerSpatial::site_prism_annual_normals()` can be used to extract PRISM climate properties associated with specific sites. 
-
-I will be using an example dataset for this process as well because it is easier to access a whole survey area and reproducible for folks that do not have NASIS access.
-```{r}
+```{r, echo=FALSE, results='hide'}
 data(CA792_climate_data, package = "ecositer.data")
 ```
 
