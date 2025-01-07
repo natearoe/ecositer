@@ -18,12 +18,12 @@ In this vignette I will present the use of Non-metric Multidimensional Scaling (
 I will be using the CA792 (Sequoia and Kings Canyon National Park) Soil Survey for this demonstration.
 
 For this example, I will be working with pedon and vegetation data stored in the `ecositer.data` package.
-```{r}
+```{r, results="hide", message=FALSE}
 data(CA792_pedon_data, package = "ecositer.data")
 data(CA792_veg_data, package = "ecositer.data")
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results="hide", message=FALSE}
 get("CA792_pedon_data")
 get("CA792_veg_data")
 ```
@@ -34,6 +34,6 @@ CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
                                            r_object = CA792_pedon_data,
                                            byDepth = list(c(0, 25), c(0, 50)))
 
-
 ```
+
 
