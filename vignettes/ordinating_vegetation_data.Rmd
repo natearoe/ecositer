@@ -5,11 +5,11 @@ date: "2025-01-02"
 output: html_document
 ---
 
-Ordination is a multivariate statistical technique that is well-suited for analyzing ecological communities. Ordination allows for many ecologically useful relationships to be evaluated - all correlative, of course (this is ecology after all) - including:
-- similarity/dissimilarity in vegetative composition between sites
-- relationship between community classifications and environmental gradients
-- relationship between community classifications and species
-- relationship between species and environmental gradients
+Ordination is a multivariate statistical technique that is well-suited for analyzing ecological communities. Ordination allows for many ecologically useful relationships to be evaluated - all correlative, of course (this is ecology after all) - including: <br>
+  - similarity/dissimilarity in vegetative composition between sites <br>
+  - relationship between community classifications and environmental gradients <br>
+  - relationship between community classifications and species <br>
+  - relationship between species and environmental gradients <br>
 
 This vignette is not intended to explain the mechanics of ordination techniques, distance measures, or how to interpret ordination results. There are many excellent sources for this purpose. I would recommend reading [Analysis of Ecological Communities by McCune and Grace](https://www.researchgate.net/publication/216769990_Analysis_of_Ecological_Communities) for a primer on these topics. 
 
@@ -70,9 +70,12 @@ CA792_veg_data <- ecositer::QC_completeness_criteria(veg_df = CA792_veg_data,
                                                      min_perc_with_abund = 80)
 ```
 
-Remove reccords with missing abundance or missing plantsym
+Remove reccords with missing abundance or missing plantsym. Remove genus level observations. 
 ```{r}
-CA792_veg_data |> dplyr::filter(!is.na(pct_cover) | !is.na(plantsym))
+CA792_veg_data <- CA792_veg_data |> dplyr::filter(!is.na(pct_cover) | !is.na(plantsym))
+
+species_level <- grep(pattern = " ", x = CA792_veg_data$plantsciname)
+CA792_veg_data <- CA792_veg_data[species_level,]
 ```
 
 Sum species abundances together when there are multiple records of the same species in the same vegplotiid. This is usually the result of species occurring in different strata. 
