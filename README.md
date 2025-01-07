@@ -20,8 +20,7 @@ Get the development version from GitHub:
 -   Package website - <https://natearoe.github.io/ecositer/>
 
 ## Vignettes
-
--   [Accessing
-    data](https://natearoe.github.io/ecositer/articles/accessing_vegetation_data.html)
--   QCing data
--   Summarizing vegetation data
+- [Accessing vegetation data](https://natearoe.github.io/ecositer/articles/accessing_vegetation_data.html)
+- [QCing vegetation data](https://natearoe.github.io/ecositer/articles/qc_vegetation_data.html) 
+- [Summarizing ecological data](https://natearoe.github.io/ecositer/articles/summarizing_ecological_data.html)
+- [Vegetation data ordination](https://natearoe.github.io/ecositer/articles/ordinating_vegetation_data.html)
