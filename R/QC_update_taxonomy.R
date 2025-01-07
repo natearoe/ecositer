@@ -27,10 +27,10 @@ QC_update_taxonomy <- function(veg_df){
                      dplyr::join_by(Accepted_Symbol == Symbol))
 
   tax_change <- veg_df_tax |> dplyr::select(Scientific_Name, plantsciname) |>
-    dplyr::filter(!is.na(Scientific_Name) & !is.na(plantsciname))
+    dplyr::filter(!is.na(Scientific_Name) & !is.na(plantsciname)) |> unique()
 
   if(nrow(tax_change) > 0){
-    message("Note: The following taxonomical changes have been made.")
+    message("Note -> The following taxonomical changes have been made.")
     message(paste(tax_change$plantsciname, "changed to", tax_change$Scientific_Name, "\n"))
   }
 

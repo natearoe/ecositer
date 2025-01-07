@@ -45,7 +45,7 @@ QC_best_vegplot_for_site <- function(veg_df) {
     multi_logi <- data[, data.table::uniqueN(vegplotiid) > 1, by = siteiid][, any(V1)]
 
     if(multi_logi){
-      message("Warning: There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:
+      message("Warning -> There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:
               'Your veg_df' |> dplyr::group_by(siteiid) |>
                                dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |>
                                dplyr::filter(unique_vegplots > 1)")

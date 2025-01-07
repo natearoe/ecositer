@@ -40,7 +40,7 @@ summarize_veg_by_ecosite <- function(veg_df,
 
   # provide warning for mult statename per stateid
   if(multi_state_name_per_stateid){
-    message("Warning: There are multiple state names associated with the same stateid. To identify these situations, use:
+    message("Warning -> There are multiple state names associated with the same stateid. To identify these situations, use:
           `Your veg df` |>
     dplyr::group_by(ecositeid, ecostateid) |>
     dplyr::filter(dplyr::n_distinct(ecostatename) > 1) |>
@@ -52,7 +52,7 @@ summarize_veg_by_ecosite <- function(veg_df,
 
   # provide warning for mult phasename per phaseid
   if(multi_phase_name_per_phaseid){
-    message("Warning: There are multiple phase names associated with the same phaseid. To identify these situations, use:
+    message("Warning -> There are multiple phase names associated with the same phaseid. To identify these situations, use:
             `Your veg df` |>
     dplyr::group_by(ecositeid, ecostateid, commphaseid) |>
     dplyr::filter(dplyr::n_distinct(commphasename) > 1) |>
@@ -65,28 +65,28 @@ summarize_veg_by_ecosite <- function(veg_df,
     sites_missing_ecositeid <- veg_df |> dplyr::group_by(siteiid) |>
       dplyr::summarise(anyNA(ecositeid)) |> dplyr::filter(`anyNA(ecositeid)` == TRUE)
     numb_sites_missing_ecositeid <- sum(sites_missing_ecositeid$`anyNA(ecositeid)`)
-    message(sprintf("Warning: %s sites missing correlation to ecositeid. These sites are removed from results.", numb_sites_missing_ecositeid))
+    message(sprintf("Warning -> %s sites missing correlation to ecositeid. These sites are removed from results.", numb_sites_missing_ecositeid))
     veg_df <- veg_df |> dplyr::filter(!siteiid %in% sites_missing_ecositeid$siteiid)
   }
 
   # note number of sites missing vegplotiid and remove those
   if(anyNA(veg_df$vegplotiid)){
     sites_missing_vegplotiid <- veg_df |> dplyr::filter(is.na(vegplotiid))
-    message(sprintf("Warning: %s sites have no associated vegplot. These sites are removed from results.", nrow(sites_missing_vegplotiid)))
+    message(sprintf("Warning -> %s sites have no associated vegplot. These sites are removed from results.", nrow(sites_missing_vegplotiid)))
     veg_df <- veg_df |> dplyr::filter(!siteiid %in% sites_missing_vegplotiid$siteiid)
   }
 
   # note number of records missing abundance and remove them
   if(anyNA(veg_df$pct_cover)){
     records_missing_cover <- veg_df |> dplyr::filter(is.na(pct_cover))
-    message(sprintf("Warning: %s records missing abundance. These records are removed from results.", nrow(records_missing_cover)))
+    message(sprintf("Warning -> %s records missing abundance. These records are removed from results.", nrow(records_missing_cover)))
     veg_df <- veg_df |> dplyr::filter(!is.na(pct_cover))
   }
 
   # note the number of species missing taxonomies
   if(anyNA(veg_df$plantsym)){
     numb_records_missing <- veg_df |> dplyr::filter(is.na(plantsym)) |> nrow()
-    message(sprintf("Warning: %s records missing taxonomical assignment. `unknown` will be populated in the plantsym column.", numb_records_missing))
+    message(sprintf("Warning -> %s records missing taxonomical assignment. `unknown` will be populated in the plantsym column.", numb_records_missing))
     veg_df$plantsym[is.na(veg_df$plantsym)] <- "unknown"
   }
 

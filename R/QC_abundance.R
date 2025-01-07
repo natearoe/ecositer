@@ -46,7 +46,7 @@ QC_aggregate_abundance <- function(veg_df,
     }
 
     if(length(abund_cols_used) == 1){
-      message(paste("Note:", abund_cols_used, "is the only abundance column used in this dataset"))
+      message(paste("Note ->", abund_cols_used, "is the only abundance column used in this dataset"))
     }
 
     names(abund_cols_used)[unlist(abund_cols_used) > 0]
