@@ -1,4 +1,4 @@
-`ecositer` is a collection of tools for the analysis, standardization,
+`ecositer` is a collection of tools for the standardization
 and automation of vegetation analysis. These tools work with data from
 the Natural Resources Conservation Service (NRCS), but the data
 structure and format used is intended to be applicable to vegetation
