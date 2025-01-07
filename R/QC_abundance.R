@@ -136,3 +136,21 @@ QC_find_multiple_abundance <- function(veg_df){
 
 
 
+# QC_aggregate_species_abundance <- function(veg_df){
+#
+#   # convert to data.table
+#   veg_df <- data.table::as.data.table(veg_df)
+#
+#   # grouping columns
+#   cols_keep <- colnames(veg_df)[colnames(veg_df) != "plantsym"]
+#
+#   # grouping columns
+#   # cols_keep <- c("siteiid", "usiteid", "siteobsiid", "vegplotid", "vegplotiid", "primarydatacollector", "vegdataorigin", "ecositeid", "ecositenm", "ecostateid", "ecostatename", "commphaseid", "commphasename")
+#
+#   # aggregate abundances when the same species listed multiple times in vegplotiid (this occurs when the same species occurs in multiple strata)
+#   veg_df_c <- merge(x = veg_df[, ..cols_keep] |> unique(),
+#                     y = veg_df[, .(pct_cover = sum(pct_cover, na.rm = TRUE)),
+#                                by = .(vegplotiid, plantsym)])
+# }
+
+
