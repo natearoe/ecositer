@@ -17,7 +17,7 @@ library(data.table)
 You should start your QC process by removing data at the coarsest level that meets your objectives. This will ensure that you do not spend time fixing obscure edge cases that are ultimately removed. 
 
 To begin with, we are going to build our dataset:
-```{r}
+```{r, message=FALSE}
 D104_veg <- ecositer::create_veg_df(from = "web_report",
                                  ecositeid = "F022AD104CA")
 ```
@@ -48,7 +48,7 @@ Now, we are going to create an aggregated abundance column called, "pct_cover". 
 `QC_aggregate_abundance()` aggregates the four abundance columns into the new "pct_cover" column. If any records have multiple abundance columns used,
 this function will average them and issue a warning or error depending on the `fail_on_dup` argument. For details on this function - `?QC_aggregate_abundance()`.  
 ```{r, echo=FALSE}
-D104_veg_best[69,17] <- 5
+D104_veg_best[69,18] <- 5
 ```
 
 ```{r}
@@ -57,7 +57,7 @@ D104_veg_agg <- ecositer::QC_aggregate_abundance(veg_df = D104_veg_best)
 
 Note the two warnings above. As mentioned in the warning, `QC_find_multiple_abundance()` will allow you to inspect which records have abundance data in multiple columns. These should be inspected to determine why multiple abundance columns are used. The other warning shows that two total abundance columns were used in this dataset. 
 ```{r}
-abund_dups <- ecositer::QC_find_multiple_abundance(veg_df = D104_veg)
+abund_dups <- ecositer::QC_find_multiple_abundance(veg_df = D104_veg_best)
 abund_dups
 ```
 
@@ -130,7 +130,7 @@ D104_veg_agg$plantsciname <- gsub(pattern = "Achnatherum",
 An additional tool that can be useful for unifying species is looking at the distribution of taxa. 
 ```{r}
 ecositerSpatial::mapping_taxon(veg_df = D104_veg_agg,
-                               taxon = "Pinus",
+                               taxon = "Ribes",
                                x = "longstDD",
                                y = "latstDD",
                                EPSG = "EPSG:4326")
