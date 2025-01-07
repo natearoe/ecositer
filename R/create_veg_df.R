@@ -186,7 +186,9 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
         by = dplyr::join_by(siteiid, siteobsiid)#,relationship = "many-to-many"
       )
 
-    vegplot <- vegplot |> dplyr::rename(usiteid = site_id, vegplotid = vegplot_id) |> as.data.frame()
+    vegplot <- vegplot |> dplyr::rename(usiteid = site_id, vegplotid = vegplot_id,
+                                        latstDD = latstddecimaldegrees,
+                                        longstDD = longstddecimaldegrees) |> as.data.frame()
 
   }
 
