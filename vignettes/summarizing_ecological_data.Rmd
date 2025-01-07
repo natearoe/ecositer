@@ -4,11 +4,6 @@ author: "Nathan Roe"
 date: "2025-01-02"
 output: html_document
 ---
-Library
-```{r}
-library(ecositer.data)
-```
-
 
 **About**
 
@@ -19,19 +14,19 @@ library(ecositer.data)
 
 Load data
 ```{r}
-Y222_veg <- ecositer::create_veg_df(from = "web_report",
-                                 ecositeid = "R232XY222AK")
+D104_veg <- ecositer::create_veg_df(from = "web_report",
+                                 ecositeid = "F022AD104CA")
 ```
 
 Summarize data
 ```{r}
-Y222_summary <- ecositer::summarize_veg_by_ecosite(veg_df = Y222_veg)
+D104_summary <- ecositer::summarize_veg_by_ecosite(veg_df = D104_veg)
 ```
 
 Note the warnings produced, such as multiple state names being associated with the same stateid. The code to inspect such situations is also supplied. 
 
 ```{r}
-    Y222_veg |>
+    D104_veg |>
     dplyr::group_by(ecositeid, ecostateid) |>
     dplyr::filter(dplyr::n_distinct(ecostatename) > 1) |>
     dplyr::distinct(ecositeid, ecostateid, ecostatename) |>
@@ -39,48 +34,42 @@ Note the warnings produced, such as multiple state names being associated with t
 ```
 In this situation, the different state names are differences in capitalized letters. I have seen many other cases in NASIS where completely different state names are associated with the same stateid, so it is worth checking this. Also, for the sake standardization, it is worth having the names be exactly same (i.e., using the same capitalization). 
 
-To examine the summarized data, type Y222_summary and put a '$' at the end of it. The data structure output by `summarize_veg_by_ecosite()` is called a list. Lists are extremely flexible data structure that work well for storing complex, heterogeneous data.
+To examine the summarized data, type D104_summary and put a '$' at the end of it. The data structure output by `summarize_veg_by_ecosite()` is called a list. Lists are extremely flexible data structure that work well for storing complex, heterogeneous data.
 
 The "$" allows you to access the elements at that location of the list. Here is an example of accessing a dataframe stored within the list structure. In this example, I am using `head()` to concisely show the output, but I recommend using `View()` to see the full output and be able to sort by columns. 
 ```{r}
-Y222_summary$R232XY222AK$STM$state1$comm1$species_summary |> head()
+D104_summary$R232XD104AK$STM$state1$comm1$species_summary |> head()
 ```
 
 **Summarizing pedon level soil data**
-When analyzing ecological communities, it is often helpful to work with summarized soil properties that are not directly accessible from pedon data. Properties of interest could include depth, texture, color, rock fragments, pH, etc. Users may be interested in these properties within particular depth ranges, across the entire soil profile, or within a particular master horizon. An example could be weighted average clay percentage in the first 100 cms or thickness of the surface O horizons (i.e., using O master horizon). `summarize_pedon_soil_properties()` generates a variety of summarized properties that are useful for ecological analysis. I would like to develop this function further, so if you have other ideas of properties to summarize, please share! 
+When analyzing ecological communities, it is often helpful to work with summarized soil properties that are not directly accessible from pedon data. Properties of interest could include depth, texture, color, rock fragments, pH, etc. Users may be interested in these properties within particular depth ranges, across the entire soil profile, or within a particular master horizon. An example could be weighted average clay percentage in the first 100 cms or thickness of the surface O horizons (i.e., using O master horizon).
 
-```{r, eval=FALSE}
-# run summaries from NASIS 
-CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = TRUE,
-                                          byDepth = list(c(0, 25), c(0, 50)))
+`summarize_pedon_soil_properties()` generates a variety of summarized properties that are useful for ecological analysis. I would like to develop this function further, so if you have ideas, please share! 
 
-# look at some of the new columns generated
-CA792_pedon_summary[, setdiff(names(CA792_pedon_summary[["full_profile"]]), names(CA792_pedon_data))[c(15,19,45,60)]] |> head()
+For this example, I am using an example dataset from CA792, the Sequoia and Kings Canyon National Park Soil Survey, from the [ecositer.data](https://github.com/natearoe/ecositer.data) package.
+```{r}
+# load data
+data(CA792_pedon_data, package = "ecositer.data")
+# get only needed for rmarkdown
+get("CA792_pedon_data")
+```
+
+This data can be used in the `r_object` argument of `summarize_pedon_soil_properties()`. Alternatively, you could use the `SS` or `static_location` arguments to access NASIS data elsewhere. 
+```{r}
+CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
+                                           r_object = CA792_pedon_data,
+                                           byDepth = list(c(0, 25), c(0, 50)))
+
+aqp::site(CA792_pedon_summary[["full_profile"]])[, c("siteiid", "d_L_lowest_mineral", "o_surf_thk", "b_clay_wtd", "full_prof_ph_wtd")] |> head()
+```
+
+**Summarizing site climate data**
+Climate data is a critical factor driving the distribution of ecological communities and individual species. `ecositerSpatial::site_prism_annual_normals()` can be used to extract PRISM climate properties associated with specific sites. 
+```{r}
 
 ```
 
 
-```{r, echo=FALSE}
-# load package data
-#data(CA792_pedon_data, package = "ecositer.data")
-# perform pedon soil property summaries
-
-data(CA792_pedon_data)
-
-head(CA792_pedon_data)
-
-# test <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
-#                                           r_object = CA792_pedon_data,
-#                                           byDepth = list(c(0, 25), c(0, 50)))
-
-# CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
-#                                            r_object = CA792_pedon_data,
-#                                            byDepth = list(c(0, 25), c(0, 50)))
-# 
-# # look at some of the new columns generated
-# CA792_pedon_summary[, setdiff(names(CA792_pedon_summary[["full_profile"]]), names(CA792_pedon_data))[c(15,19,45,60)]] |> head()
-
-```
 
 
 
@@ -91,12 +80,12 @@ head(CA792_pedon_data)
 
 
 ```{r}
-# test <- ecositerSpatial::site_prism_annual_normals(site_df = Y222_veg,
-#                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
-#                                            id = "siteiid",
-#                                            x = "utmeasting",
-#                                            y = "utmnorthing",
-#                                            EPSG = "EPSG:6335")
+test <- ecositerSpatial::site_prism_annual_normals(site_df = D104_veg,
+                                           prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
+                                           id = "siteiid",
+                                           x = "utmeasting",
+                                           y = "utmnorthing",
+                                           EPSG = "EPSG:32611")
 
 # test <- ecositer::create_veg_df(from = "web",
 #                                 ecositeid = "F022AD104CA")
