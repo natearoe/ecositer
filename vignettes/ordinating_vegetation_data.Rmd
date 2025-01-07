@@ -28,12 +28,204 @@ get("CA792_pedon_data")
 get("CA792_veg_data")
 ```
 
-We will produce environmental variables, as demonstrated in the [Summarize Ecological Data vignette](https://natearoe.github.io/ecositer/articles/summarizing_ecological_data.html). 
+Additional summary soil variable calculation, as demonstrated in the [Summarize Ecological Data vignette](https://natearoe.github.io/ecositer/articles/summarizing_ecological_data.html). 
 ```{r}
 CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
                                            r_object = CA792_pedon_data,
                                            byDepth = list(c(0, 25), c(0, 50)))
 
+```
+
+Climate variable calculation, as demonstrated in the [Summarize Ecological Data vignette](https://natearoe.github.io/ecositer/articles/summarizing_ecological_data.html). 
+```{r, eval=FALSE}
+CA792_clim <- ecositerSpatial::site_prism_annual_normals(site_df = CA792_veg_data),
+                                           prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
+                                           id = "siteiid",
+                                           x = "utmeasting",
+                                           y = "utmnorthing",
+                                           EPSG = "EPSG:32611")
+```
+
+```{r, echo = FALSE, results='hide'}
+data(CA792_climate_data, package = "ecositer.data")
+get("CA792_climate_data")
+CA792_clim <- CA792_climate_data
+```
+
+Run through QC functions for vegetation data
+```{r}
+CA792_veg_data <- ecositer::QC_aggregate_abundance(veg_df = CA792_veg_data)
+
+# manual review process because of multiple vegplots for sites with tied number of records
+CA792_veg_data <- CA792_veg_data |> dplyr::filter(!vegplotiid %in% c(276394, 276184, 276395, 276185, 276228, 196369, 990978, 954117, 316789))
+
+# now we can run QC_best_vegplot without error
+CA792_veg_data <- ecositer::QC_best_vegplot_for_site(veg_df = CA792_veg_data)
+
+CA792_veg_data <- ecositer::QC_update_taxonomy(veg_df = CA792_veg_data)
+
+CA792_veg_data <- ecositer::QC_completeness_criteria(veg_df = CA792_veg_data,
+                                                     min_unique_species = 4,
+                                                     min_perc_to_species = 70,
+                                                     min_perc_with_abund = 80)
+```
+
+Remove reccords with missing abundance or missing plantsym
+```{r}
+CA792_veg_data |> dplyr::filter(!is.na(pct_cover) | !is.na(plantsym))
+```
+
+Sum species abundances together when there are multiple records of the same species in the same vegplotiid. This is usually the result of species occurring in different strata. 
+```{r}
+CA792_veg_data <- CA792_veg_data |> dplyr::group_by(siteiid, usiteid, vegplotiid, ecositeid, ecostateid, commphaseid, plantsym) |> 
+  dplyr::summarise(pct_cover = sum(pct_cover, na.rm = TRUE), .groups = "drop")
+```
+
+Pivot data wider - preferred for ordination
+```{r}
+grouping_columns <- c("siteiid", "usiteid", "vegplotiid", "ecositeid", "ecostateid", "commphaseid", "plantsym", "pct_cover")
+
+CA792_veg_data_wide <- CA792_veg_data |> dplyr::select(dplyr::all_of(grouping_columns)) |> 
+  tidyr::pivot_wider(names_from = plantsym, values_from = pct_cover)
+```
+
+Restrict to just one LRU. Restricting to one LRU make it easier to visualize all the ecosites with colors and provide a more concentrated focus on a smaller number of sites. 
+```{r}
+AD <- grep(pattern = "AD", x = CA792_veg_data_wide$ecositeid)
+#AB <- grep(pattern = "AH", x = CA792_veg_data_wide$ecositeid)
+
+CA792_veg_data_wide <- CA792_veg_data_wide[c(AD),]
+```
+
+
+Before removing rare species, I am going to assemble the environmental dataframe, as this is likely to have a considerable amount of missing data and will likely restrict what sites are included in the analysis more than rare species. 
+```{r}
+CA792_site_props <- aqp::site(CA792_pedon_summary$full_profile)
+
+columns_of_interest <- c("siteiid", "slope_field", "elev_field", "d_L_lowest_mineral", "m_L_lowest_mineral",
+                         "o_surf_thk", "full_prof_clay_wtd", "full_prof_ph_wtd", 
+                         "full_prof_frag_vol_tot_wtd")
+
+colSums(!is.na(CA792_site_props[columns_of_interest])) / nrow(CA792_site_props) * 100 
+
+```
+
+I am going to remove d_L_lowest_mineral and m_L_lowest_mineral. Remember, any missing value in any column leads to the entire row (site) being removed. It is a difficult balance deciding what environmental variables to keep at the cost of losing sites. 
+```{r}
+CA792_site_props_reduced <- CA792_site_props[, columns_of_interest[!columns_of_interest %in% c("d_L_lowest_mineral", "m_L_lowest_mineral")]]
+```
+
+Joining in climate data
+```{r, message=FALSE}
+CA792_site_props_reduced$siteiid <- as.character(CA792_site_props_reduced$siteiid)
+CA792_site_props_reduced <- CA792_site_props_reduced |> dplyr::left_join(CA792_clim)
+```
+
+Remove rows with any NA values
+```{r}
+CA792_env_df <- CA792_site_props_reduced[complete.cases(CA792_site_props_reduced), ]
+```
+
+98 sites were lost, 1052 remain - not bad! Now we will reduce the veg data down to just those sites that are in the environmental dataframe. 
+```{r}
+CA792_veg_data_wide <- CA792_veg_data_wide |> dplyr::filter(siteiid %in% CA792_env_df$siteiid)
+```
+
+Create species only dataframe - all group columns removed. This is common in the ordination process. 
+```{r, warning=FALSE}
+CA792_comm_df <- CA792_veg_data_wide[, c(1, 7:ncol(CA792_veg_data_wide))] |> as.data.frame()
+rownames(CA792_comm_df) <- CA792_comm_df$siteiid 
+CA792_comm_df <- CA792_comm_df[,-1]
+
+CA792_comm_df[is.na(CA792_comm_df)] <- 0
+```
+
+Remove rare species
+```{r}
+frequency_threshold <- 10
+
+CA792_comm_df <- CA792_comm_df[, colSums(CA792_comm_df > 0) >= frequency_threshold]
+```
+
+Remove sites that have not species after rare species are removed
+```{r}
+CA792_comm_df <- CA792_comm_df[rowSums(CA792_comm_df != 0) > 0,]
+```
+
+There are 296 siteids in veg dataset, so we are more restricted by veg data and environment, generally speaking. We do need to now reduce the environmental dataframe to only include siteiids in the veg data. 
+```{r}
+# will improve this to avoid using rownames in this way in the future
+CA792_env_df <- CA792_env_df |> dplyr::filter(siteiid %in% rownames(CA792_comm_df))
+```
+
+There are a couple of siteiids in the environmental data that have multiple rows. This is caused by lab data. For this purpose, I am just going to take the first record. For a real analysis, these should be inspected and the best record chosen. 
+```{r}
+CA792_env_df <- CA792_env_df |> dplyr::distinct(siteiid, .keep_all = TRUE)
+```
+
+Begin ordination
+```{r}
+my_nmds <- vegan::metaMDS(CA792_comm_df, autotransform = TRUE)
+```
+
+Envfit
+```{r}
+env.envfit <- vegan::envfit(my_nmds, CA792_env_df[,-1], choices = c(1,2), permutations = 9999, na.rm = TRUE)
+species.envfit <- vegan::envfit(my_nmds, CA792_comm_df, permutation= 9999)
+```
+
+Species scores 
+```{r}
+species.scores <- as.data.frame(vegan::scores(my_nmds, "species")) |> 
+  tibble::rownames_to_column("species") |> cbind(pval = species.envfit$vectors$pvals) |> 
+  dplyr::filter(pval <= 0.05)
+```
+
+Site scores
+```{r, message=FALSE}
+site.scrs <- as.data.frame(vegan::scores(my_nmds, display = "sites")) |> tibble::rownames_to_column("siteiid") |> 
+  dplyr::left_join(CA792_veg_data_wide |> dplyr::select(usiteid, siteiid, ecositeid))
+
+```
+
+Environmental scores
+```{r}
+env.scores <- as.data.frame(vegan::scores(env.envfit, display = "vectors")) |> 
+  tibble::rownames_to_column("env.variables")
+
+env.scores <- cbind(env.scores, pval = env.envfit$vectors$pvals,
+                    r = env.envfit$vectors$r)
+
+sig.env.scores <- subset(env.scores, r >= 0.02)
+```
+
+Plotting ordination
+```{r, message=FALSE}
+
+  # plotting
+  pointSize = 5
+  textSize = 10
+  spaceLegend = 0.3
+
+  bar <- ggplot2::ggplot(site.scrs, ggplot2::aes(x = NMDS1, y = NMDS2)) +
+    ggplot2::geom_point(ggplot2::aes(color = factor(ecositeid),
+                   text = usiteid)) +
+    ggplot2::labs(title = "Presence absence NMDS", color = "Ecosite") +
+    ggplot2::guides(shape = ggplot2::guide_legend(override.aes = list(size = pointSize)),
+           color = ggplot2::guide_legend(override.aes = list(size = pointSize))) +
+    ggplot2::theme(legend.title = ggplot2::element_text(size = textSize),
+          legend.text  = ggplot2::element_text(size = textSize),
+          legend.key.size = ggplot2::unit(spaceLegend, "lines")) +
+    ggplot2::geom_text(data = species.scores, ggplot2::aes(x = NMDS1, y = NMDS2, label = species), size = 2) +
+    ggplot2::geom_segment(data = env.scores, ggplot2::aes(x = 0, xend = NMDS1, y = 0,
+                                        yend = NMDS2),
+                 arrow = ggplot2::arrow(length = ggplot2::unit(0.25, "cm")),
+                 colour = "grey10", lwd = 0.3) +
+    ggplot2::geom_text(data = env.scores, ggplot2::aes(x = NMDS1, y = NMDS2,
+                                     label = env.variables), cex = 4)
+
+  plotly::ggplotly(bar, tooltip = c("text", "color"), width = 900, height = 900)
+  
 ```
 
 
