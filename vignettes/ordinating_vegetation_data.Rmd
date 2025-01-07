@@ -232,7 +232,7 @@ Plotting ordination
 ```
 
 ```{r}
-knitr::include_graphics("painted_lady.jpg")
+knitr::include_graphics("paint_lady.jpg")
 ```
 
 ```{r}
