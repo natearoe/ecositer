@@ -106,14 +106,26 @@ messages.</p>
 associated with the same stateid. The code to inspect such situations is
 also supplied.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>    <span class="va">D104_veg</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ecositeid</span>, <span class="va">ecostateid</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">ecostatename</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">ecositeid</span>, <span class="va">ecostateid</span>, <span class="va">ecostatename</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">ecositeid</span>, <span class="va">ecostateid</span>, <span class="va">ecostatename</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 0 × 3</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># Groups:   ecositeid, ecostateid [0]</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 3 variables: ecositeid &lt;chr&gt;, ecostateid &lt;chr&gt;, ecostatename &lt;chr&gt;</span></span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">D104_veg</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">siteiid</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>unique_vegplots <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">vegplotiid</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">unique_vegplots</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 14 × 2</span></span></span>
+<span><span class="co">##    siteiid unique_vegplots</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 1146902               2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 1169814               2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 1169819               2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 1169825               2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 1169826               2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 1169880               2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 912091                2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 912100                2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 912136                2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 912150                2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> 912154                2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span> 949201                2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span> 949214                2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">14</span> 968053                2</span></span></code></pre>
 <p>In this situation, the different state names are differences in
 capitalized letters. I have seen many other cases in NASIS where
 completely different state names are associated with the same stateid,
@@ -131,8 +143,23 @@ structure. In this example, I am using <code><a href="https://rdrr.io/r/utils/he
 show the output, but I recommend using <code><a href="https://rdrr.io/r/utils/View.html" class="external-link">View()</a></code> to see the
 full output and be able to sort by columns.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">D104_summary</span><span class="op">$</span><span class="va">R232XD104AK</span><span class="op">$</span><span class="va">STM</span><span class="op">$</span><span class="va">state1</span><span class="op">$</span><span class="va">comm1</span><span class="op">$</span><span class="va">species_summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## NULL</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">D104_summary</span><span class="op">$</span><span class="va">F022AD104CA</span><span class="op">$</span><span class="va">STM</span><span class="op">$</span><span class="va">state1</span><span class="op">$</span><span class="va">comm1</span><span class="op">$</span><span class="va">species_summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    plantsym          plantsciname       plantnatvernm constancy    mean median</span></span>
+<span><span class="co">##      &lt;char&gt;                &lt;char&gt;              &lt;char&gt;     &lt;num&gt;   &lt;num&gt;  &lt;num&gt;</span></span>
+<span><span class="co">## 1:     ABCO        Abies concolor           white fir      87.5 31.0875  28.15</span></span>
+<span><span class="co">## 2:     PIJE        Pinus jeffreyi        Jeffrey pine      62.5  6.3125   2.10</span></span>
+<span><span class="co">## 3:    ARPA6 Arctostaphylos patula greenleaf manzanita      50.0  1.0250   0.05</span></span>
+<span><span class="co">## 4:   CADE27  Calocedrus decurrens       incense cedar      50.0  8.9125   0.05</span></span>
+<span><span class="co">## 5:    GALIU                Galium            bedstraw      50.0  0.5375   0.05</span></span>
+<span><span class="co">## 6:     PREM     Prunus emarginata       bitter cherry      50.0  0.6500   0.05</span></span>
+<span><span class="co">##      min   max   sum  20th  80th sites_present sites_absent</span></span>
+<span><span class="co">##    &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;         &lt;num&gt;        &lt;num&gt;</span></span>
+<span><span class="co">## 1:     0  84.0 248.7  0.14 55.06             7            1</span></span>
+<span><span class="co">## 2:     0  28.3  50.5  0.00  9.20             5            3</span></span>
+<span><span class="co">## 3:     0   7.0   8.2  0.00  0.64             4            4</span></span>
+<span><span class="co">## 4:     0  47.0  71.3  0.00 12.88             4            4</span></span>
+<span><span class="co">## 5:     0   3.0   4.3  0.00  0.70             4            4</span></span>
+<span><span class="co">## 6:     0   4.0   5.2  0.00  0.64             4            4</span></span></code></pre>
 <p><strong>Summarizing pedon level soil data</strong> When analyzing
 ecological communities, it is often helpful to work with summarized soil
 properties that are not directly accessible from pedon data. Properties
@@ -150,64 +177,12 @@ share!</p>
 Sequoia and Kings Canyon National Park Soil Survey, from the <a href="https://github.com/natearoe/ecositer.data" class="external-link">ecositer.data</a>
 package.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># load data</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">CA792_pedon_data</span>, package <span class="op">=</span> <span class="st">"ecositer.data"</span><span class="op">)</span></span>
-<span><span class="co"># get only needed for rmarkdown</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="st">"CA792_pedon_data"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Loading required package: aqp</span></span></code></pre>
-<pre><code><span><span class="co">## This is aqp 2.1.0</span></span></code></pre>
-<pre><code><span><span class="co">## SoilProfileCollection with 1150 profiles and 6006 horizons</span></span>
-<span><span class="co">## profile ID: peiid  |  horizon ID: phiid </span></span>
-<span><span class="co">## Depth range: 7 - 300 cm</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## ----- Horizons (6 / 6006 rows  |  10 / 73 columns) -----</span></span>
-<span><span class="co">##    peiid   phiid hzdept hzdepb hzname texture   genhz bounddistinct boundtopo</span></span>
-<span><span class="co">##  1069192 5149760      0      5     Oi     SPM      Oi         clear      wavy</span></span>
-<span><span class="co">##  1069192 5149761      5     15     A1  GR-FSL       A         clear      wavy</span></span>
-<span><span class="co">##  1069192 5149762     15     30     A2  GR-FSL       A         clear      wavy</span></span>
-<span><span class="co">##  1069192 5149763     30     70    Bw1    GR-L     Bw1         clear      wavy</span></span>
-<span><span class="co">##  1069192 5149764     70    110    Bw2    GR-L Bw[234]         clear      wavy</span></span>
-<span><span class="co">##  1069192 5149765    110    155    Bw3   GRV-L Bw[234]         clear irregular</span></span>
-<span><span class="co">##  clay</span></span>
-<span><span class="co">##     0</span></span>
-<span><span class="co">##    13</span></span>
-<span><span class="co">##    15</span></span>
-<span><span class="co">##    17</span></span>
-<span><span class="co">##    17</span></span>
-<span><span class="co">##    15</span></span>
-<span><span class="co">## [... more horizons ...]</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## ----- Sites (6 / 1150 rows  |  10 / 154 columns) -----</span></span>
-<span><span class="co">##  siteiid   peiid   ecositeid                             ecositenm</span></span>
-<span><span class="co">##  1076986 1069192 F022AK101CA        Mesic Shoulders And Backslopes</span></span>
-<span><span class="co">##  1076988 1069193 F022AK100CA                 Steep Mesic Drainages</span></span>
-<span><span class="co">##  1076989 1069194 F022AH104CA                  Mesic Alluvial Flats</span></span>
-<span><span class="co">##  1076990 1069195 F022AH106CA Steep Broadly Concave Mountain Slopes</span></span>
-<span><span class="co">##  1076991 1069196 F022AK100CA                 Steep Mesic Drainages</span></span>
-<span><span class="co">##  1076992 1069197 F022AK100CA                 Steep Mesic Drainages</span></span>
-<span><span class="co">##  ecositecorrdate es_classifier siteecositehistory.classifier</span></span>
-<span><span class="co">##       2016-03-18          &lt;NA&gt;                          &lt;NA&gt;</span></span>
-<span><span class="co">##       2016-03-18          &lt;NA&gt;                          &lt;NA&gt;</span></span>
-<span><span class="co">##       2024-01-23          &lt;NA&gt;                          &lt;NA&gt;</span></span>
-<span><span class="co">##       2024-01-23          &lt;NA&gt;                          &lt;NA&gt;</span></span>
-<span><span class="co">##       2016-03-18          &lt;NA&gt;                          &lt;NA&gt;</span></span>
-<span><span class="co">##       2016-03-18          &lt;NA&gt;                          &lt;NA&gt;</span></span>
-<span><span class="co">##  es_selection_method      pedon_id siteobsiid</span></span>
-<span><span class="co">##   least missing data 2014CA7920001    1053445</span></span>
-<span><span class="co">##   least missing data 2014CA7920002    1053446</span></span>
-<span><span class="co">##          most recent 2014CA7920003    1053447</span></span>
-<span><span class="co">##          most recent 2014CA7920004    1053448</span></span>
-<span><span class="co">##   least missing data 2014CA7920005    1053449</span></span>
-<span><span class="co">##   least missing data 2014CA7920006    1053450</span></span>
-<span><span class="co">## [... more sites ...]</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## Spatial Data:</span></span>
-<span><span class="co">## [EMPTY]</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">CA792_pedon_data</span>, package <span class="op">=</span> <span class="st">"ecositer.data"</span><span class="op">)</span></span></code></pre></div>
 <p>This data can be used in the <code>r_object</code> argument of
 <code><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties()</a></code>. Alternatively, you could
 use the <code>SS</code> or <code>static_location</code> arguments to
 access NASIS data elsewhere.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CA792_pedon_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties</a></span><span class="op">(</span>SS <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                           r_object <span class="op">=</span> <span class="va">CA792_pedon_data</span>,</span>
 <span>                                           byDepth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -219,7 +194,7 @@ access NASIS data elsewhere.</p>
 <span><span class="co">## match the lookup table</span></span>
 <span><span class="co">## Warning in aqp::texcl_to_ssc(x$texcl): not all the user supplied texcl values</span></span>
 <span><span class="co">## match the lookup table</span></span></code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">aqp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/aqp/man/site.html" class="external-link">site</a></span><span class="op">(</span><span class="va">CA792_pedon_summary</span><span class="op">[[</span><span class="st">"full_profile"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"siteiid"</span>, <span class="st">"d_L_lowest_mineral"</span>, <span class="st">"o_surf_thk"</span>, <span class="st">"b_clay_wtd"</span>, <span class="st">"full_prof_ph_wtd"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   siteiid d_L_lowest_mineral o_surf_thk b_clay_wtd full_prof_ph_wtd</span></span>
 <span><span class="co">## 1 1076986           51.40723          5  15.411765         6.210000</span></span>
@@ -233,15 +208,26 @@ critical factor driving the distribution of ecological communities and
 individual species.
 <code><a href="https://natearoe.github.io/ecositer/reference/site_prism_annual_normals.html">ecositerSpatial::site_prism_annual_normals()</a></code> can be used to
 extract PRISM climate properties associated with specific sites.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># D104_clim &lt;- ecositerSpatial::site_prism_annual_normals(site_df = D104_veg,</span></span>
-<span><span class="co">#                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",</span></span>
-<span><span class="co">#                                            id = "siteiid",</span></span>
-<span><span class="co">#                                            x = "utmeasting",</span></span>
-<span><span class="co">#                                            y = "utmnorthing",</span></span>
-<span><span class="co">#                                            EPSG = "EPSG:32611")</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># head(D104_clim)</span></span></code></pre></div>
+<p>I will be using an example dataset for this process as well because
+it is easier to access a whole survey area and reproducible for folks
+that do not have NASIS access.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">CA792_climate_data</span>, package <span class="op">=</span> <span class="st">"ecositer.data"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>CA792_clim <span class="ot">&lt;-</span> ecositerSpatial<span class="sc">::</span><span class="fu">site_prism_annual_normals</span>(<span class="at">site_df =</span> CA792_veg_data),</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>                                           prism_dir <span class="ot">=</span> <span class="st">"C:/Users/Nathan.Roe/Documents/PRISM_R/annual"</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>                                           id <span class="ot">=</span> <span class="st">"siteiid"</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>                                           x <span class="ot">=</span> <span class="st">"utmeasting"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>                                           y <span class="ot">=</span> <span class="st">"utmnorthing"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>                                           EPSG <span class="ot">=</span> <span class="st">"EPSG:32611"</span><span class="er">)</span></span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" tabindex="-1"></a><span class="fu">head</span>(CA792_clim)</span></code></pre></div>
+<pre><code><span><span class="co">##   siteiid      ppt tmean   tmin    tmax tdmean vpdmin vpdmax</span></span>
+<span><span class="co">## 1 1093605  920.948 10.57 4.8099 16.3299  -0.35   3.81  14.71</span></span>
+<span><span class="co">## 2 1093606  932.602 10.01 5.3700 14.6500  -0.06   3.99  12.56</span></span>
+<span><span class="co">## 3 1093607  948.341  9.82 4.7699 14.8700  -0.65   3.86  13.17</span></span>
+<span><span class="co">## 4 1093608 1080.049  9.34 4.5199 14.1600  -0.84   3.78  12.39</span></span>
+<span><span class="co">## 5 1093609 1309.006  7.54 1.9600 13.1300  -3.29   3.29  12.26</span></span>
+<span><span class="co">## 6 1093611 1309.006  7.54 1.9600 13.1300  -3.29   3.29  12.26</span></span></code></pre>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
