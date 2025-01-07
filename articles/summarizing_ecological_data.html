@@ -234,40 +234,14 @@ individual species.
 <code><a href="https://natearoe.github.io/ecositer/reference/site_prism_annual_normals.html">ecositerSpatial::site_prism_annual_normals()</a></code> can be used to
 extract PRISM climate properties associated with specific sites.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># ecositer::summarize_pedon_soil_properties(SS = TRUE,</span></span>
-<span><span class="co">#                                           byDepth = list(c(0, 50), c(0, 100)))</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">ecositerSpatial</span><span class="fu">::</span><span class="fu"><a href="https://natearoe.github.io/ecositer/reference/site_prism_annual_normals.html">site_prism_annual_normals</a></span><span class="op">(</span>site_df <span class="op">=</span> <span class="va">D104_veg</span>,</span>
-<span>                                           prism_dir <span class="op">=</span> <span class="st">"C:/Users/Nathan.Roe/Documents/PRISM_R/annual"</span>,</span>
-<span>                                           id <span class="op">=</span> <span class="st">"siteiid"</span>,</span>
-<span>                                           x <span class="op">=</span> <span class="st">"utmeasting"</span>,</span>
-<span>                                           y <span class="op">=</span> <span class="st">"utmnorthing"</span>,</span>
-<span>                                           EPSG <span class="op">=</span> <span class="st">"EPSG:32611"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## creating C:/Users/Nathan.Roe/Documents/PRISM_R/annual</span></span></code></pre>
-<pre><code><span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
-<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
-<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
-<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
-<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
-<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
-<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
-<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
-<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
-<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
-<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
-<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
-<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span></code></pre>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># test &lt;- ecositer::create_veg_df(from = "web",</span></span>
-<span><span class="co">#                                 ecositeid = "F022AD104CA")</span></span>
-<span><span class="co"># </span></span>
-<span><span class="co"># test &lt;- ecositerSpatial::site_prism_annual_normals(site_df = test,</span></span>
+<code class="sourceCode R"><span><span class="co"># D104_clim &lt;- ecositerSpatial::site_prism_annual_normals(site_df = D104_veg,</span></span>
 <span><span class="co">#                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",</span></span>
 <span><span class="co">#                                            id = "siteiid",</span></span>
 <span><span class="co">#                                            x = "utmeasting",</span></span>
 <span><span class="co">#                                            y = "utmnorthing",</span></span>
-<span><span class="co">#                                            EPSG = "EPSG:32611")</span></span></code></pre></div>
+<span><span class="co">#                                            EPSG = "EPSG:32611")</span></span>
+<span><span class="co"># </span></span>
+<span><span class="co"># head(D104_clim)</span></span></code></pre></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>

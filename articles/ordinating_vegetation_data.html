@@ -69,8 +69,48 @@
 
     
     
-<p>Ordination is a multivariate statistical technique that is excellent
-for</p>
+<p>Ordination is a multivariate statistical technique that is
+well-suited for analyzing ecological communities. Ordination allows for
+many ecologically useful relationships to be evaluated - all
+correlative, of course (this is ecology after all) - including: -
+similarity/dissimilarity in vegetative composition between sites -
+relationship between community classifications and environmental
+gradients - relationship between community classifications and species -
+relationship between species and environmental gradients</p>
+<p>This vignette is not intended to explain the mechanics of ordination
+techniques, distance measures, or how to interpret ordination results.
+There are many excellent sources for this purpose. I would recommend
+reading <a href="https://www.researchgate.net/publication/216769990_Analysis_of_Ecological_Communities" class="external-link">Analysis
+of Ecological Communities by McCune and Grace</a> for a primer on these
+topics.</p>
+<p>In this vignette I will present the use of Non-metric
+Multidimensional Scaling (NMDS) with a Bray-Curtis distance measure for
+creating an ordination. Much of the workflow will not be built into
+<code>ecositer</code> functions because it relies heavily on functions
+from other packages, and incorporating them into functions will conceal
+too many of parameters that can be, and should be, manipulated in this
+process.</p>
+<p>I will be using the CA792 (Sequoia and Kings Canyon National Park)
+Soil Survey for this demonstration.</p>
+<p>For this example, I will be working with pedon and vegetation data
+stored in the <code>ecositer.data</code> package.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">CA792_pedon_data</span>, package <span class="op">=</span> <span class="st">"ecositer.data"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">CA792_veg_data</span>, package <span class="op">=</span> <span class="st">"ecositer.data"</span><span class="op">)</span></span></code></pre></div>
+<p>We will produce environmental variables, as demonstrated in the <a href="https://natearoe.github.io/ecositer/articles/summarizing_ecological_data.html">Summarize
+Ecological Data vignette</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">CA792_pedon_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties</a></span><span class="op">(</span>SS <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                           r_object <span class="op">=</span> <span class="va">CA792_pedon_data</span>,</span>
+<span>                                           byDepth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in max(h[[bottom]][no.contact.idx], na.rm = TRUE): no non-missing</span></span>
+<span><span class="co">## arguments to max; returning -Inf</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in aqp::texcl_to_ssc(x$texcl): not all the user supplied texcl values</span></span>
+<span><span class="co">## match the lookup table</span></span>
+<span><span class="co">## Warning in aqp::texcl_to_ssc(x$texcl): not all the user supplied texcl values</span></span>
+<span><span class="co">## match the lookup table</span></span>
+<span><span class="co">## Warning in aqp::texcl_to_ssc(x$texcl): not all the user supplied texcl values</span></span>
+<span><span class="co">## match the lookup table</span></span></code></pre>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
