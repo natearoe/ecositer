@@ -24,3 +24,9 @@ B100_veg <- ecositer::create_veg_df(from = "web_report",
 rmarkdown::paged_table(B100_veg)
 ```
 
+
+```{r}
+knitr::include_graphics("cedar_axe.jpg")
+```
+
+[Getting ready for Christmas](cedar_axe.jpg)
