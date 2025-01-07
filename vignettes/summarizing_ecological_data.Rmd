@@ -26,11 +26,9 @@ D104_summary <- ecositer::summarize_veg_by_ecosite(veg_df = D104_veg)
 Note the warnings produced, such as multiple state names being associated with the same stateid. The code to inspect such situations is also supplied. 
 
 ```{r}
-    D104_veg |>
-    dplyr::group_by(ecositeid, ecostateid) |>
-    dplyr::filter(dplyr::n_distinct(ecostatename) > 1) |>
-    dplyr::distinct(ecositeid, ecostateid, ecostatename) |>
-    dplyr::arrange(ecositeid, ecostateid, ecostatename)
+D104_veg |> dplyr::group_by(siteiid) |>
+  dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |>
+  dplyr::filter(unique_vegplots > 1)
 ```
 In this situation, the different state names are differences in capitalized letters. I have seen many other cases in NASIS where completely different state names are associated with the same stateid, so it is worth checking this. Also, for the sake standardization, it is worth having the names be exactly same (i.e., using the same capitalization). 
 
@@ -38,7 +36,7 @@ To examine the summarized data, type D104_summary and put a '$' at the end of it
 
 The "$" allows you to access the elements at that location of the list. Here is an example of accessing a dataframe stored within the list structure. In this example, I am using `head()` to concisely show the output, but I recommend using `View()` to see the full output and be able to sort by columns. 
 ```{r}
-D104_summary$R232XD104AK$STM$state1$comm1$species_summary |> head()
+D104_summary$F022AD104CA$STM$state1$comm1$species_summary |> head()
 ```
 
 **Summarizing pedon level soil data**
@@ -47,12 +45,14 @@ When analyzing ecological communities, it is often helpful to work with summariz
 `summarize_pedon_soil_properties()` generates a variety of summarized properties that are useful for ecological analysis. I would like to develop this function further, so if you have ideas, please share! 
 
 For this example, I am using an example dataset from CA792, the Sequoia and Kings Canyon National Park Soil Survey, from the [ecositer.data](https://github.com/natearoe/ecositer.data) package.
-```{r}
-# load data
+```{r, message=FALSE}
 data(CA792_pedon_data, package = "ecositer.data")
-# get only needed for rmarkdown
+```
+
+```{r, echo=FALSE, message=FALSE, results='hide'}
 get("CA792_pedon_data")
 ```
+
 
 This data can be used in the `r_object` argument of `summarize_pedon_soil_properties()`. Alternatively, you could use the `SS` or `static_location` arguments to access NASIS data elsewhere. 
 ```{r}
@@ -65,15 +65,33 @@ aqp::site(CA792_pedon_summary[["full_profile"]])[, c("siteiid", "d_L_lowest_mine
 
 **Summarizing site climate data**
 Climate data is a critical factor driving the distribution of ecological communities and individual species. `ecositerSpatial::site_prism_annual_normals()` can be used to extract PRISM climate properties associated with specific sites. 
+
+I will be using an example dataset for this process as well because it is easier to access a whole survey area and reproducible for folks that do not have NASIS access.
 ```{r}
-# D104_clim <- ecositerSpatial::site_prism_annual_normals(site_df = D104_veg,
-#                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
-#                                            id = "siteiid",
-#                                            x = "utmeasting",
-#                                            y = "utmnorthing",
-#                                            EPSG = "EPSG:32611")
-# 
-# head(D104_clim)
+data(CA792_climate_data, package = "ecositer.data")
 ```
 
+```{r, echo=FALSE, results='hide'}
+get("CA792_climate_data")
+```
+
+```{r, eval=FALSE}
+CA792_clim <- ecositerSpatial::site_prism_annual_normals(site_df = CA792_veg_data),
+                                           prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
+                                           id = "siteiid",
+                                           x = "utmeasting",
+                                           y = "utmnorthing",
+                                           EPSG = "EPSG:32611")
+
+head(CA792_clim)
+```
+
+```{r, echo=FALSE, results='hide'}
+data(CA792_climate_data, package = "ecositer.data")
+get("CA792_climate_data")
+```
+
+```{r, echo=FALSE}
+head(CA792_climate_data)
+```
 
