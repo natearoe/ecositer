@@ -101,7 +101,7 @@ site, <code><a href="../reference/QC_best_vegplot_for_site.html">QC_best_vegplot
 plot with the most records.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_best</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_best_vegplot_for_site.html">QC_best_vegplot_for_site</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:</span></span>
+<pre><code><span><span class="co">## Warning -&gt; There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:</span></span>
 <span><span class="co">##               'Your veg_df' |&gt; dplyr::group_by(siteiid) |&gt;</span></span>
 <span><span class="co">##                                dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |&gt;</span></span>
 <span><span class="co">##                                dplyr::filter(unique_vegplots &gt; 1)</span></span></code></pre>
@@ -136,7 +136,7 @@ warning or error depending on the <code>fail_on_dup</code> argument. For
 details on this function - <code>?QC_aggregate_abundance()</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_agg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_aggregate_abundance.html">QC_aggregate_abundance</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_best</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Note: akstratumcoverclasspct is the only abundance column used in this dataset</span></span></code></pre>
+<pre><code><span><span class="co">## Note -&gt; akstratumcoverclasspct is the only abundance column used in this dataset</span></span></code></pre>
 <p>Note the two warnings above. As mentioned in the warning,
 <code><a href="../reference/QC_find_multiple_abundance.html">QC_find_multiple_abundance()</a></code> will allow you to inspect
 which records have abundance data in multiple columns. These should be
@@ -219,7 +219,7 @@ the taxonomy and provides a message notifying you of the changes
 made.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg_agg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/QC_update_taxonomy.html">QC_update_taxonomy</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg_agg</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Note: The following taxonomical changes have been made.</span></span></code></pre>
+<pre><code><span><span class="co">## Note -&gt; The following taxonomical changes have been made.</span></span></code></pre>
 <pre><code><span><span class="co">## Pinus latifolia changed to Pinus engelmannii</span></span></code></pre>
 <p><strong>Unify taxonomies, where possible</strong> Often times, a
 dataset has taxonomies that can be unified. Examples include records

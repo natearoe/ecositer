@@ -69,9 +69,6 @@
 
     
     
-<p>Library</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecositer.data</span><span class="op">)</span></span></code></pre></div>
 <p><strong>About</strong></p>
 <p><code>ecositer</code> has a category of functions used for
 summarizing, all of which use a “summarize_” prefix. QC should be
@@ -88,63 +85,42 @@ The messages produced by this function should be read and efforts should
 be made to address the data quality conditions that are described in the
 messages.</p>
 <p>Load data</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Y222_veg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/create_veg_df.html">create_veg_df</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"web_report"</span>,</span>
-<span>                                 ecositeid <span class="op">=</span> <span class="st">"R232XY222AK"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">D104_veg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/create_veg_df.html">create_veg_df</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"web_report"</span>,</span>
+<span>                                 ecositeid <span class="op">=</span> <span class="st">"F022AD104CA"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
 <span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
 <p>Summarize data</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Y222_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_veg_by_ecosite.html">summarize_veg_by_ecosite</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">Y222_veg</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Note: speciescancovpct is the only abundance column used in this dataset</span></span></code></pre>
-<pre><code><span><span class="co">## Note: The following taxonomical changes have been made.</span></span></code></pre>
-<pre><code><span><span class="co">## Alopecurus alpinus changed to Alopecurus magellanicus </span></span>
-<span><span class="co">## Alopecurus alpinus changed to Alopecurus magellanicus </span></span>
-<span><span class="co">## Triglochin palustre changed to Triglochin palustris </span></span>
-<span><span class="co">## Dasiphora fruticosa changed to Dasiphora fruticosa ssp. floribunda </span></span>
-<span><span class="co">## Dasiphora fruticosa changed to Dasiphora fruticosa ssp. floribunda </span></span>
-<span><span class="co">## Alopecurus alpinus changed to Alopecurus magellanicus </span></span>
-<span><span class="co">## Triglochin palustre changed to Triglochin palustris </span></span>
-<span><span class="co">## Juncus balticus changed to Juncus arcticus ssp. littoralis </span></span>
-<span><span class="co">## Triglochin palustre changed to Triglochin palustris </span></span>
-<span><span class="co">## Triglochin maritimum changed to Triglochin maritima </span></span>
-<span><span class="co">## Triglochin maritimum changed to Triglochin maritima </span></span>
-<span><span class="co">## Triglochin palustre changed to Triglochin palustris</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: There are multiple state names associated with the same stateid. To identify these situations, use:</span></span>
-<span><span class="co">##           `Your veg df` |&gt;</span></span>
-<span><span class="co">##     dplyr::group_by(ecositeid, ecostateid) |&gt;</span></span>
-<span><span class="co">##     dplyr::filter(dplyr::n_distinct(ecostatename) &gt; 1) |&gt;</span></span>
-<span><span class="co">##     dplyr::distinct(ecositeid, ecostateid, ecostatename) |&gt;</span></span>
-<span><span class="co">##     dplyr::arrange(ecositeid, ecostateid, ecostatename)</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: There are multiple phase names associated with the same phaseid. To identify these situations, use:</span></span>
-<span><span class="co">##             `Your veg df` |&gt;</span></span>
-<span><span class="co">##     dplyr::group_by(ecositeid, ecostateid, commphaseid) |&gt;</span></span>
-<span><span class="co">##     dplyr::filter(dplyr::n_distinct(commphasename) &gt; 1) |&gt;</span></span>
-<span><span class="co">##     dplyr::distinct(ecositeid, ecostateid, commphaseid, commphasename) |&gt;</span></span>
-<span><span class="co">##     dplyr::arrange(ecositeid, ecostateid, commphaseid, commphasename)</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: 414 records missing abundance. These records are removed from results.</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">D104_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_veg_by_ecosite.html">summarize_veg_by_ecosite</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Note -&gt; akstratumcoverclasspct is the only abundance column used in this dataset</span></span></code></pre>
+<pre><code><span><span class="co">## Warning -&gt; There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:</span></span>
+<span><span class="co">##               'Your veg_df' |&gt; dplyr::group_by(siteiid) |&gt;</span></span>
+<span><span class="co">##                                dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |&gt;</span></span>
+<span><span class="co">##                                dplyr::filter(unique_vegplots &gt; 1)</span></span></code></pre>
+<pre><code><span><span class="co">## Note -&gt; The following taxonomical changes have been made.</span></span></code></pre>
+<pre><code><span><span class="co">## Castanopsis sempervirens changed to Chrysolepis sempervirens </span></span>
+<span><span class="co">## Pinus latifolia changed to Pinus engelmannii</span></span></code></pre>
+<pre><code><span><span class="co">## Warning -&gt; 17 records missing abundance. These records are removed from results.</span></span></code></pre>
 <p>Note the warnings produced, such as multiple state names being
 associated with the same stateid. The code to inspect such situations is
 also supplied.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>    <span class="va">Y222_veg</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>    <span class="va">D104_veg</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ecositeid</span>, <span class="va">ecostateid</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">ecostatename</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">ecositeid</span>, <span class="va">ecostateid</span>, <span class="va">ecostatename</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">ecositeid</span>, <span class="va">ecostateid</span>, <span class="va">ecostatename</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 3</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># Groups:   ecositeid, ecostateid [1]</span></span></span>
-<span><span class="co">##   ecositeid   ecostateid ecostatename   </span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> R232XY222AK 1          Reference State</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> R232XY222AK 1          reference state</span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 0 × 3</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># Groups:   ecositeid, ecostateid [0]</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 3 variables: ecositeid &lt;chr&gt;, ecostateid &lt;chr&gt;, ecostatename &lt;chr&gt;</span></span></span></code></pre>
 <p>In this situation, the different state names are differences in
 capitalized letters. I have seen many other cases in NASIS where
 completely different state names are associated with the same stateid,
 so it is worth checking this. Also, for the sake standardization, it is
 worth having the names be exactly same (i.e., using the same
 capitalization).</p>
-<p>To examine the summarized data, type Y222_summary and put a ‘$’ at
+<p>To examine the summarized data, type D104_summary and put a ‘$’ at
 the end of it. The data structure output by
 <code><a href="../reference/summarize_veg_by_ecosite.html">summarize_veg_by_ecosite()</a></code> is called a list. Lists are
 extremely flexible data structure that work well for storing complex,
@@ -154,24 +130,9 @@ list. Here is an example of accessing a dataframe stored within the list
 structure. In this example, I am using <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> to concisely
 show the output, but I recommend using <code><a href="https://rdrr.io/r/utils/View.html" class="external-link">View()</a></code> to see the
 full output and be able to sort by columns.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Y222_summary</span><span class="op">$</span><span class="va">R232XY222AK</span><span class="op">$</span><span class="va">STM</span><span class="op">$</span><span class="va">state1</span><span class="op">$</span><span class="va">comm1</span><span class="op">$</span><span class="va">species_summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    plantsym          plantsciname      plantnatvernm constancy       mean</span></span>
-<span><span class="co">##      &lt;char&gt;                &lt;char&gt;             &lt;char&gt;     &lt;num&gt;      &lt;num&gt;</span></span>
-<span><span class="co">## 1:     HOJU       Hordeum jubatum     foxtail barley  74.28571  8.8285714</span></span>
-<span><span class="co">## 2:    ELTR7   Elymus trachycaulus slender wheatgrass  37.14286  4.9714286</span></span>
-<span><span class="co">## 3:    ACMI2  Achillea millefolium      common yarrow  34.28571  0.8285714</span></span>
-<span><span class="co">## 4:    JUAR2       Juncus arcticus        arctic rush  34.28571 12.6000000</span></span>
-<span><span class="co">## 5:   CAST36 Calamagrostis stricta slimstem reedgrass  31.42857 13.4857143</span></span>
-<span><span class="co">## 6:     CAAQ       Carex aquatilis        water sedge  28.57143  2.6000000</span></span>
-<span><span class="co">##    median   min   max   sum  20th  80th sites_present sites_absent</span></span>
-<span><span class="co">##     &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;         &lt;num&gt;        &lt;num&gt;</span></span>
-<span><span class="co">## 1:      3     0    50   309     0  16.0            26            9</span></span>
-<span><span class="co">## 2:      0     0    75   174     0   4.0            13           22</span></span>
-<span><span class="co">## 3:      0     0     5    29     0   2.0            12           23</span></span>
-<span><span class="co">## 4:      0     0    95   441     0  21.0            12           23</span></span>
-<span><span class="co">## 5:      0     0    70   472     0  37.0            11           24</span></span>
-<span><span class="co">## 6:      0     0    30    91     0   2.2            10           25</span></span></code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">D104_summary</span><span class="op">$</span><span class="va">R232XD104AK</span><span class="op">$</span><span class="va">STM</span><span class="op">$</span><span class="va">state1</span><span class="op">$</span><span class="va">comm1</span><span class="op">$</span><span class="va">species_summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## NULL</span></span></code></pre>
 <p><strong>Summarizing pedon level soil data</strong> When analyzing
 ecological communities, it is often helpful to work with summarized soil
 properties that are not directly accessible from pedon data. Properties
@@ -180,24 +141,26 @@ etc. Users may be interested in these properties within particular depth
 ranges, across the entire soil profile, or within a particular master
 horizon. An example could be weighted average clay percentage in the
 first 100 cms or thickness of the surface O horizons (i.e., using O
-master horizon). <code><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties()</a></code>
-generates a variety of summarized properties that are useful for
-ecological analysis. I would like to develop this function further, so
-if you have other ideas of properties to summarize, please share!</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># run summaries from NASIS </span></span>
-<span><span class="va">CA792_pedon_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties</a></span><span class="op">(</span>SS <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                                          byDepth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># look at some of the new columns generated</span></span>
-<span><span class="va">CA792_pedon_summary</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">CA792_pedon_summary</span><span class="op">[[</span><span class="st">"full_profile"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">CA792_pedon_data</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">19</span>,<span class="fl">45</span>,<span class="fl">60</span><span class="op">)</span><span class="op">]</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+master horizon).</p>
+<p><code><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties()</a></code> generates a variety of
+summarized properties that are useful for ecological analysis. I would
+like to develop this function further, so if you have ideas, please
+share!</p>
+<p>For this example, I am using an example dataset from CA792, the
+Sequoia and Kings Canyon National Park Soil Survey, from the <a href="https://github.com/natearoe/ecositer.data" class="external-link">ecositer.data</a>
+package.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># load data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">CA792_pedon_data</span>, package <span class="op">=</span> <span class="st">"ecositer.data"</span><span class="op">)</span></span>
+<span><span class="co"># get only needed for rmarkdown</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="st">"CA792_pedon_data"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required package: aqp</span></span></code></pre>
 <pre><code><span><span class="co">## This is aqp 2.1.0</span></span></code></pre>
-<pre><code><span><span class="co">## SoilProfileCollection with 6 profiles and 41 horizons</span></span>
+<pre><code><span><span class="co">## SoilProfileCollection with 1150 profiles and 6006 horizons</span></span>
 <span><span class="co">## profile ID: peiid  |  horizon ID: phiid </span></span>
-<span><span class="co">## Depth range: 125 - 210 cm</span></span>
+<span><span class="co">## Depth range: 7 - 300 cm</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## ----- Horizons (6 / 41 rows  |  10 / 73 columns) -----</span></span>
+<span><span class="co">## ----- Horizons (6 / 6006 rows  |  10 / 73 columns) -----</span></span>
 <span><span class="co">##    peiid   phiid hzdept hzdepb hzname texture   genhz bounddistinct boundtopo</span></span>
 <span><span class="co">##  1069192 5149760      0      5     Oi     SPM      Oi         clear      wavy</span></span>
 <span><span class="co">##  1069192 5149761      5     15     A1  GR-FSL       A         clear      wavy</span></span>
@@ -214,7 +177,7 @@ if you have other ideas of properties to summarize, please share!</p>
 <span><span class="co">##    15</span></span>
 <span><span class="co">## [... more horizons ...]</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## ----- Sites (6 / 6 rows  |  10 / 154 columns) -----</span></span>
+<span><span class="co">## ----- Sites (6 / 1150 rows  |  10 / 154 columns) -----</span></span>
 <span><span class="co">##  siteiid   peiid   ecositeid                             ecositenm</span></span>
 <span><span class="co">##  1076986 1069192 F022AK101CA        Mesic Shoulders And Backslopes</span></span>
 <span><span class="co">##  1076988 1069193 F022AK100CA                 Steep Mesic Drainages</span></span>
@@ -236,21 +199,67 @@ if you have other ideas of properties to summarize, please share!</p>
 <span><span class="co">##          most recent 2014CA7920004    1053448</span></span>
 <span><span class="co">##   least missing data 2014CA7920005    1053449</span></span>
 <span><span class="co">##   least missing data 2014CA7920006    1053450</span></span>
+<span><span class="co">## [... more sites ...]</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Spatial Data:</span></span>
 <span><span class="co">## [EMPTY]</span></span></code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<p>This data can be used in the <code>r_object</code> argument of
+<code><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties()</a></code>. Alternatively, you could
+use the <code>SS</code> or <code>static_location</code> arguments to
+access NASIS data elsewhere.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">CA792_pedon_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties</a></span><span class="op">(</span>SS <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                                           r_object <span class="op">=</span> <span class="va">CA792_pedon_data</span>,</span>
+<span>                                           byDepth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in max(h[[bottom]][no.contact.idx], na.rm = TRUE): no non-missing</span></span>
+<span><span class="co">## arguments to max; returning -Inf</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in aqp::texcl_to_ssc(x$texcl): not all the user supplied texcl values</span></span>
+<span><span class="co">## match the lookup table</span></span>
+<span><span class="co">## Warning in aqp::texcl_to_ssc(x$texcl): not all the user supplied texcl values</span></span>
+<span><span class="co">## match the lookup table</span></span>
+<span><span class="co">## Warning in aqp::texcl_to_ssc(x$texcl): not all the user supplied texcl values</span></span>
+<span><span class="co">## match the lookup table</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">aqp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/aqp/man/site.html" class="external-link">site</a></span><span class="op">(</span><span class="va">CA792_pedon_summary</span><span class="op">[[</span><span class="st">"full_profile"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"siteiid"</span>, <span class="st">"d_L_lowest_mineral"</span>, <span class="st">"o_surf_thk"</span>, <span class="st">"b_clay_wtd"</span>, <span class="st">"full_prof_ph_wtd"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   siteiid d_L_lowest_mineral o_surf_thk b_clay_wtd full_prof_ph_wtd</span></span>
+<span><span class="co">## 1 1076986           51.40723          5  15.411765         6.210000</span></span>
+<span><span class="co">## 2 1076988           51.41491          5  14.564815         6.092500</span></span>
+<span><span class="co">## 3 1076989           71.55664          5   7.684211         5.340800</span></span>
+<span><span class="co">## 4 1076990                 NA         10  12.533333         5.361905</span></span>
+<span><span class="co">## 5 1076991           51.40723          8  34.000000         6.162000</span></span>
+<span><span class="co">## 6 1076992           51.40723          5  27.305085         5.693333</span></span></code></pre>
+<p><strong>Summarizing site climate data</strong> Climate data is a
+critical factor driving the distribution of ecological communities and
+individual species.
+<code><a href="https://natearoe.github.io/ecositer/reference/site_prism_annual_normals.html">ecositerSpatial::site_prism_annual_normals()</a></code> can be used to
+extract PRISM climate properties associated with specific sites.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ecositer::summarize_pedon_soil_properties(SS = TRUE,</span></span>
 <span><span class="co">#                                           byDepth = list(c(0, 50), c(0, 100)))</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># test &lt;- ecositerSpatial::site_prism_annual_normals(site_df = Y222_veg,</span></span>
-<span><span class="co">#                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",</span></span>
-<span><span class="co">#                                            id = "siteiid",</span></span>
-<span><span class="co">#                                            x = "utmeasting",</span></span>
-<span><span class="co">#                                            y = "utmnorthing",</span></span>
-<span><span class="co">#                                            EPSG = "EPSG:6335")</span></span>
-<span></span>
-<span><span class="co"># test &lt;- ecositer::create_veg_df(from = "web",</span></span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">ecositerSpatial</span><span class="fu">::</span><span class="fu"><a href="https://natearoe.github.io/ecositer/reference/site_prism_annual_normals.html">site_prism_annual_normals</a></span><span class="op">(</span>site_df <span class="op">=</span> <span class="va">D104_veg</span>,</span>
+<span>                                           prism_dir <span class="op">=</span> <span class="st">"C:/Users/Nathan.Roe/Documents/PRISM_R/annual"</span>,</span>
+<span>                                           id <span class="op">=</span> <span class="st">"siteiid"</span>,</span>
+<span>                                           x <span class="op">=</span> <span class="st">"utmeasting"</span>,</span>
+<span>                                           y <span class="op">=</span> <span class="st">"utmnorthing"</span>,</span>
+<span>                                           EPSG <span class="op">=</span> <span class="st">"EPSG:32611"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## creating C:/Users/Nathan.Roe/Documents/PRISM_R/annual</span></span></code></pre>
+<pre><code><span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
+<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
+<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
+<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
+<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
+<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span>
+<span><span class="co">##   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
+<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
+<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
+<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
+<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
+<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span>
+<span><span class="co">## Warning: [extract] transforming vector data to the CRS of the raster</span></span></code></pre>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># test &lt;- ecositer::create_veg_df(from = "web",</span></span>
 <span><span class="co">#                                 ecositeid = "F022AD104CA")</span></span>
 <span><span class="co"># </span></span>
 <span><span class="co"># test &lt;- ecositerSpatial::site_prism_annual_normals(site_df = test,</span></span>
