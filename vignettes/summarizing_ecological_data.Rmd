@@ -66,37 +66,14 @@ aqp::site(CA792_pedon_summary[["full_profile"]])[, c("siteiid", "d_L_lowest_mine
 **Summarizing site climate data**
 Climate data is a critical factor driving the distribution of ecological communities and individual species. `ecositerSpatial::site_prism_annual_normals()` can be used to extract PRISM climate properties associated with specific sites. 
 ```{r}
-
-```
-
-
-
-
-
-```{r}
-# ecositer::summarize_pedon_soil_properties(SS = TRUE,
-#                                           byDepth = list(c(0, 50), c(0, 100)))
-```
-
-
-```{r}
-test <- ecositerSpatial::site_prism_annual_normals(site_df = D104_veg,
+D104_clim <- ecositerSpatial::site_prism_annual_normals(site_df = D104_veg,
                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
                                            id = "siteiid",
                                            x = "utmeasting",
                                            y = "utmnorthing",
                                            EPSG = "EPSG:32611")
 
-# test <- ecositer::create_veg_df(from = "web",
-#                                 ecositeid = "F022AD104CA")
-# 
-# test <- ecositerSpatial::site_prism_annual_normals(site_df = test,
-#                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
-#                                            id = "siteiid",
-#                                            x = "utmeasting",
-#                                            y = "utmnorthing",
-#                                            EPSG = "EPSG:32611")
-
+head(D104_clim)
 ```
 
 
