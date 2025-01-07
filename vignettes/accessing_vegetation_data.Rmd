@@ -15,7 +15,7 @@ This vignette will demonstrate using `ecositer` to access vegetation data associ
 **Static NASIS** - This method allows the user to access data stored in a local .sqlite NASIS database. A local .sqlite NASIS database for vegetation data can be created using `ecositer::create_local_veg_df()`.
 
 **Example:**
-```{r}
+```{r, message=FALSE}
 B100_veg <- ecositer::create_veg_df(from = "web_report",
                         ecositeid = "F022AB100CA")
 
