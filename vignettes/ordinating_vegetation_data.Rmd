@@ -230,11 +230,3 @@ Plotting ordination
   plotly::ggplotly(bar, tooltip = c("text", "color"), width = 900, height = 900)
   
 ```
-
-```{r}
-knitr::include_graphics("paint_lady.jpg")
-```
-
-```{r}
-knitr::include_graphics("forester_pass.jpg")
-```

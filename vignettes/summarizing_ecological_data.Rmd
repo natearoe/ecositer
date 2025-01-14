@@ -92,7 +92,3 @@ get("CA792_climate_data")
 ```{r, echo=FALSE}
 head(CA792_climate_data)
 ```
-
-```{r}
-knitr::include_graphics("goat_trail.jpg")
-```

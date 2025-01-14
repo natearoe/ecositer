@@ -137,7 +137,4 @@ ecositerSpatial::mapping_taxon(veg_df = D104_veg_agg,
 ```
 
 
-```{r}
-knitr::include_graphics("tuba_tuesday.jpg")
-```
 
