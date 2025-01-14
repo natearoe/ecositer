@@ -23,7 +23,5 @@ Imports:
     stringr,
     ggplot2,
     soilDB,
-    indicspecies,
     permute,
-    pdftools,
     data.table,
