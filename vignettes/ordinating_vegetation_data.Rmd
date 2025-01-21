@@ -227,6 +227,6 @@ Plotting ordination
     ggplot2::geom_text(data = env.scores, ggplot2::aes(x = NMDS1, y = NMDS2,
                                      label = env.variables), cex = 4)
 
-  plotly::ggplotly(bar, tooltip = c("text", "color"), width = 850, height = 700)
+  plotly::ggplotly(bar, tooltip = c("text", "color"), width = 825, height = 700)
   
 ```
