@@ -88,10 +88,8 @@ messages.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/create_veg_df.html">create_veg_df</a></span><span class="op">(</span>from <span class="op">=</span> <span class="st">"web_report"</span>,</span>
 <span>                                 ecositeid <span class="op">=</span> <span class="st">"F022AD104CA"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
-<span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
 <p>Summarize data</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_veg_by_ecosite.html">summarize_veg_by_ecosite</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Note -&gt; akstratumcoverclasspct is the only abundance column used in this dataset</span></span></code></pre>
 <pre><code><span><span class="co">## Warning -&gt; There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:</span></span>
@@ -105,7 +103,7 @@ messages.</p>
 <p>Note the warnings produced, such as multiple state names being
 associated with the same stateid. The code to inspect such situations is
 also supplied.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_veg</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">siteiid</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>unique_vegplots <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html" class="external-link">n_distinct</a></span><span class="op">(</span><span class="va">vegplotiid</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">unique_vegplots</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -142,7 +140,7 @@ list. Here is an example of accessing a dataframe stored within the list
 structure. In this example, I am using <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> to concisely
 show the output, but I recommend using <code><a href="https://rdrr.io/r/utils/View.html" class="external-link">View()</a></code> to see the
 full output and be able to sort by columns.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_summary</span><span class="op">$</span><span class="va">F022AD104CA</span><span class="op">$</span><span class="va">STM</span><span class="op">$</span><span class="va">state1</span><span class="op">$</span><span class="va">comm1</span><span class="op">$</span><span class="va">species_summary</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    plantsym          plantsciname       plantnatvernm constancy    mean median</span></span>
 <span><span class="co">##      &lt;char&gt;                &lt;char&gt;              &lt;char&gt;     &lt;num&gt;   &lt;num&gt;  &lt;num&gt;</span></span>
@@ -176,13 +174,13 @@ share!</p>
 <p>For this example, I am using an example dataset from CA792, the
 Sequoia and Kings Canyon National Park Soil Survey, from the <a href="https://github.com/natearoe/ecositer.data" class="external-link">ecositer.data</a>
 package.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">CA792_pedon_data</span>, package <span class="op">=</span> <span class="st">"ecositer.data"</span><span class="op">)</span></span></code></pre></div>
 <p>This data can be used in the <code>r_object</code> argument of
 <code><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties()</a></code>. Alternatively, you could
 use the <code>SS</code> or <code>static_location</code> arguments to
 access NASIS data elsewhere.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">CA792_pedon_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_pedon_soil_properties.html">summarize_pedon_soil_properties</a></span><span class="op">(</span>SS <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>                                           r_object <span class="op">=</span> <span class="va">CA792_pedon_data</span>,</span>
 <span>                                           byDepth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -194,7 +192,7 @@ access NASIS data elsewhere.</p>
 <span><span class="co">## match the lookup table</span></span>
 <span><span class="co">## Warning in aqp::texcl_to_ssc(x$texcl): not all the user supplied texcl values</span></span>
 <span><span class="co">## match the lookup table</span></span></code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">aqp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/aqp/man/site.html" class="external-link">site</a></span><span class="op">(</span><span class="va">CA792_pedon_summary</span><span class="op">[[</span><span class="st">"full_profile"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"siteiid"</span>, <span class="st">"d_L_lowest_mineral"</span>, <span class="st">"o_surf_thk"</span>, <span class="st">"b_clay_wtd"</span>, <span class="st">"full_prof_ph_wtd"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   siteiid d_L_lowest_mineral o_surf_thk b_clay_wtd full_prof_ph_wtd</span></span>
 <span><span class="co">## 1 1076986           51.40723          5  15.411765         6.210000</span></span>
@@ -208,14 +206,14 @@ critical factor driving the distribution of ecological communities and
 individual species.
 <code><a href="https://natearoe.github.io/ecositer/reference/site_prism_annual_normals.html">ecositerSpatial::site_prism_annual_normals()</a></code> can be used to
 extract PRISM climate properties associated with specific sites.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>CA792_clim <span class="ot">&lt;-</span> ecositerSpatial<span class="sc">::</span><span class="fu">site_prism_annual_normals</span>(<span class="at">site_df =</span> CA792_veg_data),</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>                                           prism_dir <span class="ot">=</span> <span class="st">"C:/Users/Nathan.Roe/Documents/PRISM_R/annual"</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>                                           id <span class="ot">=</span> <span class="st">"siteiid"</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>                                           x <span class="ot">=</span> <span class="st">"utmeasting"</span>,</span>
-<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>                                           y <span class="ot">=</span> <span class="st">"utmnorthing"</span>,</span>
-<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a>                                           EPSG <span class="ot">=</span> <span class="st">"EPSG:32611"</span><span class="er">)</span></span>
-<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a></span>
-<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="fu">head</span>(CA792_clim)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>CA792_clim <span class="ot">&lt;-</span> ecositerSpatial<span class="sc">::</span><span class="fu">site_prism_annual_normals</span>(<span class="at">site_df =</span> CA792_veg_data),</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>                                           prism_dir <span class="ot">=</span> <span class="st">"C:/Users/Nathan.Roe/Documents/PRISM_R/annual"</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>                                           id <span class="ot">=</span> <span class="st">"siteiid"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>                                           x <span class="ot">=</span> <span class="st">"utmeasting"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>                                           y <span class="ot">=</span> <span class="st">"utmnorthing"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>                                           EPSG <span class="ot">=</span> <span class="st">"EPSG:32611"</span><span class="er">)</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a><span class="fu">head</span>(CA792_clim)</span></code></pre></div>
 <pre><code><span><span class="co">##   siteiid      ppt tmean   tmin    tmax tdmean vpdmin vpdmax</span></span>
 <span><span class="co">## 1 1093605  920.948 10.57 4.8099 16.3299  -0.35   3.81  14.71</span></span>
 <span><span class="co">## 2 1093606  932.602 10.01 5.3700 14.6500  -0.06   3.99  12.56</span></span>
@@ -223,9 +221,6 @@ extract PRISM climate properties associated with specific sites.</p>
 <span><span class="co">## 4 1093608 1080.049  9.34 4.5199 14.1600  -0.84   3.78  12.39</span></span>
 <span><span class="co">## 5 1093609 1309.006  7.54 1.9600 13.1300  -3.29   3.29  12.26</span></span>
 <span><span class="co">## 6 1093611 1309.006  7.54 1.9600 13.1300  -3.29   3.29  12.26</span></span></code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="st">"goat_trail.jpg"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="goat_trail.jpg"><!-- --></p>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>

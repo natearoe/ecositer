@@ -68,7 +68,8 @@ with each state/phase</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="access_example_data.html">access_example_data</a></span><span class="op">(</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">example_data</span> <span class="op">&lt;-</span> <span class="fu">access_example_data</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in access_example_data():</span> could not find function "access_example_data"</span>
 <span class="r-in"><span><span class="va">veg_df</span> <span class="op">&lt;-</span> <span class="fu">formatted_veg_df</span><span class="op">(</span>static_location <span class="op">=</span> <span class="va">example_data</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatted_veg_df(static_location = example_data):</span> could not find function "formatted_veg_df"</span>
 <span class="r-in"><span><span class="co"># user-defined static location -</span></span></span>
