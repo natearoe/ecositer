@@ -213,7 +213,7 @@ Plotting ordination
   bar <- ggplot2::ggplot(site.scrs, ggplot2::aes(x = NMDS1, y = NMDS2)) +
     ggplot2::geom_point(ggplot2::aes(color = factor(ecositeid),
                    text = usiteid)) +
-    ggplot2::labs(title = "NMDS Ordination of Sequoia and Kings Canyon National Park Upper Montane Temp. Regime", color = "Ecosite") +
+    ggplot2::labs(title = "NMDS Ordination of SEKI NP Upper Montane Temp. Regime", color = "Ecosite") +
     ggplot2::guides(shape = ggplot2::guide_legend(override.aes = list(size = pointSize)),
            color = ggplot2::guide_legend(override.aes = list(size = pointSize))) +
     ggplot2::theme(legend.title = ggplot2::element_text(size = textSize),
