@@ -38,7 +38,7 @@ CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
 
 Climate variable calculation, as demonstrated in the [Summarize Ecological Data vignette](https://natearoe.github.io/ecositer/articles/summarizing_ecological_data.html). 
 ```{r, eval=FALSE}
-CA792_clim <- ecositerSpatial::site_prism_annual_normals(site_df = CA792_veg_data),
+CA792_clim <- ecositerSpatial::site_prism_annual_normals(site_df = CA792_veg_data,
                                            prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
                                            id = "siteiid",
                                            x = "utmeasting",
@@ -220,11 +220,11 @@ Plotting ordination
           legend.text  = ggplot2::element_text(size = textSize),
           legend.key.size = ggplot2::unit(spaceLegend, "lines")) +
     ggplot2::geom_text(data = species.scores, ggplot2::aes(x = NMDS1, y = NMDS2, label = species), size = 2) +
-    ggplot2::geom_segment(data = env.scores, ggplot2::aes(x = 0, xend = NMDS1, y = 0,
+    ggplot2::geom_segment(data = sig.env.scores, ggplot2::aes(x = 0, xend = NMDS1, y = 0,
                                         yend = NMDS2),
                  arrow = ggplot2::arrow(length = ggplot2::unit(0.25, "cm")),
                  colour = "grey10", lwd = 0.3) +
-    ggplot2::geom_text(data = env.scores, ggplot2::aes(x = NMDS1, y = NMDS2,
+    ggplot2::geom_text(data = sig.env.scores, ggplot2::aes(x = NMDS1, y = NMDS2,
                                      label = env.variables), cex = 4)
 
   plotly::ggplotly(bar, tooltip = c("text", "color"), width = 825, height = 700)
