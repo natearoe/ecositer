@@ -8,8 +8,7 @@ summarize_veg_by_ecosite(
   veg_df,
   agg_abund = TRUE,
   update_taxonomy = TRUE,
-  best_vegplot = TRUE,
-  use_id = TRUE
+  best_vegplot = TRUE
 )
 }
 \arguments{
@@ -20,8 +19,6 @@ summarize_veg_by_ecosite(
 \item{update_taxonomy}{logical - update taxonomy from USDA PLANTS using \code{ecositer::QC_update_taxonomy()},}
 
 \item{best_vegplot}{logical - use best vegplot when multiple for site using \code{ecositer::QC_best_vegplot_for_site()},}
-
-\item{use_id}{logical - use state and phase id (i.e., numeric)? Alternatively, state and phase names are used}
 }
 \value{
 list of summarized vegetation data

@@ -4,7 +4,6 @@
 #' @param agg_abund logical - aggregate abundance columns using `ecositer::QC_aggregate_abundance()`
 #' @param update_taxonomy logical - update taxonomy from USDA PLANTS using `ecositer::QC_update_taxonomy()`,
 #' @param best_vegplot logical - use best vegplot when multiple for site using `ecositer::QC_best_vegplot_for_site()`,
-#' @param use_id logical - use state and phase id (i.e., numeric)? Alternatively, state and phase names are used
 #'
 #' @return list of summarized vegetation data
 #' @export
@@ -13,8 +12,7 @@
 summarize_veg_by_ecosite <- function(veg_df,
                            agg_abund = TRUE,
                            update_taxonomy = TRUE,
-                           best_vegplot = TRUE,
-                           use_id = TRUE){
+                           best_vegplot = TRUE){
 
   # convert to data.table
   veg_df <- data.table::as.data.table(veg_df)
