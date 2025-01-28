@@ -150,7 +150,9 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
           speciescancovpct,
           speciescomppct,
           understorygrcovpct,
-          speciestraceamtflag
+          speciestraceamtflag,
+          vegetationstratalevel,
+          akstratumcoverclass
         ),
         dplyr::join_by(siteiid, vegplotiid, siteobsiid)#,relationship = "many-to-many"
       ) |>
@@ -223,6 +225,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
   vegplot$speciescomppct <- as.numeric(vegplot$speciescomppct)
   vegplot$understorygrcovpct <- as.numeric(vegplot$understorygrcovpct)
   vegplot$speciestraceamtflag <- as.character(vegplot$speciestraceamtflag)
+  vegplot$vegetationstratalevel <- as.character(vegplot$vegetationstratalevel)
   vegplot$horizdatnm <- as.character(vegplot$horizdatnm)
   vegplot$utmzone <- as.integer(vegplot$utmzone)
   vegplot$utmeasting <- as.numeric(vegplot$utmeasting)
@@ -242,7 +245,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
     dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
                   primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
                   plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct, speciestraceamtflag,
-                  horizdatnm, utmzone, utmeasting, utmnorthing, latdegrees, latminutes, latseconds, latdir, longdegrees,
+                  vegetationstratalevel, akstratumcoverclass, horizdatnm, utmzone, utmeasting, utmnorthing, latdegrees, latminutes, latseconds, latdir, longdegrees,
                   longminutes, longseconds, longdir, latstDD, longstDD) |> as.data.frame()
 
   return(vegplot)
