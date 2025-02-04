@@ -136,7 +136,8 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
       vegplotiid,
       primarydatacollector,
       vegdataorigin,
-      ecositeid
+      ecositeid,
+      siteecositehistory.classifier
     ) |>
       dplyr::left_join(
         veg_data$vegplotspecies |> dplyr::select(
@@ -152,7 +153,9 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
           understorygrcovpct,
           speciestraceamtflag,
           vegetationstratalevel,
-          akstratumcoverclass
+          akstratumcoverclass,
+          plantheightcllowerlimit,
+          plantheightclupperlimit
         ),
         dplyr::join_by(siteiid, vegplotiid, siteobsiid)#,relationship = "many-to-many"
       ) |>
@@ -191,7 +194,8 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
 
     vegplot <- vegplot |> dplyr::rename(usiteid = site_id, vegplotid = vegplot_id,
                                         latstDD = latstddecimaldegrees,
-                                        longstDD = longstddecimaldegrees) |> as.data.frame()
+                                        longstDD = longstddecimaldegrees,
+                                        ecositeclassifier = siteecositehistory.classifier) |> as.data.frame()
 
   }
 
@@ -213,6 +217,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
   vegplot$vegdataorigin <- as.character(vegplot$vegdataorigin)
   vegplot$ecositeid <- as.character(vegplot$ecositeid)
   vegplot$ecositenm <- as.character(vegplot$ecositenm)
+  vegplot$ecositeclassifier <- as.character(vegplot$ecositeclassifier)
   vegplot$ecostateid <- as.character(vegplot$ecostateid)
   vegplot$ecostatename <- as.character(vegplot$ecostatename)
   vegplot$commphaseid <- as.character(vegplot$commphaseid)
@@ -226,6 +231,8 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
   vegplot$understorygrcovpct <- as.numeric(vegplot$understorygrcovpct)
   vegplot$speciestraceamtflag <- as.character(vegplot$speciestraceamtflag)
   vegplot$vegetationstratalevel <- as.character(vegplot$vegetationstratalevel)
+  vegplot$plantheightclupperlimit <- as.character(vegplot$plantheightclupperlimit)
+  vegplot$plantheightcllowerlimit <- as.character(vegplot$plantheightcllowerlimit)
   vegplot$horizdatnm <- as.character(vegplot$horizdatnm)
   vegplot$utmzone <- as.integer(vegplot$utmzone)
   vegplot$utmeasting <- as.numeric(vegplot$utmeasting)
@@ -245,7 +252,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
     dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
                   primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
                   plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct, speciestraceamtflag,
-                  vegetationstratalevel, akstratumcoverclass, horizdatnm, utmzone, utmeasting, utmnorthing, latdegrees, latminutes, latseconds, latdir, longdegrees,
+                  vegetationstratalevel, akstratumcoverclass, plantheightcllowerlimit, plantheightclupperlimit, horizdatnm, utmzone, utmeasting, utmnorthing, latdegrees, latminutes, latseconds, latdir, longdegrees,
                   longminutes, longseconds, longdir, latstDD, longstDD) |> as.data.frame()
 
   return(vegplot)
