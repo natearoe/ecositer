@@ -137,7 +137,11 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
       primarydatacollector,
       vegdataorigin,
       ecositeid,
-      siteecositehistory.classifier
+      siteecositehistory.classifier,
+      cancovtotalpct,
+      cancovtotalclass,
+      overstorycancontotalpct,
+      overstorycancovtotalclass
     ) |>
       dplyr::left_join(
         veg_data$vegplotspecies |> dplyr::select(
@@ -222,6 +226,10 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
   vegplot$ecostatename <- as.character(vegplot$ecostatename)
   vegplot$commphaseid <- as.character(vegplot$commphaseid)
   vegplot$commphasename <- as.character(vegplot$commphasename)
+  vegplot$cancovtotalpct <- as.character(vegplot$cancovtotalpct)
+  vegplot$cancovtotalclass <- as.character(vegplot$cancovtotalclass)
+  vegplot$overstorycancontotalpct <- as.character(vegplot$overstorycancontotalpct)
+  vegplot$overstorycancovtotalclass <- as.character(vegplot$overstorycancovtotalclass)
   vegplot$plantsym <- as.character(vegplot$plantsym)
   vegplot$plantsciname <- as.character(vegplot$plantsciname)
   vegplot$plantnatvernm <- as.character(vegplot$plantnatvernm)
@@ -250,7 +258,8 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
 
   vegplot <- vegplot |> dplyr::arrange(usiteid, vegplotiid, plantsym) |>
     dplyr::select(siteiid, usiteid, siteobsiid, vegplotid, vegplotiid, # siteecositehistoryiid,
-                  primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, plantsym,
+                  primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, cancovtotalpct,
+                  cancovtotalclass, overstorycancontotalpct, overstorycancovtotalclass,  plantsym,
                   plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct, speciestraceamtflag,
                   vegetationstratalevel, akstratumcoverclass, plantheightcllowerlimit, plantheightclupperlimit, horizdatnm, utmzone, utmeasting, utmnorthing, latdegrees, latminutes, latseconds, latdir, longdegrees,
                   longminutes, longseconds, longdir, latstDD, longstDD) |> as.data.frame()
