@@ -91,7 +91,8 @@ messages.</p>
 <p>Summarize data</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">D104_summary</span> <span class="op">&lt;-</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="fu"><a href="../reference/summarize_veg_by_ecosite.html">summarize_veg_by_ecosite</a></span><span class="op">(</span>veg_df <span class="op">=</span> <span class="va">D104_veg</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Note -&gt; akstratumcoverclasspct is the only abundance column used in this dataset</span></span></code></pre>
+<pre><code><span><span class="co">## Warning in ecositer::QC_aggregate_abundance(veg_df): Multiple abundance columns</span></span>
+<span><span class="co">## are used in this dataset: akstratumcoverclasspct, speciescancovpct</span></span></code></pre>
 <pre><code><span><span class="co">## Warning -&gt; There are sites with multiple vegetation plots. Reviewing these sites is preferable to automated selection. To view which sites have multiple vegetation plots:</span></span>
 <span><span class="co">##               'Your veg_df' |&gt; dplyr::group_by(siteiid) |&gt;</span></span>
 <span><span class="co">##                                dplyr::summarise(unique_vegplots = dplyr::n_distinct(vegplotiid)) |&gt;</span></span>
@@ -232,7 +233,7 @@ extract PRISM climate properties associated with specific sites.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
     </footer>
