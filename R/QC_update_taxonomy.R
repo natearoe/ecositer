@@ -35,7 +35,7 @@ QC_update_taxonomy <- function(veg_df){
   }
 
   if(nrow(tax_change) == 0){
-    message("All taxonomies up-to-date.")
+    message("Note -> All taxonomies up-to-date.")
   }
 
   veg_df_tax$plantsym <- ifelse(is.na(veg_df_tax$Accepted_Symbol), veg_df_tax$plantsym, veg_df_tax$Accepted_Symbol)

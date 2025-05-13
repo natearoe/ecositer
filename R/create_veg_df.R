@@ -159,7 +159,8 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
           vegetationstratalevel,
           akstratumcoverclass,
           plantheightcllowerlimit,
-          plantheightclupperlimit
+          plantheightclupperlimit,
+          planttypegroup
         ),
         dplyr::join_by(siteiid, vegplotiid, siteobsiid)#,relationship = "many-to-many"
       ) |>
@@ -241,6 +242,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
   vegplot$vegetationstratalevel <- as.character(vegplot$vegetationstratalevel)
   vegplot$plantheightclupperlimit <- as.character(vegplot$plantheightclupperlimit)
   vegplot$plantheightcllowerlimit <- as.character(vegplot$plantheightcllowerlimit)
+  vegplot$planttypegroup <- as.character(vegplot$planttypegroup)
   vegplot$horizdatnm <- as.character(vegplot$horizdatnm)
   vegplot$utmzone <- as.integer(vegplot$utmzone)
   vegplot$utmeasting <- as.numeric(vegplot$utmeasting)
@@ -261,7 +263,7 @@ create_veg_df <- function(from = c("web_report", "SS", "static"),
                   primarydatacollector, vegdataorigin, ecositeid, ecositenm, ecostateid, ecostatename, commphaseid, commphasename, cancovtotalpct,
                   cancovtotalclass, overstorycancontotalpct, overstorycancovtotalclass,  plantsym,
                   plantsciname, plantnatvernm, akstratumcoverclasspct, speciescancovpct, speciescomppct, understorygrcovpct, speciestraceamtflag,
-                  vegetationstratalevel, akstratumcoverclass, plantheightcllowerlimit, plantheightclupperlimit, horizdatnm, utmzone, utmeasting, utmnorthing, latdegrees, latminutes, latseconds, latdir, longdegrees,
+                  vegetationstratalevel, akstratumcoverclass, plantheightcllowerlimit, plantheightclupperlimit, planttypegroup, horizdatnm, utmzone, utmeasting, utmnorthing, latdegrees, latminutes, latseconds, latdir, longdegrees,
                   longminutes, longseconds, longdir, latstDD, longstDD) |> as.data.frame()
 
   return(vegplot)
