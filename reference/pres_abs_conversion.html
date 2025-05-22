@@ -79,7 +79,7 @@ as abundance data. This could be different for small datasets.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">my_pres_abs</span> <span class="op">&lt;-</span> <span class="fu">pres_abs_conversion</span><span class="op">(</span>veg_df <span class="op">=</span> <span class="fu">ecositer</span><span class="fu">::</span><span class="va">vegetation_dataframe</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in veg_df %&gt;% dplyr::group_by(vegplotid, plantsciname) %&gt;% dplyr::summarise(sum(akstratumcoverclasspct)) %&gt;%     dplyr::rename(pctcover = `sum(akstratumcoverclasspct)`):</span> could not find function "%&gt;%"</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> 'vegetation_dataframe' is not an exported object from 'namespace:ecositer'</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">my_pres_abs</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> object 'my_pres_abs' not found</span>
 <span class="r-in"><span></span></span>
