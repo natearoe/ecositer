@@ -8,7 +8,6 @@
 #' @return a NMDS of taxon of interest
 #' @export
 #'
-#' @examples
 nmds_taxon_comparison <- function(veg_df, taxon, rare_species, min_plots){
 
   # remove missing species

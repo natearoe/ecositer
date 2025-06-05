@@ -7,6 +7,8 @@
 QC_aggregate_abundance(veg_df, fail_on_dup = FALSE)
 }
 \arguments{
+\item{veg_df}{vegetation dataframe from \code{ecositer::create_veg_df()}}
+
 \item{fail_on_dup}{logical - whether the function should fail if any records
 have multiple abundance columns populated.}
 }

@@ -12,9 +12,8 @@
 #' @param reference_taxa additional taxa used to compare spread in ordination space
 #'
 #' @return an ordination of plots in species space of all plots that contain the taxa of interest
-#' @export
+#' @noRd
 #'
-#' @examples
 nmds_taxa <- function(veg_df, taxa,
                       reference_taxa = NULL,
                       spp.scr.thrshld = 0.01){

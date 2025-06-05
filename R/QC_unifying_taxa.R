@@ -1,14 +1,16 @@
-
-#' QC taxonomies for unifying
+#' Identify Taxa for Unification
 #'
-#' `QC_unify_data` returns a dataframe of taxa that should be QCed for opportunities to unify. There are two types of situations
-#' that are evaluatied. The first is whether there are IDs beyond species (i.e., var or ssp) as well as to species.
-#' For example, Pinus contorta and Pinus contorta var. murrayana. Users may want to unify these observations
-#' (e.g., change all to Pinus contorta). The second situation is observations to genus as well as genus species. For example
-#' IDs to Pinus and to Pinus contorta. In some instances, it will be possible to unify these records (e.g., at the end of a
-#' project you determine there is only one species of a genus present). Statistical analyses do not recognize any relationship
-#' between different classes, therefore these taxonomically similar situations are viewed by distance measures as completely
-#' unrelated. Therefore, when reasonable, it is best to unify taxonomic observations.
+#' @description
+#' This function returns a data frame of plant taxonomies that should be evaluated for unification. Unifying taxa means lumping
+#' multiple distinct taxa together. Statistical analyses do not recognize any relationship
+#' between different taxonomic classes, therefore taxonomically similar situations are viewed by distance measures as
+#' unrelated, despite potentially having very close relationship. Therefore, it is more meaningful to unify taxa rather than preserving
+#' distinctions between closely related taxa.
+#'
+#' There are two types of situations that are evaluated:
+#' 1. **Infraspecific Species Variation**: Cases where observations exist both at the species and infraspecific levels (e.g., *Pinus contorta* and *Pinus contorta var. murrayana*). Users may wish to collapse these to the species level.
+#' 2. **Mixed Genus and Species-Level Observations**: Records identified to genus (e.g., *Pinus*) alongside specific species within that genus (e.g., *Pinus contorta*). In data sets where there are genus level observations and
+#' either a single species, or species with similar ecological function, users may collapse to the genus level.
 #'
 #' @param veg_df
 #'
@@ -16,7 +18,7 @@
 #' @export
 #'
 #' @examples
-#' QC_plants(veg_df = ecositer::vegetation_dataframe) |> head()
+#' QC_unify_taxa(veg_df = SEKI_NP_veg)
 QC_unify_taxa <- function(veg_df){
 
   # convert to data.table

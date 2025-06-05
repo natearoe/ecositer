@@ -2,7 +2,15 @@
 output: md_document 
 ---
 
-`ecositer` is a collection of tools for the standardizatio and automation of vegetation analysis. These tools work with data from the Natural Resources Conservation Service (NRCS), but the data structure and format used is intended to be applicable to vegetation analysis more broadly. To the extent possible, this package uses sources of NRCS data that are publicly accessible, increasing the relevance to non-agency users.  
+`ecositer` is a collection of tools for the standardization and automation of vegetation data analysis. While the package is designed to work directly with datasets from the Natural Resources Conservation Service (NRCS), its functions are structured to apply broadly to vegetation datasets with similar structure.
+
+The package supports workflows such as:
+- Downloading and formatting publicly accessible NRCS vegetation data
+- Quality control (QC) of vegetation data
+- Ecological summary statistics by ecological site and state-and-transition models
+- Exploratory ordination and community analysis
+
+This package is intended for ecologists, natural resource managers, land owners, and anyone else interested working with plant community data.
 
 contact nateroe@gmail.com with questions
 

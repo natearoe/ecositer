@@ -27,10 +27,9 @@
 #' @param stopOnHzLogicFail will prevent this function from running if logic errors exist in horizon data.
 #' @param byDepth a list of depth ranges to calculate properties across. Use NULL if depth ranges are not of interest.
 #' @return an SPC with ecologically relevant properties appended to the site df
-#' @export
 #' @import data.table
 #'
-#' @examples
+#' @noRd
 #'
 #'
 site_level_soil_properties <- function(soil_data,

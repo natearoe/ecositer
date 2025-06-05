@@ -1,5 +1,6 @@
-
-
+#' Example vegetation data set
+#'
+#' @description
 #' Example data set from the Sequoia and King's Canyon National Parks Soil Survey conducted by the Natural Resources Conservation Service (Soil Survey Area 792).
 #' All data is obtained from the National Soils Information System (NASIS) database.
 #'
@@ -51,6 +52,5 @@
 #'  }
 #'
 #' @usage data(SEKI_NP_Veg)
-#'
-#' @examples
+
 "SEKI_NP_veg"

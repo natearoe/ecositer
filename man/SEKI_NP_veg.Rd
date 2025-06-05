@@ -3,8 +3,7 @@
 \docType{data}
 \name{SEKI_NP_veg}
 \alias{SEKI_NP_veg}
-\title{Example data set from the Sequoia and King's Canyon National Parks Soil Survey conducted by the Natural Resources Conservation Service (Soil Survey Area 792).
-All data is obtained from the National Soils Information System (NASIS) database.}
+\title{Example vegetation data set}
 \format{
 A data frame with 17444 rows and 44 variables:
 \describe{
