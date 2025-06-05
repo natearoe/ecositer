@@ -2,7 +2,7 @@
 % Please edit documentation in R/QC_unifying_taxa.R
 \name{QC_unify_taxa}
 \alias{QC_unify_taxa}
-\title{QC taxonomies for unifying}
+\title{Identify Taxa for Unification}
 \usage{
 QC_unify_taxa(veg_df)
 }
@@ -13,15 +13,19 @@ QC_unify_taxa(veg_df)
 a dataframe of taxa recommended for unifying
 }
 \description{
-\code{QC_unify_data} returns a dataframe of taxa that should be QCed for opportunities to unify. There are two types of situations
-that are evaluatied. The first is whether there are IDs beyond species (i.e., var or ssp) as well as to species.
-For example, Pinus contorta and Pinus contorta var. murrayana. Users may want to unify these observations
-(e.g., change all to Pinus contorta). The second situation is observations to genus as well as genus species. For example
-IDs to Pinus and to Pinus contorta. In some instances, it will be possible to unify these records (e.g., at the end of a
-project you determine there is only one species of a genus present). Statistical analyses do not recognize any relationship
-between different classes, therefore these taxonomically similar situations are viewed by distance measures as completely
-unrelated. Therefore, when reasonable, it is best to unify taxonomic observations.
+This function returns a data frame of plant taxonomies that should be evaluated for unification. Unifying taxa means lumping
+multiple distinct taxa together. Statistical analyses do not recognize any relationship
+between different taxonomic classes, therefore taxonomically similar situations are viewed by distance measures as
+unrelated, despite potentially having very close relationship. Therefore, it is more meaningful to unify taxa rather than preserving
+distinctions between closely related taxa.
+
+There are two types of situations that are evaluated:
+\enumerate{
+\item \strong{Infraspecific Species Variation}: Cases where observations exist both at the species and infraspecific levels (e.g., \emph{Pinus contorta} and \emph{Pinus contorta var. murrayana}). Users may wish to collapse these to the species level.
+\item \strong{Mixed Genus and Species-Level Observations}: Records identified to genus (e.g., \emph{Pinus}) alongside specific species within that genus (e.g., \emph{Pinus contorta}). In data sets where there are genus level observations and
+either a single species, or species with similar ecological function, users may collapse to the genus level.
+}
 }
 \examples{
-QC_plants(veg_df = ecositer::vegetation_dataframe) |> head()
+QC_unify_taxa(veg_df = SEKI_NP_veg)
 }

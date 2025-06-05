@@ -9,6 +9,7 @@
 #' @export
 #'
 #' @examples
+#' summarize_veg_by_ecosite(veg_df = SEKI_NP_veg)
 summarize_veg_by_ecosite <- function(veg_df,
                            agg_abund = TRUE,
                            update_taxonomy = TRUE,

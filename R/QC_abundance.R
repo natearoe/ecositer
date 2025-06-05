@@ -1,6 +1,6 @@
 #' Aggregate abundance columns
 #'
-#' @param veg_df
+#' @param veg_df vegetation dataframe from `ecositer::create_veg_df()`
 #' @param fail_on_dup logical - whether the function should fail if any records
 #' have multiple abundance columns populated.
 #'

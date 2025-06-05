@@ -9,7 +9,7 @@
 #' @param relative_dist relativized 0-1 dissimilarity values using: \deqn{z_i = \frac{x_i - min(x)}{max(x) - min(x)}}
 #' @return a distance matrix. This distance matrix can be used for ordination or to determine the similarity between
 #' different ecological sites.
-#' @export
+#' @noRd
 #'
 #' @examples
 #' my_bbd <- big_beta_diversity(veg_df = my_veg_df)

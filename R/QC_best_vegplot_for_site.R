@@ -14,12 +14,13 @@
 #' vegetation plots from NASIS.
 #'
 #'
-#' @param veg_df
+#' @param veg_df vegetation dataframe from `ecositer::create_veg_df()`
 #'
 #' @return a vegetation dataframe with one vegetation plot per site
 #' @export
 #'
 #' @examples
+#' QC_best_vegplot_for_site(veg_df = B100_veg)
 
 QC_best_vegplot_for_site <- function(veg_df) {
 

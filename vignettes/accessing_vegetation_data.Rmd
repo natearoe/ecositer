@@ -2,7 +2,11 @@
 title: "Accessing vegetation data"
 author: "Nathan Roe"
 date: "2024-12-11"
-output: html_document
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Accessing Vegetation Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 **About**

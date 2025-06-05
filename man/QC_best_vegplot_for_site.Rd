@@ -7,7 +7,7 @@
 QC_best_vegplot_for_site(veg_df)
 }
 \arguments{
-\item{veg_df}{}
+\item{veg_df}{vegetation dataframe from \code{ecositer::create_veg_df()}}
 }
 \value{
 a vegetation dataframe with one vegetation plot per site
@@ -24,4 +24,7 @@ there are multiple vegetation plots with the same number of records, this functi
 will error. This most commonly occurs when there are two vegetation plots with
 identical data. The best solution in that case is to remove duplicated
 vegetation plots from NASIS.
+}
+\examples{
+QC_best_vegplot_for_site(veg_df = B100_veg)
 }

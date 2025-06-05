@@ -26,3 +26,6 @@ list of summarized vegetation data
 \description{
 Summarize vegetation data by ecosite, state, and community phase
 }
+\examples{
+summarize_veg_by_ecosite(veg_df = SEKI_NP_veg)
+}

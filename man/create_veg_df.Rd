@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_veg_df.R
 \name{create_veg_df}
 \alias{create_veg_df}
-\title{Create vegetation dataframe from multiple possible locations}
+\title{Create vegetation data frame}
 \usage{
 create_veg_df(
   from = c("web_report", "SS", "static"),
@@ -11,23 +11,21 @@ create_veg_df(
 )
 }
 \arguments{
-\item{from}{origin of vegetation data. "web_report" queries NASIS for vegetation data by ecosite - NASIS credentials are not needed. "SS" uses the users NASIS selected set (NASIS connection required).
-"static" uses a local .sqlite NASIS database.}
+\item{from}{Source of vegetation data. Options:
+\itemize{
+\item \code{"web_report"}: Accesses NASIS vegetation data via web report (no NASIS credentials required)
+\item \code{"SS"}: Uses NASIS Selected Set (requires NASIS connection)
+\item \code{"static"}: Uses a local NASIS \code{.sqlite} database
+}}
 
-\item{ecositeid}{ecositeid of interest - required when using from = "web_report". If used with from = "SS" or from = "static", limits returns to only ecositeid provided.}
+\item{ecositeid}{Ecological site ID of interest. Required for \code{"web_report"}.
+If used with \code{"SS"} or \code{"static"}, limits results to that ecosite ID.}
 
-\item{static_location}{file path to static NASIS .sqlite database - typically generated using \code{ecositer::vegStaticNASIS()}}
+\item{static_location}{File path to a static NASIS \code{.sqlite} database, typically created with \code{ecositer::vegStaticNASIS()}}
 }
 \value{
-vegetation dataframe
+vegetation data frame
 }
 \description{
-This function provides access to vegetation data from multiple sources and returns the data in the same format regardless of source. This function provides raw data. QC should be performed on data
-before analyzing.
-}
-\examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-my_formatted_veg_df <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
-head(formatted_veg_df)
-\dontshow{\}) # examplesIf}
+This function return a vegetation data frame from multiple data sources. Accessing data through web reports provides public access to NASIS vegetation data.
 }

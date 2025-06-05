@@ -6,15 +6,13 @@
 #' Properties include texture, pH, fragment volume,
 #'
 #'
-#' @param SS
-#' @param static_location
+#' @param SS logical describing whether data is accessed from NASIS selected set
+#' @param static_location path where .sqlite database can be found is SS = FALSE
 #' @param r_object R object where SoilProfileCollection is stored
-#' @param byDepth
+#' @param byDepth depth ranges of interest
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return summarized soil properties for pedons
+#' @noRd
 summarize_pedon_soil_properties <- function(SS = TRUE,
                                             static_location = NULL,
                                             r_object = NULL,
