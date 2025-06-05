@@ -2,7 +2,11 @@
 title: "Summarizing ecological data"
 author: "Nathan Roe"
 date: "2025-01-02"
-output: html_document
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Accessing Vegetation Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 **About**
@@ -61,34 +65,4 @@ CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
                                            byDepth = list(c(0, 25), c(0, 50)))
 
 aqp::site(CA792_pedon_summary[["full_profile"]])[, c("siteiid", "d_L_lowest_mineral", "o_surf_thk", "b_clay_wtd", "full_prof_ph_wtd")] |> head()
-```
-
-**Summarizing site climate data**
-Climate data is a critical factor driving the distribution of ecological communities and individual species. `ecositerSpatial::site_prism_annual_normals()` can be used to extract PRISM climate properties associated with specific sites. 
-```{r, echo=FALSE, results='hide'}
-data(CA792_climate_data, package = "ecositer.data")
-```
-
-```{r, echo=FALSE, results='hide'}
-get("CA792_climate_data")
-```
-
-```{r, eval=FALSE}
-CA792_clim <- ecositerSpatial::site_prism_annual_normals(site_df = CA792_veg_data),
-                                           prism_dir = "C:/Users/Nathan.Roe/Documents/PRISM_R/annual",
-                                           id = "siteiid",
-                                           x = "utmeasting",
-                                           y = "utmnorthing",
-                                           EPSG = "EPSG:32611")
-
-head(CA792_clim)
-```
-
-```{r, echo=FALSE, results='hide'}
-data(CA792_climate_data, package = "ecositer.data")
-get("CA792_climate_data")
-```
-
-```{r, echo=FALSE}
-head(CA792_climate_data)
 ```

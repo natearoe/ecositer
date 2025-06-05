@@ -7,7 +7,7 @@
 site_similarity_pairwise(dist_matrix)
 }
 \arguments{
-\item{dist_matrix}{}
+\item{dist_matrix}{distance matrix}
 }
 \value{
 a data frame of pairwise distances between plots

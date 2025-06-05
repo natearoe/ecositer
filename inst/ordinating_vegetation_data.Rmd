@@ -2,7 +2,11 @@
 title: "Vegetation data ordination"
 author: "Nathan Roe"
 date: "2025-01-02"
-output: html_document
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Accessing Vegetation Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 Ordination is a multivariate statistical technique that is well-suited for analyzing ecological communities. Ordination allows for many ecologically useful relationships to be evaluated - all correlative, of course (this is ecology after all) - including: <br>

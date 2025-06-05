@@ -7,7 +7,7 @@
 QC_unify_taxa(veg_df)
 }
 \arguments{
-\item{veg_df}{}
+\item{veg_df}{vegetation dataframe}
 }
 \value{
 a dataframe of taxa recommended for unifying

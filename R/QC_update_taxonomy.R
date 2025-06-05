@@ -1,6 +1,6 @@
 #' Update taxonomy according to USDA PLANTS
 #'
-#' @param veg_df
+#' @param veg_df vegetation dataframe
 #'
 #' @return vegetation dataframe with updated taxonomy
 #' @export

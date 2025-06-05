@@ -7,7 +7,7 @@
 QC_update_taxonomy(veg_df)
 }
 \arguments{
-\item{veg_df}{}
+\item{veg_df}{vegetation dataframe}
 }
 \value{
 vegetation dataframe with updated taxonomy

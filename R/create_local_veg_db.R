@@ -1,17 +1,22 @@
-#' Create local vegetation database
-#'
-#'`create_local_veg_db` saves your NASIS local database (not selected set!) to your local drive as a .sqlite database. The function utilizes
-#'`soilDB::createStaticNASIS`, and includes the appropriate tables to access
-#'vegetation data. The output can be used as a reliable, local copy of query results,
-#'allowing the user to change their NASIS selected set and still access the
-#'data of interest. The file extension needs to be ".sqlite". If you are working with a
-#'dataset that commonly has new data entered, it is probably best to work off of your
-#'NASIS selected set rather than using a local sqlite database.
-#'
+#' @title Create local NASIS database
+#' @description
+#' This function creates a local .sqlite database from your NASIS local database
+#' (not selected set!). It uses [soilDB::createStaticNASIS()] but makes accessing the desired tables
+#' easier without having to explicitly name them. For datasets that are static,
+#' this is an efficient way of accessing data without having to clear your local
+#' database and query.
 #'
 #' @param output_path path where file should be saved (must have .sqlite extension)
-#' @return a local .sqlite database of your SS
+#' @return a local .sqlite database of your local database
 #' @export
+#'
+#' @examplesIf requireNamespace("curl") && curl::has_internet()
+#'   result <- try(create_local_veg_db(output_path = "Users/You/veg_db.sqlite"), silent = TRUE)
+#'   if (inherits(result, "try-error")) {
+#'   message("Connection failed. Check database status.")
+#'   } else {
+#'   print(results)
+#'   }
 #'
 
 create_local_veg_db <- function(output_path){

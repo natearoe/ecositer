@@ -36,7 +36,9 @@ research. At a minimum, you should understand stress and evaluate the stress
 report in the results.
 }
 \examples{
-formatted_veg <- formatted_veg_df(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
+formatted_veg <- formatted_veg_df(static_location =
+"C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg.sqlite")
 my_veg_summary <- ecositer::veg_summary(veg_df = formatted_veg)
-my_nmds <- ecositer::nmds_ecosite(veg_summary = my_veg_summary, ecosite = "F022AK100CA", pres_abs = TRUE, nmds_dim = 2, reduce_species = NA)
+my_nmds <- ecositer::nmds_ecosite(veg_summary = my_veg_summary,
+ecosite = "F022AK100CA", pres_abs = TRUE, nmds_dim = 2, reduce_species = NA)
 }

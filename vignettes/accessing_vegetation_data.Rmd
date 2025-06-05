@@ -25,6 +25,6 @@ B100_veg <- ecositer::create_veg_df(from = "web_report",
 
 
 
-rmarkdown::paged_table(B100_veg)
+#rmarkdown::paged_table(B100_veg)
 ```
 

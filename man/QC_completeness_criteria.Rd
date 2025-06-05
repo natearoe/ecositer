@@ -30,7 +30,8 @@ vegetation dataframe meeting completeness criteria
 Remove vegetation plots based on completeness criteria
 }
 \examples{
-QC_completeness_criteria(veg_df = my_veg_df, min_unique_species = 5, min_perc_to_species = 70, min_perc_with_abund = 70)
+QC_completeness_criteria(veg_df = my_veg_df, min_unique_species = 5,
+min_perc_to_species = 70, min_perc_with_abund = 70)
 }
 \seealso{
 \code{\link[=QC_veg_completeness]{QC_veg_completeness()}}

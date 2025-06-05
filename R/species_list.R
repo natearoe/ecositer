@@ -1,7 +1,7 @@
 #' Species list
 #'
 #' @param SS logical - whether to use access data in NASIS selected set
-#' @param dsn
+#' @param dsn path to local NASIS database
 #'
 #' @return a species list from your NASIS vegplots with modern taxonomies, growth habit, native status, and higher level taxa from PLANTS database
 #' @export
