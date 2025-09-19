@@ -3,7 +3,7 @@
 #' @param veg_df a properly formatted vegetation dataframe
 #' @param taxon the taxon of interest
 #' @param rare_species TRUE or FALSE to include or remove, respectively
-#' @param min_plots
+#' @param min_plots minimum number of plots species where species is present.
 #'
 #' @return a NMDS of taxon of interest
 #' @export

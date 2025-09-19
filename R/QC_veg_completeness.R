@@ -59,7 +59,8 @@ QC_veg_completeness <- function(veg_df){
 #' @seealso [QC_veg_completeness()]
 #'
 #' @examples
-#' QC_completeness_criteria(veg_df = my_veg_df, min_unique_species = 5, min_perc_to_species = 70, min_perc_with_abund = 70)
+#' QC_completeness_criteria(veg_df = my_veg_df, min_unique_species = 5,
+#' min_perc_to_species = 70, min_perc_with_abund = 70)
 QC_completeness_criteria <- function(veg_df = NULL,
                                      min_total_records = NULL,
                                      min_unique_species = NULL,

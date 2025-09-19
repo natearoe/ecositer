@@ -2,7 +2,11 @@
 title: "Summarizing ecological data"
 author: "Nathan Roe"
 date: "2025-01-02"
-output: html_document
+output: rmarkdown::html_document
+vignette: >
+  %\VignetteIndexEntry{Accessing Vegetation Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 **About**
@@ -62,4 +66,7 @@ CA792_pedon_summary <- ecositer::summarize_pedon_soil_properties(SS = FALSE,
 
 aqp::site(CA792_pedon_summary[["full_profile"]])[, c("siteiid", "d_L_lowest_mineral", "o_surf_thk", "b_clay_wtd", "full_prof_ph_wtd")] |> head()
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> 677ae9ea627629f6b99ab8c06c089ad65689fe4f

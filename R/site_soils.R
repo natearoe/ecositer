@@ -247,8 +247,14 @@ site_soils <- function(pedon_data){
 
   my_sites$depth_class[is.na(my_sites$depth_class)] <- "VD"
 
-  my_sites$depth_class_num <- plyr::mapvalues(my_sites$depth_class, from = c("VS", "S", "MD", "D", "VD"),
-                                              to = c(12.5, 37.5, 75, 125, 200))
+  my_sites$depth_class_num <- dplyr::recode(
+    my_sites$depth_class,
+    VS = 12.5,
+    S  = 37.5,
+    MD = 75,
+    D  = 125,
+    VD = 200
+  )
 
   return(my_sites)
 }

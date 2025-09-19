@@ -100,7 +100,7 @@ QC_aggregate_abundance <- function(veg_df,
 #' This function returns records that use multiple abundance columns. This allows users
 #' to determine the cause and determine a better solution than averaging.
 #'
-#' @param veg_df
+#' @param veg_df vegetation dataframe
 #'
 #' @return dataframe of records with multiple abundance columns populated
 #' @export

@@ -1,4 +1,10 @@
+#'
+#'
 #' Big beta diversity
+#'
+#' @description
+#' This function is under development
+#'
 #'
 #' `big_beta_diversity` calculates a distance matrix using the distance measure, big beta diversity.
 #'

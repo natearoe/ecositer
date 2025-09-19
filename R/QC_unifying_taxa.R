@@ -12,7 +12,7 @@
 #' 2. **Mixed Genus and Species-Level Observations**: Records identified to genus (e.g., *Pinus*) alongside specific species within that genus (e.g., *Pinus contorta*). In data sets where there are genus level observations and
 #' either a single species, or species with similar ecological function, users may collapse to the genus level.
 #'
-#' @param veg_df
+#' @param veg_df vegetation dataframe
 #'
 #' @return a dataframe of taxa recommended for unifying
 #' @export

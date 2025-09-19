@@ -1,6 +1,6 @@
 #' Distance matrix to pairwise distance dataframe
 #'
-#' @param dist_matrix
+#' @param dist_matrix distance matrix
 #'
 #' @return a data frame of pairwise distances between plots
 #' @export

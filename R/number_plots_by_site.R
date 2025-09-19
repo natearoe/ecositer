@@ -16,7 +16,8 @@
 #' example_data <- access_example_data()
 #' my_plots_by_site <- number_plots_by_site(static_location = example_data)
 #' # specify user-defined location -
-#' # my_plots_by_site <- number_plots_by_site(static_location = "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
+#' # my_plots_by_site <- number_plots_by_site(static_location =
+#' "C:/Users/Nathan.Roe/Documents/SEKI/CA792_veg_data.sqlite")
 #' head(my_plots_by_site)
 #'
 

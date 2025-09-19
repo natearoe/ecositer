@@ -13,7 +13,7 @@ nmds_taxon_comparison(veg_df, taxon, rare_species, min_plots)
 
 \item{rare_species}{TRUE or FALSE to include or remove, respectively}
 
-\item{min_plots}{}
+\item{min_plots}{minimum number of plots species where species is present.}
 }
 \value{
 a NMDS of taxon of interest

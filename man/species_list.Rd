@@ -9,7 +9,7 @@ species_list(SS = TRUE, static_location = NULL)
 \arguments{
 \item{SS}{logical - whether to use access data in NASIS selected set}
 
-\item{dsn}{}
+\item{dsn}{path to local NASIS database}
 }
 \value{
 a species list from your NASIS vegplots with modern taxonomies, growth habit, native status, and higher level taxa from PLANTS database

@@ -7,7 +7,7 @@
 QC_find_multiple_abundance(veg_df)
 }
 \arguments{
-\item{veg_df}{}
+\item{veg_df}{vegetation dataframe}
 }
 \value{
 dataframe of records with multiple abundance columns populated
